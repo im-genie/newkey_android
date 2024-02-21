@@ -16,3 +16,8 @@ tasks.withType<JavaCompile> {
 task("clean", type = Delete::class) {
     delete(rootProject.buildDir)
 }
+
+buildscript {
+    val agp_version by extra("3.2.0")
+    val agp_version1 by extra("8.2.1")
+}
