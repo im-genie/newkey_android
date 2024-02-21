@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/gray_500_40_100">
+    <ImageView
+        android:id="@+id/news1_hot_item"
+        android:layout_width="220dp"
+        android:layout_height="132dp"
+        android:src="@drawable/test1"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="8dp"/>
+    <TextView
+        android:id="@+id/news1_hot_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기사 제목"
+        android:textColor="@color/gray_100"
+        android:layout_marginTop="91dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_gravity="center"
+        android:fontFamily="@font/pretendardregular"
+        android:textSize="12dp"/>
+</RelativeLayout>

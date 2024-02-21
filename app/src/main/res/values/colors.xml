@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="key_blue_400">#1BEAF7</color>
+    <color name="key_blue_400_20">#331BEAF7</color>
+    <color name="key_blue_300">#5EF0F9</color>
+    <color name="key_blue_200">#8AF6FD</color>
+    <color name="key_blue_100">#BBFBFF</color>
+    <color name="key_green_400">#4CF4C2</color>
+    <color name="key_green_400_20">#334CF4C2</color>
+    <color name="key_green_300">#72F6CE</color>
+    <color name="key_green_200">#A1F7DE</color>
+    <color name="key_green_100">#CDFCEE</color>
+    <color name="key_yellow_400">#E1F398</color>
+    <color name="key_yellow_400_20">#33E1F398</color>
+    <color name="key_yellow_300">#EFFFB0</color>
+    <color name="key_yellow_200">#F5FFCC</color>
+    <color name="key_yellow_100">#FBFFE9</color>
+    <color name="gray_600">#171717</color>
+    <color name="gray_500">#2D2F32</color>
+    <color name="gray_500_40">#662D2F32</color>
+    <color name="gray_500_40_100">#202122</color>
+    <color name="gray_400">#3C4043</color>
+    <color name="gray_300">#9AA0A6</color>
+    <color name="gray_300_30">#4D9AA0A6</color>
+    <color name="gray_200">#E8EAED</color>
+    <color name="gray_100">#F4F4F4</color>
+    <color name="grao_100_30">#4DF4F4F4</color>
+</resources>
