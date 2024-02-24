@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -14,9 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class news3_activity extends AppCompatActivity {
 
-    private ImageView news3back;
-    private Button summaryButton; // 기사요약 버튼
-    private CardView summaryCardView; // 요약 정보를 담은 CardView
+    private ImageView news3back, news3SummaryArrow;
+    private FrameLayout summaryButton;
+    private CardView summaryCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,10 @@ public class news3_activity extends AppCompatActivity {
         setContentView(R.layout.news3);
 
         news3back = findViewById(R.id.news3_back);
+        news3SummaryArrow = findViewById(R.id.news3_summary_arrow);
+        summaryButton = findViewById(R.id.new3_summary);
+        summaryCardView = findViewById(R.id.summary_cardview);
+
         news3back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,9 +36,6 @@ public class news3_activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        summaryButton = findViewById(R.id.new3_summary);
-        summaryCardView = findViewById(R.id.summary_cardview);
 
         summaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,12 +45,15 @@ public class news3_activity extends AppCompatActivity {
                 if (summaryCardView.getVisibility() == View.VISIBLE) {
                     summaryCardView.setVisibility(View.GONE);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
+                    news3SummaryArrow.setImageResource(R.drawable.news3_up);
                 } else {
                     summaryCardView.setVisibility(View.VISIBLE);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
+                    news3SummaryArrow.setImageResource(R.drawable.news3_down);
                 }
             }
         });
-
     }
 }
+
+
