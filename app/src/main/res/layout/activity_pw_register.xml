@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PwRegisterActivity">
+
+    <TextView
+        android:id="@+id/pwTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="사용하실\n비밀번호를 입력해 주세요"
+        android:textStyle="bold"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:id="@+id/pwText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="비밀번호"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/pw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="영어, 숫자 조합 6자리 이상"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/pwRightText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="올바른 형태의 비밀번호입니다."
+        android:textSize="10dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/pwCheckText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="비밀번호 확인"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/pwCheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="영어, 숫자 조합 6자리 이상"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/pwSameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="비밀번호가 일치합니다."
+        android:textSize="10dp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="다음" />
+
+</LinearLayout>
