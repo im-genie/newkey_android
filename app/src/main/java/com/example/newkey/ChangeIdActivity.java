@@ -45,7 +45,7 @@ public class ChangeIdActivity extends Activity {
                 editor.apply();
 
                 // MainActivity로 화면 전환하면서 사용자 입력을 인텐트에 추가하여 전달
-                Intent intent = new Intent(ChangeIdActivity.this, MyActivity.class);
+                Intent intent = new Intent(ChangeIdActivity.this, MypageActivity.class);
                 intent.putExtra("UserInput", userInput);
                 startActivity(intent);
             }

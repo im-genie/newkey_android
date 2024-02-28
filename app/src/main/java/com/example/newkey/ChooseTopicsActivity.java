@@ -20,7 +20,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // MainActivity로 돌아가기
-                Intent intent = new Intent(ChooseTopicsActivity.this, MyActivity.class);
+                Intent intent = new Intent(ChooseTopicsActivity.this, MypageActivity.class);
                 // MainActivity를 새 태스크로 시작하고, 이전에 있던 액티비티들을 모두 제거
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
