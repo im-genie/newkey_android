@@ -1,33 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/notification1"
+    android:id="@+id/notification2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/black"
+    tools:context=".notification2">
 
-    <TextView
-        android:id="@+id/새로운알림생기면"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="새로운 알림이 생기면 알려드릴게요."
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Newkey123456" />
-
-    <ImageView
-        android:id="@+id/Newkey123456"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.505"
-        app:srcCompat="@drawable/newkey12346" />
 
     <FrameLayout
         android:id="@+id/frame_81"
@@ -65,5 +46,37 @@
             android:textColor="@color/white"
             android:textSize="19dp" />
     </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/pretendardmedium"
+        android:includeFontPadding="false"
+        android:text="전체 삭제"
+        android:textColor="#9AA0A6"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_noti"
+        android:layout_width="369dp"
+        android:layout_height="585dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:scrollbarFadeDuration="0"
+        android:scrollbarSize="4dp"
+        android:scrollbarThumbVertical="@android:color/darker_gray"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_delete"
+        app:layout_constraintVertical_weight="1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
