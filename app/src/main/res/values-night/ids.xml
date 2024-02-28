@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="alrim_todaynews" type="id" />
+    <item name="alrim_icon" type="id" />
+    <item name="alrim_content" type="id" />
+</resources>

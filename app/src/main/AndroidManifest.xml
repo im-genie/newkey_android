@@ -52,6 +52,18 @@
         <activity
             android:name=".RecommendationActivity"
             android:exported="false" />
+        <activity
+            android:name=".search2"
+            android:exported="false" />
+        <activity
+            android:name=".search1"
+            android:exported="false" />
+        <activity
+            android:name=".notification2"
+            android:exported="false" />
+        <activity
+            android:name=".notification1"
+            android:exported="false" />
 
     </application>
 
