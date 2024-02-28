@@ -73,7 +73,7 @@
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".MyActivity"
+            android:name=".MypageActivity"
             android:exported="false" />
 
     </application>
