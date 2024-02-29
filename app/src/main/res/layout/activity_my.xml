@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:backgroundTint="@color/black"
-    >
+    android:backgroundTint="@color/black">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -21,7 +20,6 @@
         android:backgroundTint="@color/gray_500"
         android:orientation="horizontal">
 
-
         <Button
             android:id="@+id/btn_history"
             android:layout_width="wrap_content"
@@ -29,14 +27,13 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="invisible"
-            />
+            android:background="@android:color/transparent"/>
 
         <ImageView
             android:id="@+id/line2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/line" />
+            android:src="@drawable/line" />
 
         <Button
             android:id="@+id/btn_scrap"
@@ -45,13 +42,13 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="invisible"/>
+            android:background="@android:color/transparent"/>
 
         <ImageView
             android:id="@+id/line1"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/line" />
+            android:src="@drawable/line" />
 
         <Button
             android:id="@+id/btn_topic"
@@ -60,9 +57,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="invisible"/>
-
-
+            android:background="@android:color/transparent"/>
     </LinearLayout>
 
     <TextView
@@ -86,7 +81,6 @@
         android:layout_marginEnd="20dp"
         android:text="로그아웃"
         android:textColor="@color/gray_300"/>
-
 
     <TextView
         android:id="@+id/text1"
@@ -128,7 +122,6 @@
         android:textColor="@color/gray_100"
         android:textSize='13dp' />
 
-
     <ImageView
         android:id="@+id/changeProfile"
         android:layout_width="wrap_content"
@@ -140,47 +133,38 @@
         android:clickable="true"
         android:focusable="true"
         android:elevation="4dp"
-        app:srcCompat="@drawable/change_profile" />
+        android:src="@drawable/change_profile" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="336dp"
-        android:orientation="horizontal"
-        >
-
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/viewHistory"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_marginStart="72dp"
-            app:srcCompat="@drawable/history" />
+            android:src="@drawable/history" />
 
         <ImageView
             android:id="@+id/viewScrap"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:backgroundTint="@color/gray_500"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_marginStart="103dp"
-            app:srcCompat="@drawable/bookmark" />
+            android:src="@drawable/bookmark" />
 
         <ImageView
             android:id="@+id/chooseTopics"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:backgroundTint="@color/gray_500"
-            android:clickable="true"
-            android:focusable="true"
             android:layout_marginStart="105dp"
-            app:srcCompat="@drawable/category" />
+            android:src="@drawable/category" />
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -190,13 +174,12 @@
         android:gravity="center"
         android:orientation="vertical">
 
-
         <ImageView
             android:id="@+id/profileImg"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:background="@drawable/rounded_corner_40"
-            app:srcCompat="@drawable/profile_yellow" />
+            android:src="@drawable/profile_yellow" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -215,7 +198,6 @@
                 android:textColor="@color/white"
                 android:textSize="16dp" />
 
-
             <ImageView
                 android:id="@+id/changeProfileId"
                 android:layout_width="16dp"
@@ -224,11 +206,7 @@
                 android:layout_marginTop="3dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:srcCompat="@drawable/edit" />
+                android:src="@drawable/edit" />
         </LinearLayout>
-
-
     </LinearLayout>
-
-
 </RelativeLayout>
