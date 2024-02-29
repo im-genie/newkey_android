@@ -11,9 +11,9 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHolder> {
-    private List<news2_item> newsItems;
+    private List<news1_item> newsItems;
 
-    public news2_adapter(List<news2_item> newsItems) {
+    public news2_adapter(List<news1_item> newsItems) {
         this.newsItems = newsItems;
     }
 
@@ -25,10 +25,9 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
 
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
-        news2_item newsItem = newsItems.get(position);
-        holder.newsTitle.setText(newsItem.getTitle());
-        holder.newsPublisher.setText(newsItem.getPublisher());
-        holder.newsTime.setText(newsItem.getTime());
+        news1_item newsItem = newsItems.get(position);
+        holder.setItem(newsItem);
+
         // Glide로 이미지 로드
         Glide.with(holder.itemView.getContext())
                 .load(newsItem.getImg())
@@ -37,9 +36,18 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // news3_activity로 이동하는 Intent
                 Intent intent = new Intent(v.getContext(), news3_activity.class);
+                intent.putExtra("id", newsItem.getId());
+                intent.putExtra("title", newsItem.getTitle());
+                intent.putExtra("content", newsItem.getContent());
+                intent.putExtra("publisher", newsItem.getPublisher());
+                intent.putExtra("date", newsItem.getDate());
+                intent.putExtra("img", newsItem.getImg());
+                intent.putExtra("summary", newsItem.getSummary());
+                intent.putExtra("key", newsItem.getKey());
                 v.getContext().startActivity(intent);
+
+                //클릭 시 사용자 정보 저장
             }
         });
     }
@@ -59,6 +67,11 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
             newsPublisher = itemView.findViewById(R.id.news2_item_name);
             newsTime = itemView.findViewById(R.id.news2_item_time);
             newsImage = itemView.findViewById(R.id.news2_item_image);
+        }
+        public void setItem(news1_item item){
+            newsTitle.setText(item.getTitle());
+            newsPublisher.setText(item.getPublisher());
+            newsTime.setText(item.getDate());
         }
     }
 }

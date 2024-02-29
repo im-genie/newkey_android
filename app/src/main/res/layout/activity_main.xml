@@ -62,8 +62,7 @@
             android:id="@+id/main_activity_framelayout1_linearlayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
         <LinearLayout
             android:id="@+id/main_activity_linearlayout2_imageview1"

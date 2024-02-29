@@ -1,13 +1,20 @@
 package com.example.newkey;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHolder> {
@@ -26,9 +33,8 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
         news1_item newsItem = newsItems.get(position);
-        holder.newsTitle.setText(newsItem.getTitle());
-        holder.newsPublisher.setText(newsItem.getPublisher());
-        holder.newsTime.setText(newsItem.getTime());
+        holder.setItem(newsItem);
+
         Glide.with(holder.itemView.getContext())
                 .load(newsItem.getImg())
                 .into(holder.newsImage);
@@ -38,7 +44,18 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), news3_activity.class);
+                intent.putExtra("id", newsItem.getId());
+                intent.putExtra("title", newsItem.getTitle());
+                intent.putExtra("content", newsItem.getContent());
+                intent.putExtra("publisher", newsItem.getPublisher());
+                intent.putExtra("date", newsItem.getDate());
+                intent.putExtra("img", newsItem.getImg());
+                intent.putExtra("summary", newsItem.getSummary());
+                intent.putExtra("key", newsItem.getKey());
                 v.getContext().startActivity(intent);
+
+                //클릭 시 사용자 정보 저장
+
             }
         });
     }
@@ -58,6 +75,11 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
             newsPublisher = itemView.findViewById(R.id.news1_item_name);
             newsTime = itemView.findViewById(R.id.news1_item_time);
             newsImage = itemView.findViewById(R.id.news1_item_image);
+        }
+        public void setItem(news1_item item){
+            newsTitle.setText(item.getTitle());
+            newsPublisher.setText(item.getPublisher());
+            newsTime.setText(item.getDate());
         }
     }
 }

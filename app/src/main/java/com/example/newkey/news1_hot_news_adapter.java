@@ -27,14 +27,22 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
 
     @Override
     public void onBindViewHolder(@NonNull HotNewsViewHolder holder, int position) {
-        news1_item currentItem = newsItems.get(position);
-        Glide.with(holder.itemView.getContext()).load(currentItem.getImg()).into(holder.newsImage);
-        holder.newsTitle.setText(currentItem.getTitle());
+        news1_item newsItem = newsItems.get(position);
+        Glide.with(holder.itemView.getContext()).load(newsItem.getImg()).into(holder.newsImage);
+        holder.setItem(newsItem);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), news3_activity.class);
+                intent.putExtra("id", newsItem.getId());
+                intent.putExtra("title", newsItem.getTitle());
+                intent.putExtra("content", newsItem.getContent());
+                intent.putExtra("publisher", newsItem.getPublisher());
+                intent.putExtra("date", newsItem.getDate());
+                intent.putExtra("img", newsItem.getImg());
+                intent.putExtra("summary", newsItem.getSummary());
+                intent.putExtra("key", newsItem.getKey());
                 v.getContext().startActivity(intent);
             }
         });
@@ -53,6 +61,9 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
             super(itemView);
             newsImage = itemView.findViewById(R.id.news1_hot_item);
             newsTitle = itemView.findViewById(R.id.news1_hot_item_title);
+        }
+        public void setItem(news1_item item){
+            newsTitle.setText(item.getTitle());
         }
     }
 }
