@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         main_activity_linearlayout2_imageview1_imageview2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NewsActivity.class);
+                Intent intent = new Intent(MainActivity.this, news1_activity.class);
                 startActivity(intent);
             }
         });
@@ -71,7 +71,5 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment myFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_activity_framelayout1_linearlayout1, myFragment);
         fragmentTransaction.commit();
-
-
     }
 }
