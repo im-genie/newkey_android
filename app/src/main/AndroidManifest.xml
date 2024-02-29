@@ -52,6 +52,30 @@
         <activity
             android:name=".RecommendationActivity"
             android:exported="false" />
+        <activity
+            android:name=".LogoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChooseTopicsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewScrapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MypageActivity"
+            android:exported="false" />
 
     </application>
 
