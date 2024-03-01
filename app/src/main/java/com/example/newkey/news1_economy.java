@@ -27,11 +27,17 @@ public class news1_economy extends Fragment {
         itemList = new ArrayList<>();
 
         itemList.add(new news1_item("경제 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
-        itemList.add(new news1_item("정치 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("경제 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
         itemList.add(new news1_item("경제 기사 3", "언론사 C", "3시간 전", "https://example.com/imageA.jpg"));
-        itemList.add(new news1_item("정치 기사 4", "언론사 D", "4시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("경제 기사 4", "언론사 D", "4시간 전", "https://example.com/imageB.jpg"));
         itemList.add(new news1_item("경제 기사 5", "언론사 E", "5시간 전", "https://example.com/imageA.jpg"));
-        itemList.add(new news1_item("정치 기사 6", "언론사 F", "6시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("경제 기사 6", "언론사 F", "6시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("경제 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("경제 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("경제 기사 3", "언론사 C", "3시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("경제 기사 4", "언론사 D", "4시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("경제 기사 5", "언론사 E", "5시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("경제 기사 6", "언론사 F", "6시간 전", "https://example.com/imageB.jpg"));
 
         adapter = new news1_adapter(itemList);
         recyclerView.setAdapter(adapter);
