@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EmailRegisterActivity2">
+
+    <TextView
+        android:id="@+id/codeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="해당 메일 주소로 보내드린\n6자리 인증코드를 입력해 주세요"
+        android:textStyle="bold"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:id="@+id/codeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="인증코드"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/code"
+            android:layout_width="316dp"
+            android:layout_height="wrap_content"
+            android:hint="인증코드 6자리"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/codeCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="확인" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/codeRightText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="인증코드가 일치하지 않습니다."
+        android:textSize="10dp"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="인증코드가 오지 않은 경우\n
+- 인증코드 전송은 최대 1분 소요될 수 있습니다.\n
+- 입력하신 이메일 주소가 올바른지 확인해 주세요.\n
+- 메일이 오지 않는다면 인증코드 전송 버튼을 다시 눌러주세요.\n
+- 인증코드는 10분 간 유효합니다."/>
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="230dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:text="다음" />
+</LinearLayout>

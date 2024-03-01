@@ -52,5 +52,5 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
-
+    implementation("com.android.volley:volley:1.2.1")
 }
