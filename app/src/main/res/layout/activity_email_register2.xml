@@ -125,6 +125,7 @@
 
 
         <LinearLayout
+            android:id="@+id/next"
             android:layout_width="87dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
