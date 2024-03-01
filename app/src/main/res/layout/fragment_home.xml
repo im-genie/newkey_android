@@ -8,8 +8,8 @@
     android:orientation="vertical"
     android:id="@+id/home_scrollview">
 
-
     <LinearLayout
+        android:id="@+id/container_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:text="뉴키는 은경님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?"
                     android:fontFamily="@font/pretendardregular"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
                     android:textColor="@color/gray_100"
                     android:lineSpacingMultiplier="1.2"
                     android:layout_marginLeft="20dp"
@@ -78,13 +78,14 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="12dp"
                         android:text="맞춤 설정"
                         android:textColor="@color/gray_200"
                         android:fontFamily="@font/pretendardextralight"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp">
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center">
                     </TextView>
                     <ImageView
                         android:layout_width="14dp"
@@ -92,7 +93,8 @@
                         android:src="@drawable/button_next"
                         android:layout_marginRight="4dp"
                         android:layout_marginTop="4dp"
-                        android:layout_marginBottom="4dp">
+                        android:layout_marginBottom="4dp"
+                        android:layout_gravity="center">
                     </ImageView>
                 </LinearLayout>
             </FrameLayout>
@@ -128,19 +130,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="12dp"
                         android:text="더보기"
                         android:textColor="@color/gray_200"
                         android:fontFamily="@font/pretendardextralight"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp">
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="center">
                     </TextView>
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:src="@drawable/button_next"
-                        android:layout_marginTop="4dp">
+                        android:layout_gravity="center">
                     </ImageView>
                 </LinearLayout>
             </FrameLayout>
@@ -155,6 +158,7 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/hot_keyword_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/home_custom_section"
@@ -177,11 +181,11 @@
                 </TextView>
                 <ImageView
                     android:id="@+id/button_question"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:src="@drawable/question_mark"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginLeft="106dp"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginLeft="100dp"
                     android:layout_marginBottom="4dp"
                     android:layout_gravity="bottom">
                 </ImageView>
@@ -190,17 +194,17 @@
                     android:layout_height="wrap_content"
                     android:text="2024. 01. 12. 13시"
                     android:fontFamily="@font/pretendardregular"
-                    android:textSize="10dp"
+                    android:textSize="12dp"
                     android:textColor="@color/gray_200"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="34dp"
+                    android:layout_marginRight="36dp"
                     android:layout_marginBottom="4dp"
                     android:layout_gravity="right">
                 </TextView>
                 <ImageView
                     android:id="@+id/button_refresh"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:src="@drawable/update_mark"
                     android:layout_marginTop="16dp"
                     android:layout_marginRight="15dp"
@@ -220,6 +224,7 @@
                     android:layout_marginBottom="12dp">
                 </ImageView>
                 <TextView
+                    android:id="@+id/top_1"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="금융"
@@ -232,6 +237,7 @@
                     android:maxLines="2">
                 </TextView>
                 <TextView
+                    android:id="@+id/top_5"
                     android:layout_width="35dp"
                     android:layout_height="wrap_content"
                     android:text="K-POP"
@@ -245,6 +251,7 @@
                     android:maxLines="2">
                 </TextView>
                 <TextView
+                    android:id="@+id/top_2"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="미국 주식"
@@ -258,6 +265,7 @@
                     android:maxLines="2">
                 </TextView>
                 <TextView
+                    android:id="@+id/top_4"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:text="한파"
@@ -271,6 +279,7 @@
                     android:maxLines="2">
                 </TextView>
                 <TextView
+                    android:id="@+id/top_3"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:text="엔화"
@@ -318,7 +327,7 @@
                         android:id="@+id/keyword_open_close_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="10dp"
+                        android:textSize="12dp"
                         android:text="펼치기"
                         android:textColor="@color/gray_200"
                         android:fontFamily="@font/pretendardextralight"
@@ -331,8 +340,8 @@
                         android:id="@+id/keyword_open_close_image"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
-                        android:layout_marginTop="4dp"
-                        android:src="@drawable/button_down"></ImageView>
+                        android:src="@drawable/button_down"
+                        android:layout_gravity="center"></ImageView>
                 </LinearLayout>
             </FrameLayout>
             <View

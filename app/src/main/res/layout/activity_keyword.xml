@@ -24,6 +24,7 @@
                 android:layout_gravity="center_vertical">
             </ImageView>
             <TextView
+                android:id="@+id/top_keyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="금융"
@@ -57,24 +58,29 @@
             android:orientation="vertical">
         </LinearLayout>
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/card_news_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
         <LinearLayout
             android:id="@+id/main_activity_linearlayout2_imageview1"
             android:layout_width="188dp"
             android:layout_height="52dp"
-            android:layout_marginBottom="76dp"
+            android:layout_marginBottom="27dp"
             android:background="@drawable/navigationbar_rounded_rectangle_background"
             android:orientation="horizontal"
             android:layout_gravity="center|bottom">
 
             <ImageView
-                android:id="@+id/main_activity_linearlayout2_imageview1_imageview1"
+                android:id="@+id/button_home_keyword"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/icon_circle_background"
                 android:padding="10dp"
-                android:src="@drawable/home"></ImageView>
+                android:src="@drawable/home_green"></ImageView>
 
             <View
                 android:layout_width="0dp"
@@ -82,7 +88,7 @@
                 android:layout_weight="1"></View>
 
             <ImageView
-                android:id="@+id/main_activity_linearlayout2_imageview1_imageview2"
+                android:id="@+id/button_feed_keyword"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
@@ -96,7 +102,7 @@
                 android:layout_weight="1"></View>
 
             <ImageView
-                android:id="@+id/main_activity_linearlayout2_imageview1_imageview3"
+                android:id="@+id/button_person_keyword"
                 android:layout_width="44dp"
                 android:layout_height="44dp"
                 android:layout_gravity="center"
@@ -105,12 +111,6 @@
                 android:padding="10dp"
                 android:src="@drawable/person"></ImageView>
         </LinearLayout>
-        <LinearLayout
-            android:id="@+id/card_news_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </LinearLayout>
-
     </FrameLayout>
 
 </LinearLayout>
