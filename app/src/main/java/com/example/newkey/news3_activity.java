@@ -15,9 +15,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class news3_activity extends AppCompatActivity {
 
-    private ImageView news3back, news3SummaryArrow;
+    private ImageView news3back, news3SummaryArrow, news3Scrap;
     private FrameLayout summaryButton;
     private CardView summaryCardView;
+    private boolean isBookmarked = false; // Tracks whether the news is bookmarked
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class news3_activity extends AppCompatActivity {
 
         news3back = findViewById(R.id.news3_back);
         news3SummaryArrow = findViewById(R.id.news3_summary_arrow);
+        news3Scrap = findViewById(R.id.news3_scrap); // Initialize the ImageView
         summaryButton = findViewById(R.id.new3_summary);
         summaryCardView = findViewById(R.id.summary_cardview);
 
@@ -53,7 +55,25 @@ public class news3_activity extends AppCompatActivity {
                 }
             }
         });
+
+        // Set onClickListener for news3Scrap to toggle the bookmark state
+        news3Scrap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle bookmark state
+                isBookmarked = !isBookmarked;
+
+                // Update the ImageView based on whether the news is bookmarked
+                if (isBookmarked) {
+                    news3Scrap.setImageResource(R.drawable.bookmark_checked);
+                } else {
+                    news3Scrap.setImageResource(R.drawable.bookmark_unchecked);
+                }
+            }
+        });
     }
 }
+
+
 
 

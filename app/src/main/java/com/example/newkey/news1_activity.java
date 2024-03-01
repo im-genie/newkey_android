@@ -61,7 +61,7 @@ public class news1_activity extends AppCompatActivity {
                 super.onPageSelected(position);
                 tabLayout.selectTab(tabLayout.getTabAt(position));
 
-                viewPagerHotNews.setUserInputEnabled(false);
+                viewPagerHotNews.setUserInputEnabled(false); //중요! HOT 뉴스 viewpager2 동작 못하게 하기
 
             }
 
@@ -94,7 +94,64 @@ public class news1_activity extends AppCompatActivity {
                 }
             }
         });
+
+
+        ImageView button_home = findViewById(R.id.button_home);
+        ImageView button_feed = findViewById(R.id.button_feed);
+        ImageView button_person = findViewById(R.id.button_person);
+
+
+
+        // 네비게이션 바: Home
+
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(news1_activity.this, MainActivity.class);
+                startActivity(intent);
+                button_home.setImageResource(R.drawable.home_green);
+                button_feed.setImageResource(R.drawable.feed);
+                button_person.setImageResource(R.drawable.person);
+            }
+        });
+        // 네비게이션 바: news
+        button_feed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(news1_activity.this, news1_activity.class);
+                startActivity(intent);
+                button_home.setImageResource(R.drawable.home);
+                button_feed.setImageResource(R.drawable.feed_green);
+                button_person.setImageResource(R.drawable.person);
+            }
+        });
+        // 네비게이션 바: mypage
+        button_person.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(news1_activity.this, MypageActivity.class);
+                startActivity(intent);
+                button_home.setImageResource(R.drawable.home);
+                button_feed.setImageResource(R.drawable.feed);
+                button_person.setImageResource(R.drawable.person_green);
+            }
+        });
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ImageView button_home = findViewById(R.id.button_home);
+        ImageView button_feed = findViewById(R.id.button_feed);
+        ImageView button_person = findViewById(R.id.button_person);
+
+        button_home.setImageResource(R.drawable.home);
+        button_feed.setImageResource(R.drawable.feed_green);
+        button_person.setImageResource(R.drawable.person);
+    }
+
 
     private View.OnClickListener getMoreClickListener(int position) {
         switch (position) {
