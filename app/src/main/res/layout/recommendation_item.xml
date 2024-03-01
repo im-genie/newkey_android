@@ -52,6 +52,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/item_bookmark"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/bookmark_unchecked"
