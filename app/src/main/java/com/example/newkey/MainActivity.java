@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,31 +41,42 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageView button_home = findViewById(R.id.button_home);
+        ImageView button_feed = findViewById(R.id.button_feed);
+        ImageView button_person = findViewById(R.id.button_person);
+
         // 네비게이션 바: Home
-        ImageView main_activity_linearlayout2_imageview1_imageview1 = findViewById(R.id.main_activity_linearlayout2_imageview1_imageview1);
-        main_activity_linearlayout2_imageview1_imageview1.setOnClickListener(new View.OnClickListener() {
+
+        button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
+                button_home.setImageResource(R.drawable.home_green);
+                button_feed.setImageResource(R.drawable.feed);
+                button_person.setImageResource(R.drawable.person);
             }
         });
         // 네비게이션 바: news
-        ImageView main_activity_linearlayout2_imageview1_imageview2 = findViewById(R.id.main_activity_linearlayout2_imageview1_imageview2);
-        main_activity_linearlayout2_imageview1_imageview2.setOnClickListener(new View.OnClickListener() {
+        button_feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, news1_activity.class);
                 startActivity(intent);
+                button_home.setImageResource(R.drawable.home);
+                button_feed.setImageResource(R.drawable.feed_green);
+                button_person.setImageResource(R.drawable.person);
             }
         });
         // 네비게이션 바: mypage
-        ImageView main_activity_linearlayout2_imageview1_imageview3 = findViewById(R.id.main_activity_linearlayout2_imageview1_imageview3);
-        main_activity_linearlayout2_imageview1_imageview3.setOnClickListener(new View.OnClickListener() {
+        button_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MypageActivity.class);
                 startActivity(intent);
+                button_home.setImageResource(R.drawable.home);
+                button_feed.setImageResource(R.drawable.feed);
+                button_person.setImageResource(R.drawable.person_green);
             }
         });
 
