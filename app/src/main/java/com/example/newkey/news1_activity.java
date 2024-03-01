@@ -18,6 +18,7 @@ public class news1_activity extends AppCompatActivity {
     private ViewPager2 viewPagerNews; // 일반 뉴스를 위한 ViewPager2
     private ViewPager2 viewPagerHotNews; // HOT 뉴스를 위한 ViewPager2
     private TabLayout tabLayout;
+    private RecyclerView recyclerView; // 가로 RecyclerView
 
     private TextView news1Information1;
     private ImageView news1Information2;
@@ -29,11 +30,11 @@ public class news1_activity extends AppCompatActivity {
 
         viewPagerHotNews = findViewById(R.id.viewPagerHotNews);
         viewPagerNews = findViewById(R.id.viewPagerNews);
+        recyclerView = findViewById(R.id.news1_hot_recyclerview); // 가로 RecyclerView
         tabLayout = findViewById(R.id.toolbar);
 
         viewPagerNews.setAdapter(new news1_fragment_adapter(this));
         viewPagerHotNews.setAdapter(new news1_hot_fragment_adapter(this));
-
 
         news1Information1 = findViewById(R.id.news1_information1);
         news1Information2 = findViewById(R.id.news1_information2);
@@ -59,7 +60,11 @@ public class news1_activity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 tabLayout.selectTab(tabLayout.getTabAt(position));
+
+                viewPagerHotNews.setUserInputEnabled(false);
+
             }
+
         });
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -81,6 +86,14 @@ public class news1_activity extends AppCompatActivity {
             }
         });
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (!recyclerView.canScrollHorizontally(1)) {
+                    viewPagerNews.setCurrentItem(viewPagerNews.getCurrentItem() + 1);
+                }
+            }
+        });
     }
 
     private View.OnClickListener getMoreClickListener(int position) {
