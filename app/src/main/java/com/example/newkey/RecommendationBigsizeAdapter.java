@@ -33,6 +33,10 @@ public class RecommendationBigsizeAdapter extends RecyclerView.Adapter<Recommend
 
         public CircleImageView circleImageView;
 
+        public ImageView bookmarkBigImageView;
+
+        public Boolean isClicked = Boolean.FALSE;
+
         public ViewHolder(View v) {
             super(v);
             imageView = v.findViewById(R.id.news_image_big);
@@ -40,6 +44,7 @@ public class RecommendationBigsizeAdapter extends RecyclerView.Adapter<Recommend
             pressView = v.findViewById(R.id.news_press_big);
             timeView = v.findViewById(R.id.news_time_big);
             circleImageView = v.findViewById(R.id.news_press_image_big);
+            bookmarkBigImageView = v.findViewById(R.id.item_bookmark_big);
         }
     }
 
@@ -63,6 +68,20 @@ public class RecommendationBigsizeAdapter extends RecyclerView.Adapter<Recommend
 
         new ImageLoadTask(holder.imageView).loadImage(newsItem.getImageUrl());
         new ImageLoadTask(holder.circleImageView).loadImage(newsItem.getCircleImageUrl());
+
+        holder.bookmarkBigImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.isClicked == Boolean.FALSE){
+                    holder.isClicked = Boolean.TRUE;
+                    holder.bookmarkBigImageView.setImageResource(R.drawable.bookmark_checked);
+                }
+                else {
+                    holder.isClicked = Boolean.FALSE;
+                    holder.bookmarkBigImageView.setImageResource(R.drawable.bookmark_unchecked);
+                }
+            }
+        });
     }
 
     @Override

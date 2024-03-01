@@ -1,7 +1,13 @@
 package com.example.newkey;
 
+import static com.google.android.material.internal.ViewUtils.dpToPx;
+
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +19,18 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.widget.PopupWindow;
+import android.view.ViewGroup.LayoutParams;
+import android.content.Context;
 
 public class HomeFragment extends Fragment {
 
@@ -83,10 +95,77 @@ public class HomeFragment extends Fragment {
 
         // HOT 키워드 - 물음표
         ImageView button_question = view.findViewById(R.id.button_question);
+
         button_question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 툴팁으로 사용할 레이아웃 인플레이트
+                View tooltipView = inflater.inflate(R.layout.tooltip_layout, (ViewGroup) v.getRootView(), false);
+                final PopupWindow tooltipPopup = new PopupWindow(tooltipView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
+                // 바깥 클릭을 감지하도록 설정
+                tooltipPopup.setOutsideTouchable(true);
+                tooltipPopup.setFocusable(true);
+
+                // 버튼의 위치와 크기를 가져오기 위해 배열을 생성합니다.
+                int[] location = new int[2];
+                button_question.getLocationOnScreen(location);
+
+                // dp 값을 픽셀로 변환합니다. getResources()와 DisplayMetrics를 사용합니다.
+                Resources resources = v.getContext().getResources();
+                int pxOffset = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, resources.getDisplayMetrics()));
+
+                // 툴팁을 버튼 위로 위치시킵니다. 버튼의 Y 좌표에서 버튼의 높이와 변환된 픽셀 값을 빼줍니다.
+                tooltipPopup.showAtLocation(v.getRootView(), Gravity.NO_GRAVITY, location[0], location[1] - button_question.getHeight() - pxOffset);
+
+
+                // 툴팁이 사라졌을 때의 동작 설정
+                tooltipPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        // 모든 오버레이를 제거하고 원래의 뷰로 복원
+                        LinearLayout container = view.findViewById(R.id.container_layout);
+                        for (int i = 0; i < container.getChildCount(); i++) {
+                            View child = container.getChildAt(i);
+                            if (child instanceof FrameLayout) {
+                                FrameLayout frameLayout = (FrameLayout) child;
+                                if (frameLayout.getChildCount() > 1) {
+                                    View originalChild = frameLayout.getChildAt(0);
+                                    frameLayout.removeViewAt(1); // 오버레이 제거
+
+                                    // 필요한 경우, 여기서 추가적인 복원 로직을 수행할 수 있습니다.
+                                }
+                            }
+                        }
+                    }
+                });
+
+                LinearLayout container = view.findViewById(R.id.container_layout);
+                for (int i = 0; i < container.getChildCount(); i++) {
+                    View child = container.getChildAt(i);
+
+                    // 특정 레이아웃을 제외하고 투명한 회색 뷰 추가
+                    if (child.getId() != R.id.hot_keyword_layout) {
+                        FrameLayout frameLayout = new FrameLayout(v.getContext());
+                        ViewGroup.LayoutParams originalParams = child.getLayoutParams();
+                        frameLayout.setLayoutParams(originalParams);
+
+                        // 기존 뷰를 부모에서 제거하고 FrameLayout에 추가
+                        ViewGroup parent = (ViewGroup) child.getParent();
+                        int index = parent.indexOfChild(child);
+                        parent.removeView(child);
+                        frameLayout.addView(child, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+                        // 투명한 회색 뷰(overlay)를 FrameLayout에 추가
+                        View overlay = new View(v.getContext());
+                        overlay.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                        overlay.setBackgroundColor(ContextCompat.getColor(v.getContext(), R.color.gray_600_90)); // 투명한 회색
+                        frameLayout.addView(overlay);
+
+                        // FrameLayout을 원래의 부모 뷰에 추가
+                        parent.addView(frameLayout, index);
+                    }
+                }
             }
         });
 
@@ -96,6 +175,74 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // *********** 새로고치는 event *********** //
+            }
+        });
+
+        // HOT 키워드 - 키워드 클릭 시 카드뉴스로 이동
+        TextView top_1 = view.findViewById(R.id.top_1);
+        TextView top_2 = view.findViewById(R.id.top_2);
+        TextView top_3 = view.findViewById(R.id.top_3);
+        TextView top_4 = view.findViewById(R.id.top_4);
+        TextView top_5 = view.findViewById(R.id.top_5);
+
+        top_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView의 텍스트를 가져옵니다.
+                String textToSend = top_1.getText().toString();
+
+                // 새로운 액티비티를 시작하고 텍스트를 전달합니다.
+                Intent intent = new Intent(getActivity(), KeywordActivity.class);
+                intent.putExtra("keyword", textToSend);
+                startActivity(intent);
+            }
+        });
+        top_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView의 텍스트를 가져옵니다.
+                String textToSend = top_2.getText().toString();
+
+                // 새로운 액티비티를 시작하고 텍스트를 전달합니다.
+                Intent intent = new Intent(getActivity(), KeywordActivity.class);
+                intent.putExtra("keyword", textToSend);
+                startActivity(intent);
+            }
+        });
+        top_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView의 텍스트를 가져옵니다.
+                String textToSend = top_3.getText().toString();
+
+                // 새로운 액티비티를 시작하고 텍스트를 전달합니다.
+                Intent intent = new Intent(getActivity(), KeywordActivity.class);
+                intent.putExtra("keyword", textToSend);
+                startActivity(intent);
+            }
+        });
+        top_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView의 텍스트를 가져옵니다.
+                String textToSend = top_4.getText().toString();
+
+                // 새로운 액티비티를 시작하고 텍스트를 전달합니다.
+                Intent intent = new Intent(getActivity(), KeywordActivity.class);
+                intent.putExtra("keyword", textToSend);
+                startActivity(intent);
+            }
+        });
+        top_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TextView의 텍스트를 가져옵니다.
+                String textToSend = top_5.getText().toString();
+
+                // 새로운 액티비티를 시작하고 텍스트를 전달합니다.
+                Intent intent = new Intent(getActivity(), KeywordActivity.class);
+                intent.putExtra("keyword", textToSend);
+                startActivity(intent);
             }
         });
 
@@ -112,6 +259,8 @@ public class HomeFragment extends Fragment {
         ScrollView home_scrollview = view.findViewById(R.id.home_scrollview);
 
         LinearLayout keyword_open_close = view.findViewById(R.id.keyword_open_close);
+
+
         keyword_open_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +276,12 @@ public class HomeFragment extends Fragment {
                     keyword_open_close_image.setImageResource(R.drawable.button_up);
                     // 현재 상태 변경
                     isOpened = true;
+                    home_scrollview.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            home_scrollview.smoothScrollTo(0, home_scrollview.getChildAt(0).getBottom());
+                        }
+                    });
                 }
                 else {
                     // 키워드 open
