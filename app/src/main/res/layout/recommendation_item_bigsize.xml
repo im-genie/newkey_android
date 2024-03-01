@@ -43,6 +43,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:id="@+id/item_bookmark_big"
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:src="@drawable/bookmark_unchecked"
