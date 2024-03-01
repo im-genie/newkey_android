@@ -51,6 +51,6 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    //추가
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
     implementation("com.android.volley:volley:1.2.1")
 }

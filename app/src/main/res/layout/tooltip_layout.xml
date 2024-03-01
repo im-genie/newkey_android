@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/tooltip_background"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tooltip_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="키워드를 클릭하면\n현재 인기 있는 뉴스 요약을 볼 수 있어요"
+        android:textColor="@color/black"
+        android:textSize="12dp"
+        android:fontFamily="@font/pretendardmedium"
+        android:gravity="center" />
+</LinearLayout>

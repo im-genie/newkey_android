@@ -28,6 +28,8 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         public TextView titleView;
         public TextView pressView;
         public TextView timeView;
+        public ImageView bookmarkImageView;
+        public Boolean isClicked = Boolean.FALSE;
 
         public ViewHolder(View v) {
             super(v);
@@ -35,6 +37,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
             titleView = v.findViewById(R.id.news_title);
             pressView = v.findViewById(R.id.news_press);
             timeView = v.findViewById(R.id.news_time);
+            bookmarkImageView = v.findViewById(R.id.item_bookmark);
         }
     }
 
@@ -57,6 +60,20 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         holder.timeView.setText(newsItem.getTime());
 
         new ImageLoadTask(holder.imageView).loadImage(newsItem.getImageUrl());
+
+        holder.bookmarkImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.isClicked == Boolean.FALSE){
+                    holder.isClicked = Boolean.TRUE;
+                    holder.bookmarkImageView.setImageResource(R.drawable.bookmark_checked);
+                }
+                else {
+                    holder.isClicked = Boolean.FALSE;
+                    holder.bookmarkImageView.setImageResource(R.drawable.bookmark_unchecked);
+                }
+            }
+        });
     }
 
     @Override
