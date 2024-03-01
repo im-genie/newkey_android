@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -30,8 +31,9 @@ public class news1_activity extends AppCompatActivity {
 
         viewPagerHotNews = findViewById(R.id.viewPagerHotNews);
         viewPagerNews = findViewById(R.id.viewPagerNews);
-        recyclerView = findViewById(R.id.news1_hot_recyclerview); // 가로 RecyclerView
+        recyclerView = findViewById(R.id.news1_hot_recyclerview);
         tabLayout = findViewById(R.id.toolbar);
+
 
         viewPagerNews.setAdapter(new news1_fragment_adapter(this));
         viewPagerHotNews.setAdapter(new news1_hot_fragment_adapter(this));
