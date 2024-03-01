@@ -32,7 +32,6 @@ public class MypageActivity extends Activity {
             textView.setText(userIdFromIntent); // 인텐트로부터 받은 값을 사용하여 TextView를 업데이트
         }
 
-
         ImageView changeProfile = findViewById(R.id.changeProfile);
         ImageView changeProfileId = findViewById(R.id.changeProfileId);
         Button viewHistory = findViewById(R.id.btn_history);

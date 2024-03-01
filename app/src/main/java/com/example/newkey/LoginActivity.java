@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         email2=findViewById(R.id.email2);
         pw=findViewById(R.id.pw);
         pwFind=findViewById(R.id.pwFind);
-        queue= Volley.newRequestQueue(this);
+        queue=Volley.newRequestQueue(this);
         sharedPreferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         String url="http://13.124.230.98:8080/user/login";
 

@@ -39,7 +39,7 @@ public class NicknameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nickname);
 
         nickname=findViewById(R.id.nickname);
-        queue= Volley.newRequestQueue(this);
+        queue=Volley.newRequestQueue(this);
         next=findViewById(R.id.next);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
 
@@ -61,6 +61,7 @@ public class NicknameActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                //회원가입
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url.toString(), jsonRequest, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -71,17 +72,13 @@ public class NicknameActivity extends AppCompatActivity {
                             boolean isSuccess = response.getBoolean("isSuccess");
 
                             if (isSuccess) {
-                                Intent intent = new Intent(getApplicationContext(), LogoActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), CatActivity1.class);
                                 startActivity(intent);
-                                Toast.makeText(NicknameActivity.this, "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 next.setClickable(false);
-                                Log.d("test", "회원가입 실패");
-                                Toast.makeText(NicknameActivity.this, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(NicknameActivity.this, "JSON 파싱 오류입니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {

@@ -28,4 +28,8 @@
     <color name="gray_100">#F4F4F4</color>
     <color name="grao_100_30">#4DF4F4F4</color>
     <color name="gray_000_40">#66000000</color>
+    <color name="green_main">#5FB0B7</color>
+    <color name="back">#393E3F</color>
+    <color name="back2">#050B2C</color>
+    <color name="blue_main">#6C91BF</color>
 </resources>

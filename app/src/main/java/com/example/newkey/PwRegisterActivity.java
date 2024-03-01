@@ -38,7 +38,7 @@ public class PwRegisterActivity extends AppCompatActivity {
         pwSameText.setText("비밀번호가 일치하지 않습니다");
         next=findViewById(R.id.next);
         next.setClickable(false);
-        queue= Volley.newRequestQueue(this);
+        queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
 
         pw.addTextChangedListener(new TextWatcher() {
