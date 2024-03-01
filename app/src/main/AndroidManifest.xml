@@ -16,8 +16,22 @@
 
         <activity
             android:name=".news1_activity"
-            android:exported="false"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 <!--        <activity android:name=".news1_activity"/>-->
         <activity android:name=".news2_politics"/>
         <activity android:name=".news2_economy"/>
@@ -28,15 +42,7 @@
         <activity android:name=".news2_opinion"/>
         <activity android:name=".news2_sports"/>
         <activity android:name=".news3_activity"/>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"/>
         <activity
             android:name=".NotificationActivity"
             android:exported="false" />
@@ -47,34 +53,13 @@
             android:name=".NewsActivity"
             android:exported="false" />
         <activity
+            android:name=".MypageActivity"
+            android:exported="false" />
+        <activity
             android:name=".KeywordActivity"
             android:exported="false" />
         <activity
             android:name=".RecommendationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LogoutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChangePasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ViewHistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChooseTopicsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ViewScrapActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChangeIdActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MypageActivity"
             android:exported="false" />
 
     </application>
