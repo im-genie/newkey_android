@@ -14,15 +14,6 @@
         android:theme="@style/Theme.NewKey"
         tools:targetApi="31">
 
-<!--        <activity-->
-<!--            android:name=".news1_activity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -42,7 +33,6 @@
         <activity android:name=".news2_opinion"/>
         <activity android:name=".news2_sports"/>
         <activity android:name=".news3_activity"/>
-<!--        <activity android:name=".MainActivity"/>-->
         <activity
             android:name=".NotificationActivity"
             android:exported="false" />
