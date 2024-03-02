@@ -33,7 +33,7 @@ public class news3_activity extends AppCompatActivity {
     TextView Title,Content,Date;
     ImageView Img;
     RequestQueue queue;
-    String fiveWOneHUrl="http://54.180.83.28:5000/5w1h";
+    String fiveWOneHUrl="http://15.164.210.22:5000/5w1h";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

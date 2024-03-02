@@ -77,7 +77,7 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
-                String flask_url = "http://54.180.83.28:5000/click";
+                String flask_url = "http://15.164.210.22:5000/click";
 
                 final StringRequest request=new StringRequest(Request.Method.POST, flask_url, new Response.Listener<String>() {
                     @Override

@@ -36,7 +36,7 @@ public class news1_opinion_hot extends Fragment {
 
         itemList = new ArrayList<>();
         queue= Volley.newRequestQueue(view.getContext());
-        String url = "http://54.180.83.28:5000/opinion";
+        String url = "http://15.164.210.22:5000/opinion";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -66,7 +66,7 @@ public class news1_opinion_hot extends Fragment {
                         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
                         RecyclerView recyclerView=view.findViewById(R.id.news1_opinion_hot_recyclerview);
                         recyclerView.setLayoutManager(layoutManager);
-                        news1_adapter adapter=new news1_adapter(itemList);
+                        news1_hot_news_adapter adapter=new news1_hot_news_adapter(itemList);
                         recyclerView.setAdapter(adapter);
                     }
                 } catch (Exception e) {

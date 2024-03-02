@@ -84,7 +84,7 @@ public class CatActivity2 extends AppCompatActivity {
 
         Button nextButton=findViewById(R.id.nextButton);
 
-        String url="http://54.180.83.28:5000/register";
+        String url="http://15.164.210.22:5000/register";
 
         preferences=getSharedPreferences(preference, MODE_PRIVATE);
         String email=preferences.getString("email", null);
@@ -139,6 +139,11 @@ public class CatActivity2 extends AppCompatActivity {
                         return params;
                     }
                 };
+                request.setRetryPolicy(new DefaultRetryPolicy(
+                        1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                ));
 
                 request.setShouldCache(false);
                 queue.add(request);

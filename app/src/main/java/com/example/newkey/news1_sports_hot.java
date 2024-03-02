@@ -35,7 +35,7 @@ public class news1_sports_hot extends Fragment {
 
         itemList = new ArrayList<>();
         queue= Volley.newRequestQueue(view.getContext());
-        String url = "http://54.180.83.28:5000/sport";
+        String url = "http://15.164.210.22:5000/sport";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

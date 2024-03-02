@@ -36,7 +36,7 @@ public class news1_living_hot extends Fragment {
 
         itemList = new ArrayList<>();
         queue= Volley.newRequestQueue(view.getContext());
-        String url = "http://54.180.83.28:5000/life";
+        String url = "http://15.164.210.22:5000/life";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -57,7 +57,6 @@ public class news1_living_hot extends Fragment {
 
                         // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
                         news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key);
-                        Log.d("title!!",title);
                         itemList.add(newsData);
 
                         // 이후에 newsList를 사용하여 원하는 처리를 진행
@@ -65,7 +64,7 @@ public class news1_living_hot extends Fragment {
                         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
                         RecyclerView recyclerView=view.findViewById(R.id.news1_living_hot_recyclerview);
                         recyclerView.setLayoutManager(layoutManager);
-                        news1_adapter adapter=new news1_adapter(itemList);
+                        news1_hot_news_adapter adapter=new news1_hot_news_adapter(itemList);
                         recyclerView.setAdapter(adapter);
                     }
                 } catch (Exception e) {

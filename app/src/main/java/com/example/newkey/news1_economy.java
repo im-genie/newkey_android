@@ -33,7 +33,7 @@ public class news1_economy extends Fragment {
 
         itemList = new ArrayList<>();
         queue=Volley.newRequestQueue(view.getContext());
-        String url = "http://54.180.83.28:5000/economic";
+        String url = "http://15.164.210.22:5000/economic";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

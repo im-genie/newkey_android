@@ -43,7 +43,7 @@ public class news2_it extends AppCompatActivity {
 
         itemList = new ArrayList<>();
         queue= Volley.newRequestQueue(getApplicationContext());
-        String url = "http://54.180.83.28:5000/it";
+        String url = "http://15.164.210.22:5000/it";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
