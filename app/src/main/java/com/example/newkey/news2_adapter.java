@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import java.util.List;
@@ -17,29 +18,36 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
         this.newsItems = newsItems;
     }
 
+    @NonNull
     @Override
-    public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NewsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news2_recyclerview, parent, false);
         return new NewsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(NewsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
         news2_item newsItem = newsItems.get(position);
         holder.newsTitle.setText(newsItem.getTitle());
         holder.newsPublisher.setText(newsItem.getPublisher());
         holder.newsTime.setText(newsItem.getTime());
-        // Glide로 이미지 로드
         Glide.with(holder.itemView.getContext())
                 .load(newsItem.getImg())
                 .into(holder.newsImage);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // news3_activity로 이동하는 Intent
-                Intent intent = new Intent(v.getContext(), news3_activity.class);
-                v.getContext().startActivity(intent);
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), news3_activity.class);
+            v.getContext().startActivity(intent);
+        });
+
+        holder.newsBookmark.setOnClickListener(v -> {
+            boolean isChecked = holder.newsBookmark.getTag() != null && (boolean) holder.newsBookmark.getTag();
+            if (!isChecked) {
+                holder.newsBookmark.setImageResource(R.drawable.bookmark_checked);
+                holder.newsBookmark.setTag(true);
+            } else {
+                holder.newsBookmark.setImageResource(R.drawable.bookmark_unchecked);
+                holder.newsBookmark.setTag(false);
             }
         });
     }
@@ -50,8 +58,8 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
     }
 
     public static class NewsViewHolder extends RecyclerView.ViewHolder {
-        public TextView newsTitle, newsPublisher, newsTime;
-        public ImageView newsImage;
+        TextView newsTitle, newsPublisher, newsTime;
+        ImageView newsImage, newsBookmark;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
@@ -59,6 +67,8 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
             newsPublisher = itemView.findViewById(R.id.news2_item_name);
             newsTime = itemView.findViewById(R.id.news2_item_time);
             newsImage = itemView.findViewById(R.id.news2_item_image);
+            newsBookmark = itemView.findViewById(R.id.news2_bookmark);
+            newsBookmark.setTag(false);
         }
     }
 }

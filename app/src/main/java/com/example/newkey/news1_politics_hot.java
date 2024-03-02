@@ -31,6 +31,7 @@ public class news1_politics_hot extends Fragment {
         newsItems.add(new news1_item("제목 2", "", "", "https://image.jtbcplus.kr/data/contents/jam_photo/202303/16/997f7f88-8b64-4f68-83b8-be098fb18b17.jpg"));
         newsItems.add(new news1_item("제목 3", "", "", "https://image.jtbcplus.kr/data/contents/jam_photo/202303/16/997f7f88-8b64-4f68-83b8-be098fb18b17.jpg"));
 
+
         adapter = new news1_hot_news_adapter(newsItems);
         recyclerView.setAdapter(adapter);
 

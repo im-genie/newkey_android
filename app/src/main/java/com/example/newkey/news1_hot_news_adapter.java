@@ -38,6 +38,20 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
                 v.getContext().startActivity(intent);
             }
         });
+
+        holder.newsBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isChecked = holder.newsBookmark.getTag() != null && (boolean) holder.newsBookmark.getTag();
+                if (!isChecked) {
+                    holder.newsBookmark.setImageResource(R.drawable.bookmark_checked);
+                    holder.newsBookmark.setTag(true);
+                } else {
+                    holder.newsBookmark.setImageResource(R.drawable.bookmark_unchecked);
+                    holder.newsBookmark.setTag(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -48,11 +62,14 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
     public static class HotNewsViewHolder extends RecyclerView.ViewHolder {
         public ImageView newsImage;
         public TextView newsTitle;
+        public ImageView newsBookmark;
 
         public HotNewsViewHolder(View itemView) {
             super(itemView);
             newsImage = itemView.findViewById(R.id.news1_hot_item);
             newsTitle = itemView.findViewById(R.id.news1_hot_item_title);
+            newsBookmark = itemView.findViewById(R.id.news1_bookmark);
+            newsBookmark.setTag(false);
         }
     }
 }
