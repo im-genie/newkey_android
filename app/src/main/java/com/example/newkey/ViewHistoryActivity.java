@@ -37,7 +37,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
-    String url="http://54.180.83.28:5000/viewNews";
+    String url="http://15.164.210.22:5000/viewNews";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

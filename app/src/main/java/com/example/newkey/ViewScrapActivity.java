@@ -48,7 +48,7 @@ public class ViewScrapActivity extends AppCompatActivity {
         queue=Volley.newRequestQueue(getApplicationContext());
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
-        String url="http://54.180.83.28:5000/viewNews";
+        String url="http://15.164.210.22:5000/viewNews";
 
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
