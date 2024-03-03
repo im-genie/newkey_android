@@ -135,6 +135,7 @@ public class CatActivity2 extends AppCompatActivity {
                         params.put("user_id", email); // 로그인 아이디로 바꾸기
                         params.put("click_news", "[]");
                         params.put("select_cat", catList.toString()); // 사용자가 선택한 선호 카테고리로 바꾸기
+                        params.put("stored_news", "[]");
 
                         return params;
                     }
