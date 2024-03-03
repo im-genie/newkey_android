@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@color/gray_500_40_100">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="12dp"
+    android:layout_marginRight="8dp">
     <ImageView
         android:id="@+id/news1_hot_item"
         android:layout_width="220dp"
         android:layout_height="132dp"
         android:src="@drawable/test1"
-        android:scaleType="centerCrop"
-        android:layout_marginRight="8dp"/>
+        android:scaleType="centerCrop" />
     <TextView
         android:id="@+id/news1_hot_item_title"
         android:layout_width="wrap_content"
@@ -21,7 +21,14 @@
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_gravity="center"
         android:fontFamily="@font/pretendardregular"
-        android:textSize="12dp"/>
-</RelativeLayout>
+        android:textSize="12dp"
+        android:maxLines="2"/>
+    <ImageView
+        android:id="@+id/news1_bookmark"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/bookmark_unchecked"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="184dp"/>
+</androidx.cardview.widget.CardView>

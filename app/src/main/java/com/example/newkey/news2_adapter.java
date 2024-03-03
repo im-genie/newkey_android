@@ -105,6 +105,89 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
                 queue.add(request);
             }
         });
+
+        holder.bookMark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.isClicked == Boolean.FALSE) {
+                    holder.isClicked = Boolean.TRUE;
+                    holder.bookMark.setImageResource(R.drawable.bookmark_checked);
+
+                    // 사용자 저장 기사
+                    String store_url = "http://15.164.210.22:5000/store";
+
+                    final StringRequest request = new StringRequest(Request.Method.POST, store_url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //클릭 시 기사 자세히 보여주기
+                            Log.d("res", response);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println(error);
+                        }
+                    }) {
+                        //@Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("user_id", email);
+                            params.put("stored_news", newsItem.getId());
+
+                            return params;
+                        }
+                    };
+
+                    request.setRetryPolicy(new DefaultRetryPolicy(
+                            1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                    ));
+
+                    request.setShouldCache(false);
+                    queue.add(request);
+                } else {
+                    holder.isClicked = Boolean.FALSE;
+                    holder.bookMark.setImageResource(R.drawable.bookmark_unchecked);
+
+                    // 사용자 저장 취소 기사
+                    String unstore_url = "http://3.36.74.186:5000/unstore";
+
+                    final StringRequest request = new StringRequest(Request.Method.POST, unstore_url, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //클릭 시 기사 자세히 보여주기
+                            Log.d("res", response);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            System.out.println(error);
+                        }
+                    }) {
+                        //@Nullable
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("user_id", email);
+                            params.put("stored_news", newsItem.getId());
+
+                            return params;
+                        }
+                    };
+
+                    request.setRetryPolicy(new DefaultRetryPolicy(
+                            1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                    ));
+
+                    request.setShouldCache(false);
+                    queue.add(request);
+                }
+            }
+        });
     }
 
     @Override
@@ -114,7 +197,8 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
 
     public static class NewsViewHolder extends RecyclerView.ViewHolder {
         public TextView newsTitle, newsPublisher, newsTime;
-        public ImageView newsImage;
+        public ImageView newsImage, bookMark;
+        public Boolean isClicked = Boolean.FALSE;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
@@ -122,6 +206,7 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
             newsPublisher = itemView.findViewById(R.id.news2_item_name);
             newsTime = itemView.findViewById(R.id.news2_item_time);
             newsImage = itemView.findViewById(R.id.news2_item_image);
+            bookMark=itemView.findViewById(R.id.news2_bookmark);
         }
         public void setItem(news1_item item){
             newsTitle.setText(item.getTitle());
