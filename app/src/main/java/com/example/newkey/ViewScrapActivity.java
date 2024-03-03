@@ -48,7 +48,7 @@ public class ViewScrapActivity extends AppCompatActivity {
         queue=Volley.newRequestQueue(getApplicationContext());
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
-        String url="http://15.164.210.22:5000/viewNews";
+        String url="http://3.36.74.186:5000/storedNews";
 
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -83,7 +83,7 @@ public class ViewScrapActivity extends AppCompatActivity {
                         LinearLayoutManager layoutManager=new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
                         RecyclerView recyclerView=findViewById(R.id.myNewsRecyclerView);
                         recyclerView.setLayoutManager(layoutManager);
-                        NewsAdapter adapter=new NewsAdapter(itemList);
+                        news1_adapter adapter=new news1_adapter(itemList);
                         recyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -93,7 +93,7 @@ public class ViewScrapActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
+                Log.d("storeViewError",error.toString());
             }
         }){
             //@Nullable

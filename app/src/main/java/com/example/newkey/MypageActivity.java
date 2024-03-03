@@ -1,6 +1,7 @@
 package com.example.newkey;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MypageActivity extends Activity {
+
+    private SharedPreferences preferences;
+    public static final String preference = "newkey";
+    Long userIdx;
+    String email, name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,19 +25,12 @@ public class MypageActivity extends Activity {
         // TextView 초기화
         TextView textView = findViewById(R.id.profileId); // activity_main.xml 내의 TextView ID가 이와 일치해야 합니다.
 
-        // SharedPreferences에서 사용자 ID 읽기
-        SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        String userId = preferences.getString("UserInput", "Default ID");
+        preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
+        userIdx=preferences.getLong("userIdx", 0);
+        email=preferences.getString("email", "");
 
         // TextView에 사용자 ID 표시
-        textView.setText(userId);
-
-        // 인텐트에서 사용자 ID를 받는 경우 (옵셔널: 인텐트를 사용하는 경우에만 필요)
-        Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("UserInput")) {
-            String userIdFromIntent = intent.getStringExtra("UserInput");
-            textView.setText(userIdFromIntent); // 인텐트로부터 받은 값을 사용하여 TextView를 업데이트
-        }
+        textView.setText(email);
 
         ImageView changeProfile = findViewById(R.id.changeProfile);
         ImageView changeProfileId = findViewById(R.id.changeProfileId);
@@ -83,7 +83,7 @@ public class MypageActivity extends Activity {
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, ChangePasswordActivity.class);
+                Intent intent = new Intent(MypageActivity.this, PwFindActivity1.class);
                 startActivity(intent);
             }
         });
@@ -91,8 +91,13 @@ public class MypageActivity extends Activity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, LogoutActivity.class);
+                Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
                 startActivity(intent);
+
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.remove("userIdx");
+                editor.remove("email");
+                editor.apply();
             }
         });
     }

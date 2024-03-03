@@ -37,7 +37,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
-    String url="http://15.164.210.22:5000/viewNews";
+    String url="http://3.36.74.186:5000/viewNews";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
         itemList = new ArrayList<>();
         queue=Volley.newRequestQueue(getApplicationContext());
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        email=preferences.getString("email", null);
+        email=preferences.getString("email", "");
+        Log.d("email test",email);
 
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -57,7 +58,6 @@ public class ViewHistoryActivity extends AppCompatActivity {
                 try {
                     jsonArray = new JSONArray(response);
                 } catch (JSONException e) {
-                    Log.d("v1",e.toString());
                     e.printStackTrace();
                 }
 
@@ -82,7 +82,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
                         LinearLayoutManager layoutManager=new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
                         RecyclerView recyclerView=findViewById(R.id.myNewsRecyclerView);
                         recyclerView.setLayoutManager(layoutManager);
-                        NewsAdapter adapter=new NewsAdapter(itemList);
+                        news1_adapter adapter=new news1_adapter(itemList);
                         recyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
                         Log.d("v2",e.toString());
