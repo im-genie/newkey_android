@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText email1,email2,pw;
     Button login,pwFind;
     RequestQueue queue;
-    SharedPreferences sharedPreferences;
+    SharedPreferences preferences;
     String email;
     public static final String preference = "newkey";
 
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         pw=findViewById(R.id.pw);
         pwFind=findViewById(R.id.pwFind);
         queue=Volley.newRequestQueue(this);
-        sharedPreferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
+        preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         String url="http://13.124.230.98:8080/user/login";
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +74,9 @@ public class LoginActivity extends AppCompatActivity {
                             if(result!=null) {
                                 userIdx = result.getLong("userIdx");
 
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                SharedPreferences.Editor editor = preferences.edit();
                                 editor.putLong("userIdx",userIdx);
+                                editor.putString("email",email);
                                 editor.commit();
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
