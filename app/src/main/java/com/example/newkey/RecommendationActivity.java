@@ -9,38 +9,83 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecommendationActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private RecommendationBigsizeAdapter recommendationAdapter;
-    private List<RecommendationItemBigsize> newsItems;
+    private List<news1_item> itemList;
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommendation);
 
-        // 추천 list 구성
-        recyclerView = findViewById(R.id.recommendation_recyclerview2);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        itemList = new ArrayList<>();
+        queue=Volley.newRequestQueue(getApplicationContext());
+        String url = "http://3.36.74.186:5000/economic";
 
-        newsItems = new ArrayList<>();
-        // newsItems.add(new NewsItem("제목", "언론사", "시간", "이미지 URL", "언론사 URL"));
-        newsItems = new ArrayList<>();
-        newsItems.add(new RecommendationItemBigsize("중국 메인뉴스 등장한 AI 앵커…\"표정, 몸짓, 억양 성공적 구현\"\n", "더 차이나", "어제", "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202402/14/a586f091-7a01-4a59-820a-7a065c761778.jpg", "https://img.joongang.co.kr/pubimg/northkorea/bn_china_gray.png"));
-        newsItems.add(new RecommendationItemBigsize("박성재 후보자, 절세 효과 누리면서 아내는 탈세 의혹 [뉴스AS]\n", "한겨례", "6시간 전", "https://flexible.img.hani.co.kr/flexible/normal/800/536/imgdb/original/2024/0214/20240214501487.jpg", "https://pds.saramin.co.kr/company/logo/202101/06/qmi8ti_f8zg-1kkvbkh_logo.jpg"));
-        newsItems.add(new RecommendationItemBigsize("'은퇴' 기보배 \"대한민국 양궁 선수로 산다는 건…\"\n", "연합뉴스 TV", "2시간 전", "https://yonhapnewstv-prod.s3.ap-northeast-2.amazonaws.com/article/AKR/20240214/AKR20240214141400641_01_i_P4.jpg", "https://r.yna.co.kr/global/home/v01/img/yonhapnews_logo_600x600_kr01.jpg"));
-        newsItems.add(new RecommendationItemBigsize("'은퇴' 기보배 \"대한민국 양궁 선수로 산다는 건…\"\n", "연합뉴스 TV", "2시간 전", "https://yonhapnewstv-prod.s3.ap-northeast-2.amazonaws.com/article/AKR/20240214/AKR20240214141400641_01_i_P4.jpg", "https://r.yna.co.kr/global/home/v01/img/yonhapnews_logo_600x600_kr01.jpg"));
-        newsItems.add(new RecommendationItemBigsize("'은퇴' 기보배 \"대한민국 양궁 선수로 산다는 건…\"\n", "연합뉴스 TV", "2시간 전", "https://yonhapnewstv-prod.s3.ap-northeast-2.amazonaws.com/article/AKR/20240214/AKR20240214141400641_01_i_P4.jpg", "https://r.yna.co.kr/global/home/v01/img/yonhapnews_logo_600x600_kr01.jpg"));
-        newsItems.add(new RecommendationItemBigsize("'은퇴' 기보배 \"대한민국 양궁 선수로 산다는 건…\"\n", "연합뉴스 TV", "2시간 전", "https://yonhapnewstv-prod.s3.ap-northeast-2.amazonaws.com/article/AKR/20240214/AKR20240214141400641_01_i_P4.jpg", "https://r.yna.co.kr/global/home/v01/img/yonhapnews_logo_600x600_kr01.jpg"));
-        newsItems.add(new RecommendationItemBigsize("'은퇴' 기보배 \"대한민국 양궁 선수로 산다는 건…\"\n", "연합뉴스 TV", "2시간 전", "https://yonhapnewstv-prod.s3.ap-northeast-2.amazonaws.com/article/AKR/20240214/AKR20240214141400641_01_i_P4.jpg", "https://r.yna.co.kr/global/home/v01/img/yonhapnews_logo_600x600_kr01.jpg"));
+        final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //s3에서 기사 받아와 배열에 저장
+                try {
+                    // 예시: 응답으로부터 필요한 데이터를 파싱하여 처리
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String id = jsonObject.getString("id");
+                        String title = jsonObject.getString("title");
+                        String content = jsonObject.getString("origin_content");
+                        String press = jsonObject.getString("media");
+                        String date = jsonObject.getString("date");
+                        String img = jsonObject.getString("img");
+                        String summary=jsonObject.getString("summary");
+                        String key=jsonObject.getString("key");
 
-        recommendationAdapter = new RecommendationBigsizeAdapter(newsItems);
-        recyclerView.setAdapter(recommendationAdapter);
+                        // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
+                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key);
+                        System.out.println(title);
+                        itemList.add(newsData);
+
+                        // 이후에 newsList를 사용하여 원하는 처리를 진행
+                        //Adapter
+                        LinearLayoutManager layoutManager=new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+                        RecyclerView recyclerView=findViewById(R.id.recommendation_recyclerview2);
+                        recyclerView.setLayoutManager(layoutManager);
+                        RecommendationBigsizeAdapter adapter=new RecommendationBigsizeAdapter(itemList);
+                        recyclerView.setAdapter(adapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error);
+            }
+        });
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        queue.add(request);
 
         // 뒤로가기 - Main Activity로 이동
         ImageView back_recommendation_to_main = findViewById(R.id.back_recommendation_to_main);
