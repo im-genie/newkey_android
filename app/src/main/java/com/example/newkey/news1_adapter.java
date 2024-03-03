@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHolder> {
+
     private List<news1_item> newsItems;
     RequestQueue queue;
     String email;
@@ -46,7 +47,7 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news1_recyclerview, parent, false);
         queue=Volley.newRequestQueue(view.getContext());
-        preferences=view.getContext().getSharedPreferences("newkey",  Context.MODE_PRIVATE);
+        preferences=view.getContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
 
         return new NewsViewHolder(view);
@@ -77,7 +78,7 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
-                String flask_url = "http://15.164.210.22:5000/click";
+                String flask_url = "http://3.36.74.186:5000/click";
 
                 final StringRequest request=new StringRequest(Request.Method.POST, flask_url, new Response.Listener<String>() {
                     @Override
@@ -88,7 +89,7 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println(error);
+                        Log.d("clickError",error.toString());
                     }
                 }){
                     //@Nullable

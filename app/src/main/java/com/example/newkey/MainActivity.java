@@ -5,12 +5,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private SharedPreferences preferences;
+    public static final String preference = "newkey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,5 +86,17 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment myFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_activity_framelayout1_linearlayout1, myFragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ImageView button_home = findViewById(R.id.button_home);
+        ImageView button_feed = findViewById(R.id.button_feed);
+        ImageView button_person = findViewById(R.id.button_person);
+
+        button_home.setImageResource(R.drawable.home_green);
+        button_feed.setImageResource(R.drawable.feed);
+        button_person.setImageResource(R.drawable.person);
     }
 }

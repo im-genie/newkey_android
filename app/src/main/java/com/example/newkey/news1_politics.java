@@ -34,7 +34,8 @@ public class news1_politics extends Fragment {
 
         itemList = new ArrayList<>();
         queue=Volley.newRequestQueue(view.getContext());
-        String url = "http://15.164.210.22:5000/politic";
+        //String url = "http://15.164.210.22:5000/politic";
+        String url = "https://2it4t5ehyk.execute-api.ap-northeast-2.amazonaws.com/default/CatNews";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
