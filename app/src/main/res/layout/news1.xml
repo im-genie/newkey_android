@@ -9,17 +9,16 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <androidx.core.widget.NestedScrollView
                 android:id="@+id/news1_scroll"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fillViewport="true">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:descendantFocusability="blocksDescendants" >
+                    android:layout_height="wrap_content">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="112dp"
@@ -164,13 +163,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="4dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="11dp"
                         android:background="@color/gray_500_40_100" />
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/news1_recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"/>
                     <androidx.viewpager2.widget.ViewPager2
