@@ -34,7 +34,6 @@ public class news1_activity extends AppCompatActivity {
         recyclerView = findViewById(R.id.news1_hot_recyclerview);
         tabLayout = findViewById(R.id.toolbar);
 
-
         viewPagerNews.setAdapter(new news1_fragment_adapter(this));
         viewPagerHotNews.setAdapter(new news1_hot_fragment_adapter(this));
 
