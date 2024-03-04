@@ -2,7 +2,9 @@ package com.example.newkey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,7 +38,7 @@ public class news1_activity extends AppCompatActivity {
         recyclerView = findViewById(R.id.news1_hot_recyclerview);
         recyclerView_vertical = findViewById(R.id.news1_recyclerview);
 
-        recyclerView_vertical.setNestedScrollingEnabled(false);
+        recyclerView_vertical.setNestedScrollingEnabled(false); //세로 스크롤 막기
 
         tabLayout = findViewById(R.id.toolbar);
 
@@ -189,7 +191,7 @@ public class news1_activity extends AppCompatActivity {
     private void scrollToTopOfNestedScrollView() {
         NestedScrollView nestedScrollView = findViewById(R.id.news1_scroll);
         if (nestedScrollView != null) {
-            nestedScrollView.smoothScrollTo(0, 0);  // NestedScrollView의 스크롤 위치를 맨 위로 설정
+            nestedScrollView.scrollTo(0, 0);  // NestedScrollView의 스크롤 위치를 맨 위로 설정
         }
     }
 }
