@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -20,6 +21,7 @@ public class news1_activity extends AppCompatActivity {
     private ViewPager2 viewPagerHotNews; // HOT 뉴스를 위한 ViewPager2
     private TabLayout tabLayout;
     private RecyclerView recyclerView; // 가로 RecyclerView
+    private RecyclerView recyclerView_vertical; //세로 Recyclerview
 
     private TextView news1Information1;
     private ImageView news1Information2;
@@ -32,6 +34,10 @@ public class news1_activity extends AppCompatActivity {
         viewPagerHotNews = findViewById(R.id.viewPagerHotNews);
         viewPagerNews = findViewById(R.id.viewPagerNews);
         recyclerView = findViewById(R.id.news1_hot_recyclerview);
+        recyclerView_vertical = findViewById(R.id.news1_recyclerview);
+
+        recyclerView_vertical.setNestedScrollingEnabled(false);
+
         tabLayout = findViewById(R.id.toolbar);
 
         viewPagerNews.setAdapter(new news1_fragment_adapter(this));
@@ -53,6 +59,8 @@ public class news1_activity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 tabLayout.selectTab(tabLayout.getTabAt(position));
+
+                scrollToTopOfNestedScrollView(); //viewpager 동작할 때 마다 맨 위로 화면 옮기기
             }
         });
 
@@ -100,7 +108,6 @@ public class news1_activity extends AppCompatActivity {
         ImageView button_home = findViewById(R.id.button_home);
         ImageView button_feed = findViewById(R.id.button_feed);
         ImageView button_person = findViewById(R.id.button_person);
-
 
 
         // 네비게이션 바: Home
@@ -174,7 +181,15 @@ public class news1_activity extends AppCompatActivity {
                 return v -> startActivity(new Intent(this, news2_sports.class));
             default:
                 // 기본적으로 아무 동작도 하지 않는 리스너 반환
-                return v -> {};
+                return v -> {
+                };
+        }
+    }
+
+    private void scrollToTopOfNestedScrollView() {
+        NestedScrollView nestedScrollView = findViewById(R.id.news1_scroll);
+        if (nestedScrollView != null) {
+            nestedScrollView.smoothScrollTo(0, 0);  // NestedScrollView의 스크롤 위치를 맨 위로 설정
         }
     }
 }

@@ -28,6 +28,29 @@ public class news1_it extends Fragment {
 
         itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
         itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        itemList.add(new news1_item("it 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
+        itemList.add(new news1_item("it 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+
 
         adapter = new news1_adapter(itemList);
         recyclerView.setAdapter(adapter);
