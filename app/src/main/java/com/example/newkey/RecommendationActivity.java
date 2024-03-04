@@ -35,7 +35,7 @@ public class RecommendationActivity extends AppCompatActivity {
 
         itemList = new ArrayList<>();
         queue=Volley.newRequestQueue(getApplicationContext());
-        String url = "http://3.36.74.186:5000/economic";
+        String url = "http://3.36.74.186:5000/economic"; //recommend로 변경하기
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

@@ -1,6 +1,7 @@
 package com.example.newkey;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +30,7 @@ import java.util.List;
 import android.widget.PopupWindow;
 import android.view.ViewGroup.LayoutParams;
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -36,6 +38,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -46,7 +49,10 @@ public class HomeFragment extends Fragment {
 
     private List<news1_item> recommendList;
     private boolean isOpened = false;
-    RequestQueue recommendQueue, hotQueue;
+    RequestQueue recommendQueue, hotQueue, nameQueue;
+    private SharedPreferences preferences;
+    public static final String preference = "newkey";
+    TextView userName,name;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +67,63 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        preferences=view.getContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
+        String email=preferences.getString("email", null);
+        userName=view.findViewById(R.id.userName);
+        name=view.findViewById(R.id.name);
+
+        StringBuilder nameUrl = new StringBuilder();
+        nameUrl.append("http://13.124.230.98:8080/user/info").append("?email=").append(email);
+        nameQueue=Volley.newRequestQueue(view.getContext());
+
+        //사용자 프로필,이름 가져오기
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, nameUrl.toString(), jsonRequest, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("success", response.toString());
+                JSONObject result = null;
+
+                try {
+                    result = response.getJSONObject("result");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if(result!=null) {
+                        userName.setText(result.getString("name"));
+                        name.setText("뉴키는 "+result.getString("name")+"님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?");
+                    }
+                    else{
+                        Toast.makeText(getContext(), "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+                Log.d("test", "Mypage error: " + error.toString());
+            }
+        });
+
+        //이 부분에 추가
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                100000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+        request.setShouldCache(false);
+        nameQueue.add(request);
+
 
         // 추천뉴스
         recommendList = new ArrayList<>();

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.io.UnsupportedEncodingException;
 
 public class EmailRegisterActivity2 extends AppCompatActivity {
     EditText code;
-    Button codeCheck,next;
+    Button codeCheck;
+    private ImageView next;
     TextView codeRightText;
     private StringBuilder url;
     private SharedPreferences preferences;
@@ -116,6 +118,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                 request.setRetryPolicy(new DefaultRetryPolicy(100000000,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
                 queue.add(request);
             }
         });

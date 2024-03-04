@@ -15,18 +15,6 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
-
-        <Button
-            android:id="@+id/inputId"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="249dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/rounded_corner_15"
-            tools:layout_editor_absoluteX="41dp"
-            tools:layout_editor_absoluteY="249dp" />
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="350dp"
@@ -52,9 +40,9 @@
             android:ems="10"
             android:hint="뉴키123"
             android:inputType="text"
-            android:textColor="@color/gray_100"
-            android:textColorHint="@color/gray_400"
-            />
+            android:textColor="@color/gray_500"
+            android:textColorHint="@color/gray_300"
+            android:background="@drawable/rounded_corner_15"/>
 
         <ImageButton
             android:id="@+id/backFromProfile"

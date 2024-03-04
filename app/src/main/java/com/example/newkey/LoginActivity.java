@@ -93,18 +93,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle error
+                        Toast.makeText(getApplicationContext(), "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                         Log.e("test", "Login error: " + error.toString());
-                        if (error.networkResponse != null && error.networkResponse.data != null) {
-                            try {
-                                String errorResponse = new String(error.networkResponse.data, "utf-8");
-                                JSONObject jsonObject = new JSONObject(errorResponse);
-                                String errorMessage = jsonObject.getString("errorMessage");
-                                // Handle BaseException
-                                Log.e("test", "BaseException: " + errorMessage);
-                            } catch (UnsupportedEncodingException | JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
                     }
                 });
 

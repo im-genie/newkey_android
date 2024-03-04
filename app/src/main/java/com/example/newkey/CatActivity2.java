@@ -84,7 +84,7 @@ public class CatActivity2 extends AppCompatActivity {
 
         Button nextButton=findViewById(R.id.nextButton);
 
-        String url="http://15.164.210.22:5000/register";
+        String url="http://3.36.74.186:5000/register";
 
         preferences=getSharedPreferences(preference, MODE_PRIVATE);
         String email=preferences.getString("email", null);

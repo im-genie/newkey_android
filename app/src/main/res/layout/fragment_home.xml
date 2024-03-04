@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="은경"
@@ -55,18 +56,20 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="뉴키는 은경님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?"
-                    android:fontFamily="@font/pretendardregular"
-                    android:textSize="12dp"
-                    android:textColor="@color/gray_100"
-                    android:lineSpacingMultiplier="1.2"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginBottom="19dp">
-                </TextView>
+                    android:layout_marginBottom="19dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="뉴키는 은경님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?"
+                    android:textColor="@color/gray_100"
+                    android:textSize="12dp"></TextView>
+
                 <LinearLayout
                     android:id="@+id/layout_goto_mypage"
                     android:layout_width="wrap_content"

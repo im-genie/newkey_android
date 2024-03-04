@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.io.UnsupportedEncodingException;
 
 public class EmailRegisterActivity1 extends AppCompatActivity {
     private EditText email1,email2;
-    private Button emailDpCheck,next;
+    private Button emailDpCheck;
+    private ImageView next;
     private TextView emailDpCheckText;
     private String email;
     private StringBuilder url;

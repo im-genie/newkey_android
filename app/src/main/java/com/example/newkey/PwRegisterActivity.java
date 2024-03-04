@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -19,7 +20,7 @@ import com.android.volley.toolbox.Volley;
 public class PwRegisterActivity extends AppCompatActivity {
     EditText pw,pwCheck;
     TextView pwRightText,pwSameText;
-    Button next;
+    ImageView next;
     private StringBuilder url;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
