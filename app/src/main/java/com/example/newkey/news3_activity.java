@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import android.transition.TransitionManager;
+import android.widget.TextView;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class news3_activity extends AppCompatActivity {
 
     private ImageView news3back, news3SummaryArrow, news3Scrap;
+    private TextView news3SummaryText;
     private FrameLayout summaryButton;
     private CardView summaryCardView;
     private boolean isBookmarked = false; // Tracks whether the news is bookmarked
@@ -27,7 +30,8 @@ public class news3_activity extends AppCompatActivity {
 
         news3back = findViewById(R.id.news3_back);
         news3SummaryArrow = findViewById(R.id.news3_summary_arrow);
-        news3Scrap = findViewById(R.id.news3_scrap); // Initialize the ImageView
+        news3SummaryText=findViewById(R.id.news3_summary_text);
+        news3Scrap = findViewById(R.id.news3_scrap);
         summaryButton = findViewById(R.id.new3_summary);
         summaryCardView = findViewById(R.id.summary_cardview);
 
@@ -48,13 +52,16 @@ public class news3_activity extends AppCompatActivity {
                     summaryCardView.setVisibility(View.GONE);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_up);
+                    news3SummaryText.setTextColor(getResources().getColor(R.color.white)); // 글씨색 변경 추가
                 } else {
                     summaryCardView.setVisibility(View.VISIBLE);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_down);
+                    news3SummaryText.setTextColor(getResources().getColor(R.color.gray_600)); // 글씨색 원래대로 변경 추가
                 }
             }
         });
+
 
         // Set onClickListener for news3Scrap to toggle the bookmark state
         news3Scrap.setOnClickListener(new View.OnClickListener() {

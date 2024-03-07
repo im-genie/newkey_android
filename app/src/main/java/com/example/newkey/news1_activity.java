@@ -26,7 +26,7 @@ public class news1_activity extends AppCompatActivity {
     private RecyclerView recyclerView_vertical; //세로 Recyclerview
 
     private TextView news1Information1;
-    private ImageView news1Information2;
+    private ImageView news1Information2, news1Logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,8 @@ public class news1_activity extends AppCompatActivity {
 
         news1Information1.setOnClickListener(getMoreClickListener(tabLayout.getSelectedTabPosition()));
         news1Information2.setOnClickListener(getMoreClickListener(tabLayout.getSelectedTabPosition()));
+
+        news1Logo=findViewById(R.id.news1_logo);
 
         new TabLayoutMediator(tabLayout, viewPagerNews, (tab, position) -> {
             String[] tabTitles = {"정치", "경제", "사회", "생활", "세계", "IT", "오피니언", "스포츠"};
@@ -106,6 +108,14 @@ public class news1_activity extends AppCompatActivity {
             }
         });
 
+        news1Logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(news1_activity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         ImageView button_home = findViewById(R.id.button_home);
         ImageView button_feed = findViewById(R.id.button_feed);
@@ -113,7 +123,6 @@ public class news1_activity extends AppCompatActivity {
 
 
         // 네비게이션 바: Home
-
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
