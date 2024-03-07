@@ -26,7 +26,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
         LinearLayout backFromTopic = findViewById(R.id.back_from_topic);
 
 
-        recyclerView = findViewById(R.id.categoriesListView);
+        recyclerView = findViewById(R.id.categoriesRecyclerView);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
