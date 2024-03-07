@@ -42,7 +42,7 @@ public class news1_activity extends AppCompatActivity {
         news1Information2.setOnClickListener(getMoreClickListener(tabLayout.getSelectedTabPosition()));
 
         new TabLayoutMediator(tabLayout, viewPagerNews, (tab, position) -> {
-            String[] tabTitles = {"정치", "경제", "사회", "생활", "세계", "IT", "오피니언", "스포츠"};
+            String[] tabTitles = {"정치", "경제", "사회","연예", "생활", "세계", "IT", "오피니언", "스포츠"};
             tab.setText(tabTitles[position]);
         }).attach();
 
@@ -113,15 +113,17 @@ public class news1_activity extends AppCompatActivity {
                 return v -> startActivity(new Intent(this, news2_economy.class));
             case 2: // 사회
                 return v -> startActivity(new Intent(this, news2_society.class));
-            case 3: // 생활
+            case 3: // 연예
+                return v -> startActivity(new Intent(this, news2_entertainment.class));
+            case 4: // 생활
                 return v -> startActivity(new Intent(this, news2_living.class));
-            case 4: // 세계
+            case 5: // 세계
                 return v -> startActivity(new Intent(this, news2_world.class));
-            case 5: // IT
+            case 6: // IT
                 return v -> startActivity(new Intent(this, news2_it.class));
-            case 6: // 오피니언
+            case 7: // 오피니언
                 return v -> startActivity(new Intent(this, news2_opinion.class));
-            case 7: // 스포츠
+            case 8: // 스포츠
                 return v -> startActivity(new Intent(this, news2_sports.class));
             default:
                 // 기본적으로 아무 동작도 하지 않는 리스너 반환
