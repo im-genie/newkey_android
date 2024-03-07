@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -41,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ImageView main_activity_linearlayout1_imageview1=findViewById(R.id.main_activity_linearlayout1_imageview1);
+
+        main_activity_linearlayout1_imageview1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
         ImageView button_home = findViewById(R.id.button_home);
         ImageView button_feed = findViewById(R.id.button_feed);
         ImageView button_person = findViewById(R.id.button_person);
@@ -57,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 button_person.setImageResource(R.drawable.person);
             }
         });
+
         // 네비게이션 바: news
         button_feed.setOnClickListener(new View.OnClickListener() {
             @Override
