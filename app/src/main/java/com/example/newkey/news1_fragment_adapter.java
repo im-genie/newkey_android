@@ -21,14 +21,16 @@ public class news1_fragment_adapter extends FragmentStateAdapter {
             case 2:
                 return new news1_society();
             case 3:
-                return new news1_living();
+                return new news1_entertainment();
             case 4:
-                return new news1_world();
+                return new news1_living();
             case 5:
-                return new news1_it();
+                return new news1_world();
             case 6:
-                return new news1_opinion();
+                return new news1_it();
             case 7:
+                return new news1_opinion();
+            case 8:
                 return new news1_sports();
             default:
                 return new Fragment(); // 기본값으로 빈 Fragment 반환
@@ -37,6 +39,6 @@ public class news1_fragment_adapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 8; // 탭의 총 개수
+        return 9; // 탭의 총 개수
     }
 }

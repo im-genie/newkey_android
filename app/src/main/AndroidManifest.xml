@@ -27,6 +27,7 @@
         <activity android:name=".news2_politics"/>
         <activity android:name=".news2_economy"/>
         <activity android:name=".news2_society"/>
+        <activity android:name=".news2_entertainment"/>
         <activity android:name=".news2_living"/>
         <activity android:name=".news2_world"/>
         <activity android:name=".news2_it"/>
@@ -72,10 +73,6 @@
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
-        <activity
-            android:name=".MypageActivity"
-            android:exported="false" />
-
     </application>
 
 </manifest>
