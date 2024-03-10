@@ -38,13 +38,13 @@ public class news3_activity extends AppCompatActivity {
     private ImageView news3back, news3SummaryArrow;
     private FrameLayout summaryButton;
     private CardView summaryCardView;
-    TextView Title,Content,Date;
+    TextView Title,Content,Date,Reporter,Publisher;
     ImageView Img,bookMark;
     RequestQueue queue;
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
-    String fiveWOneHUrl="http://15.164.210.22:5000/5w1h";
+    String fiveWOneHUrl="http://15.164.199.177:5000/5w1h";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +60,8 @@ public class news3_activity extends AppCompatActivity {
         Title=findViewById(R.id.title);
         Content=findViewById(R.id.content);
         Date=findViewById(R.id.date);
+        Reporter=findViewById(R.id.reporter);
+        Publisher=findViewById(R.id.publisher);
         Img=findViewById(R.id.newsImg);
         queue=Volley.newRequestQueue(getApplicationContext());
 
@@ -67,12 +69,16 @@ public class news3_activity extends AppCompatActivity {
         String title = getIntent().getStringExtra("title");
         String content = getIntent().getStringExtra("content");
         String date = getIntent().getStringExtra("date");
+        String publisher = getIntent().getStringExtra("publisher");
         String summary = getIntent().getStringExtra("summary");
         String imgUrl = getIntent().getStringExtra("img");
+        String reporter = getIntent().getStringExtra("reporter");
 
         Title.setText(title);
         Content.setText(content);
         Date.setText(date);
+        Reporter.setText(reporter+" 기자");
+        Publisher.setText(publisher);
 
         preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
@@ -86,7 +92,7 @@ public class news3_activity extends AppCompatActivity {
                     bookMark.setTag(true);
 
                     // 사용자 저장 기사
-                    String store_url = "http://3.36.74.186:5000/store";
+                    String store_url = "http://15.164.199.177:5000/store";
 
                     final StringRequest request=new StringRequest(Request.Method.POST, store_url, new Response.Listener<String>() {
                         @Override
@@ -123,7 +129,7 @@ public class news3_activity extends AppCompatActivity {
                     bookMark.setTag(false);
 
                     // 사용자 저장 취소 기사
-                    String unstore_url = "http://3.36.74.186:5000/unstore";
+                    String unstore_url = "http://15.164.199.177:5000/unstore";
 
                     final StringRequest request=new StringRequest(Request.Method.POST, unstore_url, new Response.Listener<String>() {
                         @Override

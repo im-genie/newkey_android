@@ -35,7 +35,7 @@ public class news1_it_hot extends Fragment {
 
         itemList = new ArrayList<>();
         queue= Volley.newRequestQueue(view.getContext());
-        String url = "http://15.164.210.22:5000/it";
+        String url = "http://15.164.199.177:5000/it";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -53,10 +53,11 @@ public class news1_it_hot extends Fragment {
                         String img = jsonObject.getString("img");
                         String summary=jsonObject.getString("summary");
                         String key=jsonObject.getString("key");
+                        String reporter = jsonObject.getString("reporter");
+                        String mediaImg = jsonObject.getString("media_img");
 
                         // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key);
-                        System.out.println(title);
+                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
                         itemList.add(newsData);
 
                         // 이후에 newsList를 사용하여 원하는 처리를 진행

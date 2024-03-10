@@ -124,11 +124,10 @@ public class HomeFragment extends Fragment {
         request.setShouldCache(false);
         nameQueue.add(request);
 
-
         // 추천뉴스
         recommendList = new ArrayList<>();
         recommendQueue = Volley.newRequestQueue(view.getContext());
-        String recommendUrl = "https://n7yfsgspql.execute-api.ap-northeast-2.amazonaws.com/default/economic";
+        String recommendUrl = "http://15.164.199.177:5000/politic";
 
         final JsonArrayRequest recommendRequest = new JsonArrayRequest(Request.Method.GET, recommendUrl, null, new Response.Listener<JSONArray>() {
             @Override
@@ -146,9 +145,11 @@ public class HomeFragment extends Fragment {
                         String img = jsonObject.getString("img");
                         String summary=jsonObject.getString("summary");
                         String key=jsonObject.getString("key");
+                        String reporter = jsonObject.getString("reporter");
+                        String mediaImg = jsonObject.getString("media_img");
 
                         // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key);
+                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
                         recommendList.add(newsData);
 
                         // 이후에 newsList를 사용하여 원하는 처리를 진행
@@ -294,7 +295,7 @@ public class HomeFragment extends Fragment {
         TextView top2_10 = view.findViewById(R.id.top2_10);
 
         hotQueue = Volley.newRequestQueue(view.getContext());
-        String hotUrl = "http://3.36.74.186:5000/hot";
+        String hotUrl = "http://15.164.199.177:5000/hot";
 
         JsonArrayRequest hotRequest = new JsonArrayRequest(Request.Method.GET, hotUrl, null, new Response.Listener<JSONArray>() {
             @Override

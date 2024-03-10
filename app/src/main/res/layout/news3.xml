@@ -25,6 +25,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginBottom="28dp"/>
             <TextView
+                android:id="@+id/publisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_100"
@@ -75,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_300"
                 android:text="기자 이름"
-                android:layout_marginLeft="290dp"
+                android:layout_marginLeft="230dp"
                 android:fontFamily="@font/pretendardregular"
                 android:textSize="10dp" />
         </LinearLayout>

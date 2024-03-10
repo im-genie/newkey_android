@@ -37,7 +37,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
-    String url="http://3.36.74.186:5000/viewNews";
+    String url="http://15.164.199.177:5000/viewNews";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +72,11 @@ public class ViewHistoryActivity extends AppCompatActivity {
                         String img = jsonObject.getString("img");
                         String summary=jsonObject.getString("summary");
                         String key=jsonObject.getString("key");
+                        String reporter = jsonObject.getString("reporter");
+                        String mediaImg = jsonObject.getString("media_img");
 
                         // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key);
+                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
                         itemList.add(newsData);
 
                         // 이후에 newsList를 사용하여 원하는 처리를 진행

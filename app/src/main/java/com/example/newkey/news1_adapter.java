@@ -58,9 +58,16 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
         news1_item newsItem = newsItems.get(position);
         holder.setItem(newsItem);
 
-        Glide.with(holder.itemView.getContext())
-                .load(newsItem.getImg())
-                .into(holder.newsImage);
+        if(newsItem.getImg().equals("none")){
+            Glide.with(holder.itemView.getContext())
+                    .load(newsItem.getMediaImg())
+                    .into(holder.newsImage);
+        }
+        else{
+            Glide.with(holder.itemView.getContext())
+                    .load(newsItem.getImg())
+                    .into(holder.newsImage);
+        }
 
         // 아이템 클릭 리스너 추가
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -75,10 +82,11 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
                 intent.putExtra("img", newsItem.getImg());
                 intent.putExtra("summary", newsItem.getSummary());
                 intent.putExtra("key", newsItem.getKey());
+                intent.putExtra("reporter", newsItem.getReporter());
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
-                String flask_url = "http://3.36.74.186:5000/click";
+                String flask_url = "http://15.164.199.177:5000/click";
 
                 final StringRequest request=new StringRequest(Request.Method.POST, flask_url, new Response.Listener<String>() {
                     @Override

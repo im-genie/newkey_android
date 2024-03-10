@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:text="기사 제목"
         android:textColor="@color/gray_100"
-        android:layout_marginTop="91dp"
+        android:layout_gravity="bottom"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"

@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHolder> {
     private List<news1_item> newsItems;
     RequestQueue queue;
@@ -52,9 +54,20 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
         holder.setItem(newsItem);
 
         // Glide로 이미지 로드
+        if(newsItem.getImg().equals("none")){
+            Glide.with(holder.itemView.getContext())
+                    .load(newsItem.getMediaImg())
+                    .into(holder.newsImage);
+        }
+        else{
+            Glide.with(holder.itemView.getContext())
+                    .load(newsItem.getImg())
+                    .into(holder.newsImage);
+        }
+
         Glide.with(holder.itemView.getContext())
-                .load(newsItem.getImg())
-                .into(holder.newsImage);
+                .load(newsItem.getMediaImg())
+                .into(holder.newsCircleImage);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,10 +81,11 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
                 intent.putExtra("img", newsItem.getImg());
                 intent.putExtra("summary", newsItem.getSummary());
                 intent.putExtra("key", newsItem.getKey());
+                intent.putExtra("reporter", newsItem.getReporter());
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
-                String flask_url = "http://15.164.210.22:5000/click";
+                String flask_url = "http://15.164.199.177:5000/click";
 
                 final StringRequest request=new StringRequest(Request.Method.POST, flask_url, new Response.Listener<String>() {
                     @Override
@@ -114,7 +128,7 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
                     holder.bookMark.setImageResource(R.drawable.bookmark_checked);
 
                     // 사용자 저장 기사
-                    String store_url = "http://15.164.210.22:5000/store";
+                    String store_url = "http://15.164.199.177:5000/store";
 
                     final StringRequest request = new StringRequest(Request.Method.POST, store_url, new Response.Listener<String>() {
                         @Override
@@ -152,7 +166,7 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
                     holder.bookMark.setImageResource(R.drawable.bookmark_unchecked);
 
                     // 사용자 저장 취소 기사
-                    String unstore_url = "http://3.36.74.186:5000/unstore";
+                    String unstore_url = "http://15.164.199.177:5000/unstore";
 
                     final StringRequest request = new StringRequest(Request.Method.POST, unstore_url, new Response.Listener<String>() {
                         @Override
@@ -198,6 +212,7 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
     public static class NewsViewHolder extends RecyclerView.ViewHolder {
         public TextView newsTitle, newsPublisher, newsTime;
         public ImageView newsImage, bookMark;
+        public CircleImageView newsCircleImage;
         public Boolean isClicked = Boolean.FALSE;
 
         public NewsViewHolder(View itemView) {
@@ -206,6 +221,7 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
             newsPublisher = itemView.findViewById(R.id.news2_item_name);
             newsTime = itemView.findViewById(R.id.news2_item_time);
             newsImage = itemView.findViewById(R.id.news2_item_image);
+            newsCircleImage=itemView.findViewById(R.id.news2_publisher_icon);
             bookMark=itemView.findViewById(R.id.news2_bookmark);
         }
         public void setItem(news1_item item){

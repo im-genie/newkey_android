@@ -12,8 +12,11 @@ public class news1_item {
     private String img;
     private String summary;
     private String key;
+    private String reporter;
+    private String mediaImg;
 
-    public news1_item(String id, String title, String content, String publisher, String date, String img, String summary, String key) {
+
+    public news1_item(String id, String title, String content, String publisher, String date, String img, String summary, String key, String reporter, String mediaImg) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -22,6 +25,8 @@ public class news1_item {
         this.img = img;
         this.summary = summary;
         this.key = key;
+        this.reporter = reporter;
+        this.mediaImg = mediaImg;
     }
 
     public String getId() {
@@ -86,5 +91,21 @@ public class news1_item {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getReporter() {
+        return reporter;
+    }
+
+    public void setReporter(String reporter) {
+        this.reporter = reporter;
+    }
+
+    public String getMediaImg() {
+        return mediaImg;
+    }
+
+    public void setMediaImg(String mediaImg) {
+        this.mediaImg = mediaImg;
     }
 }

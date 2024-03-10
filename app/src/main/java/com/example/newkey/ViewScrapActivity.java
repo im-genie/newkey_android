@@ -1,6 +1,5 @@
 package com.example.newkey;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,7 +47,7 @@ public class ViewScrapActivity extends AppCompatActivity {
         queue=Volley.newRequestQueue(getApplicationContext());
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
-        String url="http://3.36.74.186:5000/storedNews";
+        String url="http://15.164.199.177:5000/storedNews";
 
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -72,10 +71,11 @@ public class ViewScrapActivity extends AppCompatActivity {
                         String img = jsonObject.getString("img");
                         String summary=jsonObject.getString("summary");
                         String key=jsonObject.getString("key");
+                        String reporter = jsonObject.getString("reporter");
+                        String mediaImg = jsonObject.getString("media_img");
 
                         // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key);
-                        System.out.println(title);
+                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
                         itemList.add(newsData);
 
                         // 이후에 newsList를 사용하여 원하는 처리를 진행

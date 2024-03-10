@@ -62,7 +62,13 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         news1_item newsItem = newsItems.get(position);
         holder.setItem(newsItem);
 
-        new ImageLoadTask(holder.imageView).loadImage(newsItem.getImg());
+        Log.d("Img!!", newsItem.getImg());
+        if(newsItem.getImg().equals("none")){
+            new ImageLoadTask(holder.imageView).loadImage(newsItem.getMediaImg());
+        }
+        else{
+            new ImageLoadTask(holder.imageView).loadImage(newsItem.getImg());
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,10 +82,11 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
                 intent.putExtra("img", newsItem.getImg());
                 intent.putExtra("summary", newsItem.getSummary());
                 intent.putExtra("key", newsItem.getKey());
+                intent.putExtra("reporter", newsItem.getReporter());
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
-                String flask_url = "http://15.164.210.22:5000/click";
+                String flask_url = "http://15.164.199.177:5000/click";
 
                 final StringRequest request=new StringRequest(Request.Method.POST, flask_url, new Response.Listener<String>() {
                     @Override
@@ -123,7 +130,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
                     holder.bookmarkImageView.setImageResource(R.drawable.bookmark_checked);
 
                     // 사용자 저장 기사
-                    String store_url = "http://15.164.210.22:5000/store";
+                    String store_url = "http://15.164.199.177:5000/store";
 
                     final StringRequest request=new StringRequest(Request.Method.POST, store_url, new Response.Listener<String>() {
                         @Override
@@ -162,7 +169,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
                     holder.bookmarkImageView.setImageResource(R.drawable.bookmark_unchecked);
 
                     // 사용자 저장 취소 기사
-                    String unstore_url = "http://15.164.210.22:5000/unstore";
+                    String unstore_url = "http://15.164.199.177:5000/unstore";
 
                     final StringRequest request=new StringRequest(Request.Method.POST, unstore_url, new Response.Listener<String>() {
                         @Override

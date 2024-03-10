@@ -51,7 +51,13 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
     @Override
     public void onBindViewHolder(@NonNull HotNewsViewHolder holder, int position) {
         news1_item newsItem = newsItems.get(position);
-        Glide.with(holder.itemView.getContext()).load(newsItem.getImg()).into(holder.newsImage);
+
+        if(newsItem.getImg().equals("none")){
+            Glide.with(holder.itemView.getContext()).load(newsItem.getMediaImg()).into(holder.newsImage);
+        }
+        else{
+            Glide.with(holder.itemView.getContext()).load(newsItem.getImg()).into(holder.newsImage);
+        }
         holder.setItem(newsItem);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +68,7 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
                 intent.putExtra("title", newsItem.getTitle());
                 intent.putExtra("content", newsItem.getContent());
                 intent.putExtra("publisher", newsItem.getPublisher());
+                intent.putExtra("reporter", newsItem.getReporter());
                 intent.putExtra("date", newsItem.getDate());
                 intent.putExtra("img", newsItem.getImg());
                 intent.putExtra("summary", newsItem.getSummary());
@@ -69,7 +76,7 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
-                String flask_url = "http://3.36.74.186:5000/click";
+                String flask_url = "http://15.164.199.177:5000/click";
 
                 final StringRequest request=new StringRequest(Request.Method.POST, flask_url, new Response.Listener<String>() {
                     @Override
@@ -108,7 +115,7 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
                     holder.newsBookmark.setTag(true);
 
                     // 사용자 저장 기사
-                    String store_url = "http://15.164.210.22:5000/store";
+                    String store_url = "http://15.164.199.177:5000/store";
 
                     final StringRequest request=new StringRequest(Request.Method.POST, store_url, new Response.Listener<String>() {
                         @Override
@@ -146,7 +153,7 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
                     holder.newsBookmark.setTag(false);
 
                     // 사용자 저장 취소 기사
-                    String unstore_url = "http://15.164.210.22:5000/unstore";
+                    String unstore_url = "http://15.164.199.177:5000/unstore";
 
                     final StringRequest request=new StringRequest(Request.Method.POST, unstore_url, new Response.Listener<String>() {
                         @Override
