@@ -7,7 +7,7 @@
     android:background="@color/gray_600">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/news1_economy_recyclerview"
+        android:id="@+id/news1_entertainment_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
