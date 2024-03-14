@@ -73,6 +73,22 @@
         <activity
             android:name=".ProfileActivity"
             android:exported="false" />
+        <activity
+            android:name=".notification1"
+            android:exported="false" />
+        <activity
+            android:name=".AlrimSetting"
+            android:exported="false" />
+
+        <receiver
+            android:name=".notification1"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.newkey.NOTIFICATION_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
