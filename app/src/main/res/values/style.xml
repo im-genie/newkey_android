@@ -4,4 +4,16 @@
         <item name="android:textSize">16sp</item>
         <item name="android:fontFamily">@font/pretendardmedium</item>
     </style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textColorHint">#E8EAED</item> <!-- 힌트 텍스트 색상 설정 -->
+        <item name="android:imeOptions">actionSearch</item>
+    </style>
+
+    <style name="CustomSwitchStyle" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:trackTint">#72F6CE</item> <!-- Track (스위치 바 부분) 색상 -->
+    </style>
+
+
+
 </resources>

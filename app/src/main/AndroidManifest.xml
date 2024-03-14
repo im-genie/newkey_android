@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,25 +22,26 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".news1_activity"
-            android:exported="true">
+            android:name=".search1"
+            android:exported="true"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".news1_activity"/>-->
-        <activity android:name=".news2_politics"/>
-        <activity android:name=".news2_economy"/>
-        <activity android:name=".news2_society"/>
-        <activity android:name=".news2_living"/>
-        <activity android:name=".news2_world"/>
-        <activity android:name=".news2_it"/>
-        <activity android:name=".news2_opinion"/>
-        <activity android:name=".news2_sports"/>
-        <activity android:name=".news3_activity"/>
-        <activity android:name=".MainActivity"/>
+
+        <!-- <activity android:name=".news1_activity"/> -->
+        <activity android:name=".news2_politics" />
+        <activity android:name=".news2_economy" />
+        <activity android:name=".news2_society" />
+        <activity android:name=".news2_living" />
+        <activity android:name=".news2_world" />
+        <activity android:name=".news2_it" />
+        <activity android:name=".news2_opinion" />
+        <activity android:name=".news2_sports" />
+        <activity android:name=".news3_activity" />
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".NotificationActivity"
             android:exported="false" />
@@ -53,18 +61,25 @@
             android:name=".RecommendationActivity"
             android:exported="false" />
         <activity
-            android:name=".search2"
+            android:name=".notification1"
             android:exported="false" />
-        <activity
-            android:name=".search1"
-            android:exported="false" />
-        <activity
-            android:name=".notification2"
-            android:exported="false" />
+        <!--
         <activity
             android:name=".notification1"
             android:exported="false" />
+        -->
+        <activity
+            android:name=".AlrimSetting"
+            android:exported="false" />
 
+        <receiver
+            android:name=".notification1"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.newkey.NOTIFICATION_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

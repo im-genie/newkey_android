@@ -3,83 +3,80 @@ package com.example.newkey;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.newkey.AlrimItem;
+import com.example.newkey.R;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class AlrimAdapter extends RecyclerView.Adapter<AlrimAdapter.CustomViewHolder>{
+public class AlrimAdapter extends RecyclerView.Adapter<AlrimAdapter.AlrimViewHolder> {
+    private List<AlrimItem> alrimItems;
 
-    private ArrayList<AlrimData> arrayList;
+    // 추가: 기본 생성자
+    public AlrimAdapter() {
+        this.alrimItems = new ArrayList<>();
+    }
 
-    public AlrimAdapter(ArrayList<AlrimData> arrayList) {
-        this.arrayList = arrayList;
+    // 추가: 매개변수를 받는 생성자
+    public AlrimAdapter(List<AlrimItem> alrimItems) {
+        this.alrimItems = alrimItems;
+    }
+
+    public void setAlrimItems(List<AlrimItem> alrimItems) {
+        this.alrimItems = alrimItems;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public AlrimAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.alrim_list, parent, false);
-        CustomViewHolder holder = new CustomViewHolder(view);
-
-        return holder;
+    public AlrimViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        int layoutRes = (viewType == 0) ? R.layout.alrim_list : R.layout.alrim_list_todayhot;
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
+        return new AlrimViewHolder(view, viewType);  // viewType을 전달
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlrimAdapter.CustomViewHolder holder, int position) {
-        holder.alrim_icon.setImageResource(arrayList.get(position).getAlrim_icon());
-        holder.alrim_todaynews.setText(arrayList.get(position).getAlrim_todaynews());
-        holder.alrim_content.setText(arrayList.get(position).getAlrim_content());
+    public void onBindViewHolder(@NonNull AlrimViewHolder holder, int position) {
+        AlrimItem item = alrimItems.get(position);
 
-        holder.itemView.setTag(position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String curName = holder.alrim_todaynews.getText().toString();
-                Toast.makeText(v.getContext(), curName, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                remove(holder.getAdapterPosition());
-
-                return true;
-            }
-        });
+        // type에 따라 텍스트뷰 설정
+        if (item.getType() == 0) {
+            holder.tvNewsTitle.setText(item.getAlrim_newstitle());
+            holder.tvTime.setText(item.getAlrim_time());
+        } else if (item.getType() == 1) {
+            holder.tvNewsTitle.setText(item.getAlrim_newstitle());
+            holder.tvTime.setText(item.getAlrim_time());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return (null != arrayList ? arrayList.size() : 0);
+        return (alrimItems != null) ? alrimItems.size() : 0;
     }
 
-    public void remove(int position) {
-        try {
-            arrayList.remove(position);
-            notifyItemRemoved(position);
-        } catch (IndexOutOfBoundsException ex) {
-            ex.printStackTrace();
-        }
+    @Override
+    public int getItemViewType(int position) {
+        return alrimItems.get(position).getType();
     }
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
+    static class AlrimViewHolder extends RecyclerView.ViewHolder {
+        TextView tvNewsTitle;
+        TextView tvTime;
+        int viewType;  // 추가: viewType을 저장할 변수
 
-        protected ImageView alrim_icon;
-        protected TextView alrim_todaynews;
-        protected TextView alrim_content;
-
-        public CustomViewHolder(@NonNull View itemView) {
+        public AlrimViewHolder(@NonNull View itemView, int viewType) {
             super(itemView);
-            this.alrim_icon = (ImageView) itemView.findViewById(R.id.alrim_icon);
-            this.alrim_todaynews = (TextView) itemView.findViewById(R.id.alrim_todaynews);
-            this.alrim_content = (TextView) itemView.findViewById(R.id.alrim_content);
+            this.viewType = viewType;  // viewType 먼저 초기화
+
+            // 실제 TextView ID로 업데이트
+            tvNewsTitle = itemView.findViewById((viewType == 0) ? R.id.rv_noti_content_yesterday : R.id.rv_noti_content_today);
+            tvTime = itemView.findViewById((viewType == 0) ? R.id.alrim_time_yesterday : R.id.alrim_time_today);
         }
     }
+
 }
