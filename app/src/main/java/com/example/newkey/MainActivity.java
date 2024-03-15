@@ -110,4 +110,16 @@ public class MainActivity extends AppCompatActivity {
         button_feed.setImageResource(R.drawable.feed);
         button_person.setImageResource(R.drawable.person);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ImageView button_home = findViewById(R.id.button_home);
+        ImageView button_feed = findViewById(R.id.button_feed);
+        ImageView button_person = findViewById(R.id.button_person);
+
+        button_home.setImageResource(R.drawable.home_green);
+        button_feed.setImageResource(R.drawable.feed);
+        button_person.setImageResource(R.drawable.person);
+    }
 }

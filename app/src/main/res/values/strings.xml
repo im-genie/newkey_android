@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">NewKey</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <color name="red">#FF0000</color>
     <color name="green">#008000</color>
 </resources>
