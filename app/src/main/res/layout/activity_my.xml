@@ -286,10 +286,14 @@
         android:id="@+id/changeProfile"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginStart="81dp"
         android:layout_marginTop="84dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="4dp"
+        app:layout_constraintStart_toStartOf="@+id/profileImg"
         app:layout_constraintTop_toBottomOf="@+id/main_activity_linearlayout1"
-        app:srcCompat="@drawable/change_profile"
-        tools:layout_editor_absoluteX="237dp" />
+        app:srcCompat="@drawable/change_profile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
