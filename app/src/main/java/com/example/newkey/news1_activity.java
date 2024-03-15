@@ -100,28 +100,6 @@ public class news1_activity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
-
-
-        });
-
-        // 검색 클릭이벤트
-        ImageView search = findViewById(R.id.search);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), search1.class);
-                startActivity(intent);
-            }
-        });
-
-        // 알림 클릭이벤트
-        ImageView notification = findViewById(R.id.notification);
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), notification1.class);
-                startActivity(intent);
-            }
         });
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -161,7 +139,7 @@ public class news1_activity extends AppCompatActivity {
         news1Notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(news1_activity.this, NotificationActivity.class);
+                Intent intent = new Intent(news1_activity.this, notification1.class);
                 startActivity(intent);
             }
         });
@@ -254,5 +232,4 @@ public class news1_activity extends AppCompatActivity {
             nestedScrollView.scrollTo(0, 0);  // NestedScrollView의 스크롤 위치를 맨 위로 설정
         }
     }
-
 }
