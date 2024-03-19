@@ -20,6 +20,18 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapte
         this.recentSearchList = recentSearchList;
     }
 
+    // 데이터를 외부에서 삭제하는 메서드
+    public void removeItem(int position) {
+        recentSearchList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    // 어댑터의 데이터를 모두 삭제하는 메서드
+    public void clearAllItems() {
+        recentSearchList.clear();
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

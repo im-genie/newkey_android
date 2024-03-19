@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         main_activity_linearlayout1_imageview2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                Intent intent = new Intent(MainActivity.this, search1.class);
                 startActivity(intent);
             }
         });

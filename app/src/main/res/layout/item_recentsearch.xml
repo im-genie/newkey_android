@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="#E8EAED"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:text="최근 검색어 1 블라블라블라"/>
 
     <ImageButton

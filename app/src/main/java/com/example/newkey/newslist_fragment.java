@@ -25,7 +25,8 @@ public class newslist_fragment extends Fragment {
         adapter = new newslist_adapter();
         recyclerView.setAdapter(adapter);
 
-        // 여기에 item_search.xml 파일을 로드하고 데이터를 설정하는 코드를 추가해야 합니다.
+        // 테스트 데이터 추가
+        adapter.addTestData();
 
         return view;
     }

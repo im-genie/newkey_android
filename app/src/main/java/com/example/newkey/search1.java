@@ -9,8 +9,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class search1 extends AppCompatActivity {
 
@@ -80,7 +82,7 @@ public class search1 extends AppCompatActivity {
             return;
         }
 
-        // TODO: 검색 결과를 처리하고 표시하는 코드 추가
+        // TODO: 검색어를 받아서, 실제로 데이터를 검색하고, 검색 결과를 화면에 표시하는 로직을 추가해야 함.
 
         // NewsListFragment를 표시하기 위한 코드
         fragmentManager = getSupportFragmentManager();
@@ -92,8 +94,15 @@ public class search1 extends AppCompatActivity {
         bundle.putString("searchText", searchText);
         newsListFragment.setArguments(bundle);
 
-        transaction.replace(R.id.fragment_recentsearch, newsListFragment);
-        transaction.addToBackStack(null);  // 뒤로 가기 버튼을 눌렀을 때 이전 Fragment로 돌아갈 수 있도록 합니다.
+        // 현재 newslist_fragment가 화면에 표시되어 있다면 제거합니다.
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_recentsearch);
+        if (currentFragment instanceof newslist_fragment) {
+            transaction.remove(currentFragment);
+        }
+
+        // recyclerView_SearchNews를 표시하기 위해 해당 View를 화면에 표시합니다.
+        RecyclerView recyclerViewSearchNews = findViewById(R.id.recyclerView_SearchNews);
+        recyclerViewSearchNews.setVisibility(View.VISIBLE);
 
         transaction.commit();
     }
@@ -106,6 +115,7 @@ public class search1 extends AppCompatActivity {
         }
     }
 
+    // activity가 활성화될 때마다 최근 검색어에 테스트 데이터가 추가되도록 함.
     @Override
     protected void onStart() {
         super.onStart();

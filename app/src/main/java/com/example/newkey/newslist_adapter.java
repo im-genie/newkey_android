@@ -7,10 +7,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class newslist_adapter extends RecyclerView.Adapter<newslist_adapter.NewsViewHolder> {
 
-    // 데이터 리스트를 여기에 추가해야 합니다.
+    private List<NewsItem> newsItemList = new ArrayList<>();
+
+    public void addItem(NewsItem item) {
+        newsItemList.add(item);
+    }
 
     @NonNull
     @Override
@@ -21,13 +27,16 @@ public class newslist_adapter extends RecyclerView.Adapter<newslist_adapter.News
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        // 데이터를 뷰홀더에 바인딩하는 코드를 여기에 추가해야 합니다.
+        NewsItem item = newsItemList.get(position);
+        holder.newsTitle.setText(item.getTitle());
+        holder.newsPublisher.setText(item.getPublisher());
+        holder.newsTime.setText(item.getTime());
+        // 이미지 설정 등 추가 작업 필요
     }
 
     @Override
     public int getItemCount() {
-        // 데이터 리스트의 크기를 반환해야 합니다.
-        return 0; // 현재는 데이터가 없기 때문에 0을 반환합니다.
+        return newsItemList.size();
     }
 
     static class NewsViewHolder extends RecyclerView.ViewHolder {
@@ -41,5 +50,13 @@ public class newslist_adapter extends RecyclerView.Adapter<newslist_adapter.News
             newsTime = itemView.findViewById(R.id.item_search_time);
             newsImage = itemView.findViewById(R.id.item_search_image);
         }
+    }
+
+    public void addTestData() {
+        for (int i = 0; i < 10; i++) {
+            NewsItem item = new NewsItem("테스트 제목 " + (i + 1), "출판사 " + (i + 1), "시간 " + (i + 1), null);
+            addItem(item);
+        }
+        notifyDataSetChanged(); // 데이터가 변경되었음을 어댑터에 알립니다.
     }
 }
