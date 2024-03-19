@@ -79,6 +79,9 @@
         <activity
             android:name=".AlrimSetting"
             android:exported="false" />
+        <activity
+            android:name=".search1"
+            android:exported="false" />
 
         <receiver
             android:name=".notification1"
