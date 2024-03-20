@@ -5,84 +5,289 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/gray_600"
     tools:context=".ConsentActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/useConditionBox"
-            android:layout_width="22dp"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/useConditionTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="이용약관 (필수)" />
-
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="240dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/useConditionText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="뉴키 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 뉴키 서비스의 이용과 관련하여 뉴키 서비스를 제공하는 ‘뉴키’와 이를 이용하는 뉴키 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 뉴키 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다. 뉴키 서비스를 이용하시거나 뉴키 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다. 뉴키 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 뉴키 서비스의 이용과 관련하여 뉴키 서비스를 제공하는 ‘뉴키’와 이를 이용하는 뉴키 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다. 뉴키 서비스를 이용하시거나 뉴키 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다." />
-        </LinearLayout>
-    </ScrollView>
 
     <LinearLayout
+        android:id="@+id/back_from_history"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        android:gravity="bottom">
 
-        <CheckBox
-            android:id="@+id/personInforBox"
-            android:layout_width="22dp"
-            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="28dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/back" />
 
         <TextView
-            android:id="@+id/personInforTitle"
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
             android:layout_weight="1"
-            android:text="개인정보 처리방침 (필수)" />
-
+            android:text="회원가입"
+            android:textColor="@color/gray_100"
+            android:textSize="20dp"/>
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/personInforText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="수집하는 개인정보 이용자는 회원가입을 하지 않아도 뉴키 서비스를 회원과 동일하게 이용할 수 있습니다. 이용자가 피드, 채팅 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우, 뉴키는 서비스 이용을 위한 최소한의 개인 정보를 수집합니다. 이용자는 회원가입을 하지 않아도 뉴키 서비스를 회원과 동일하게 이용할 수 있습니다. 이용자가 피드, 채팅 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우, 뉴키는 서비스 이용을 위한 최소한의 개인 정보를 수집합니다." />
-        </LinearLayout>
-    </ScrollView>
-
-    <Button
-        android:id="@+id/next"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="네, 모두 동의합니다." />
+        android:text="서비스 이용을 위한 \n약관에 동의해 주세요"
+        android:textSize="22dp"
+        android:fontFamily="@font/pretendardmedium"
+        android:textColor="@color/gray_100"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="28dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp">
+
+        <ImageView
+            android:id="@+id/imageView14"
+            android:layout_width="match_parent"
+            android:layout_height="138dp"
+            android:layout_weight="1"
+            android:layout_marginTop="58dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/radius_12" />
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="match_parent"
+            android:layout_height="138dp"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7"
+            app:srcCompat="@drawable/radius_12" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="29dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2.5dp">
+
+
+                <ImageView
+                    android:id="@+id/conditionBoxUnchecked"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/check_gray" />
+
+                <ImageView
+                    android:id="@+id/conditionBoxChecked"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/check_green" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/useConditionTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/pretendardregular"
+                android:text="이용약관"
+                android:textColor="@color/gray_100"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendardregular"
+                android:text="(필수)"
+                android:textColor="@color/key_green_400"
+                android:textSize="16dp" />
+
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="138dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+            tools:layout_editor_absoluteX="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/useConditionText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:lineSpacingExtra="5dp"
+                    android:text="뉴키 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 뉴키 서비스의 이용과 관련하여 뉴키 서비스를 제공하는 ‘뉴키’와 이를 이용하는 뉴키 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 뉴키 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다. 뉴키 서비스를 이용하시거나 뉴키 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다. 뉴키 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 뉴키 서비스의 이용과 관련하여 뉴키 서비스를 제공하는 ‘뉴키’와 이를 이용하는 뉴키 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 네이버 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다. 뉴키 서비스를 이용하시거나 뉴키 서비스 회원으로 가입하실 경우 여러분은 본 약관 및 관련 운영 정책을 확인하거나 동의하게 되므로, 잠시 시간을 내시어 주의 깊게 살펴봐 주시기 바랍니다."
+                    android:textColor="@color/gray_300"
+                    android:textSize="10dp" />
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2.5dp">
+
+                <ImageView
+                    android:id="@+id/conditionBoxUnchecked2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/check_gray" />
+
+                <ImageView
+                    android:id="@+id/conditionBoxChecked2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_weight="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/check_green" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/personInforTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/pretendardregular"
+                android:text="개인정보 처리방침"
+                android:textColor="@color/gray_100"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/pretendardregular"
+                android:text="(필수)"
+                android:textColor="@color/key_green_400"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/personInforText"
+                    android:layout_width="match_parent"
+                    android:layout_height="151dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="12dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:lineSpacingExtra="5dp"
+                    android:text="수집하는 개인정보 이용자는 회원가입을 하지 않아도 뉴키 서비스를 회원과 동일하게 이용할 수 있습니다. 이용자가 피드, 채팅 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우, 뉴키는 서비스 이용을 위한 최소한의 개인 정보를 수집합니다. 이용자는 회원가입을 하지 않아도 뉴키 서비스를 회원과 동일하게 이용할 수 있습니다. 이용자가 피드, 채팅 등과 같이 개인화 혹은 회원제 서비스를 이용하기 위해 회원가입을 할 경우, 뉴키는 서비스 이용을 위한 최소한의 개인 정보를 수집합니다."
+                    android:textColor="@color/gray_300"
+                    android:textSize="10dp" />
+            </LinearLayout>
+        </ScrollView>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/rounded_corner_15"
+            android:backgroundTint="@color/key_green_400"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"
+                app:srcCompat="@drawable/check_black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="네, 모두 동의합니다."
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:fontFamily="@font/pretendardmedium"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="16dp"
+                app:layout_constraintVertical_bias="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </LinearLayout>
