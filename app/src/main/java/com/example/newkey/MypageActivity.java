@@ -25,6 +25,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 public class MypageActivity extends Activity {
 
     private SharedPreferences preferences;
@@ -114,9 +116,9 @@ public class MypageActivity extends Activity {
 
         ImageView changeProfile = findViewById(R.id.changeProfile);
         ImageView changeProfileId = findViewById(R.id.changeProfileId);
-        Button viewHistory = findViewById(R.id.btn_history);
-        Button viewScrap = findViewById(R.id.btn_scrap);
-        Button chooseTopics = findViewById(R.id.btn_topic);
+        ConstraintLayout viewHistory = findViewById(R.id.btn_history);
+        ConstraintLayout viewScrap = findViewById(R.id.btn_scrap);
+        ConstraintLayout chooseTopics = findViewById(R.id.btn_topic);
         TextView changePassword = findViewById(R.id.changePassword);
         TextView logout = findViewById(R.id.logout);
 

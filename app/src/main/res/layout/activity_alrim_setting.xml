@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AlrimSetting"
+    android:background="@color/black">
+
+    <ImageButton
+        android:id="@+id/button_back"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="39dp"
+        android:layout_marginStart="20dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="뒤로가는버튼"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/button_back"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/알림설정"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/button_back"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="41dp"
+        android:fontFamily="@font/pretendardmedium"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:text="알림 설정"
+        android:textColor="@color/white"
+        android:textSize="19dp"
+        />
+
+    <TextView
+        android:id="@+id/소식받기"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="140dp"
+        android:fontFamily="@font/pretendardmedium"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:text="뉴키 소식 받기"
+        android:textColor="@color/white"
+        android:textSize="19dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="20dp"
+        android:track="@drawable/switch_track"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/infoicon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/info" />
+
+    <TextView
+        android:id="@+id/alrimsettinginfo1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="180dp"
+        android:fontFamily="@font/pretendardmedium"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:text="어떤 알림이 오나요?"
+        android:textColor="#9AA0A6"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/alrimsettinginfo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="206dp"
+        android:fontFamily="@font/pretendardmedium"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:text="・ 오늘의 추천 뉴스나 어제 가장 인기 있었던 뉴스를 알려드려요."
+        android:textColor="#9AA0A6"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/alrimsettinginfo3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="222dp"
+        android:fontFamily="@font/pretendardmedium"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:text="・ 알림은 매일 오전 8시와 오후 8시에 전달돼요."
+        android:textColor="#9AA0A6"
+        android:textSize="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

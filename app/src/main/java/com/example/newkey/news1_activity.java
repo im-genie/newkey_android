@@ -139,7 +139,7 @@ public class news1_activity extends AppCompatActivity {
         news1Notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(news1_activity.this, NotificationActivity.class);
+                Intent intent = new Intent(news1_activity.this, notification1.class);
                 startActivity(intent);
             }
         });
