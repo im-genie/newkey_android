@@ -53,8 +53,7 @@ public class ViewHistoryActivity extends AppCompatActivity {
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("res",response);
-                JSONArray jsonArray = null;
+                JSONArray jsonArray = new JSONArray();
                 try {
                     jsonArray = new JSONArray(response);
                 } catch (JSONException e) {
@@ -70,8 +69,8 @@ public class ViewHistoryActivity extends AppCompatActivity {
                         String press = jsonObject.getString("media");
                         String date = jsonObject.getString("date");
                         String img = jsonObject.getString("img");
-                        String summary=jsonObject.getString("summary");
-                        String key=jsonObject.getString("key");
+                        String summary = jsonObject.getString("summary");
+                        String key = jsonObject.getString("key");
                         String reporter = jsonObject.getString("reporter");
                         String mediaImg = jsonObject.getString("media_img");
 
@@ -87,15 +86,15 @@ public class ViewHistoryActivity extends AppCompatActivity {
                         news1_adapter adapter=new news1_adapter(itemList);
                         recyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
-                        Log.d("v2",e.toString());
+                        Log.d("res!!",response);
                         e.printStackTrace();
                     }
                 }
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError e) {
-                Log.d("v3",e.toString());
+            public void onErrorResponse(VolleyError error) {
+                Log.d("storeViewError",error.toString());
             }
         }){
             //@Nullable

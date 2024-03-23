@@ -52,8 +52,7 @@ public class ViewScrapActivity extends AppCompatActivity {
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("res",response);
-                JSONArray jsonArray = null;
+                JSONArray jsonArray = new JSONArray();
                 try {
                     jsonArray = new JSONArray(response);
                 } catch (JSONException e) {
@@ -69,8 +68,8 @@ public class ViewScrapActivity extends AppCompatActivity {
                         String press = jsonObject.getString("media");
                         String date = jsonObject.getString("date");
                         String img = jsonObject.getString("img");
-                        String summary=jsonObject.getString("summary");
-                        String key=jsonObject.getString("key");
+                        String summary = jsonObject.getString("summary");
+                        String key = jsonObject.getString("key");
                         String reporter = jsonObject.getString("reporter");
                         String mediaImg = jsonObject.getString("media_img");
 
@@ -86,6 +85,7 @@ public class ViewScrapActivity extends AppCompatActivity {
                         news1_adapter adapter=new news1_adapter(itemList);
                         recyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
+                        Log.d("res!!",response);
                         e.printStackTrace();
                     }
                 }

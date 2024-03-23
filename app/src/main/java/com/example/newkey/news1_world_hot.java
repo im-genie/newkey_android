@@ -35,7 +35,7 @@ public class news1_world_hot extends Fragment {
 
         itemList = new ArrayList<>();
         queue= Volley.newRequestQueue(view.getContext());
-        String url = "http://15.164.199.177:5000/world";
+        String url = "http://15.164.199.177:5000/catHot/world";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

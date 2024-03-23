@@ -83,6 +83,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
                 intent.putExtra("summary", newsItem.getSummary());
                 intent.putExtra("key", newsItem.getKey());
                 intent.putExtra("reporter", newsItem.getReporter());
+                intent.putExtra("media_img", newsItem.getMediaImg());
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장

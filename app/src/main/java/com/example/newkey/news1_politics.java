@@ -33,7 +33,7 @@ public class news1_politics extends Fragment {
         View view = inflater.inflate(R.layout.news1_politics, container, false);
 
         itemList = new ArrayList<>();
-        queue=Volley.newRequestQueue(view.getContext());
+        queue = Volley.newRequestQueue(view.getContext());
         String url = "http://15.164.199.177:5000/politic";
 
         final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -55,6 +55,8 @@ public class news1_politics extends Fragment {
                         String key=jsonObject.getString("key");
                         String reporter = jsonObject.getString("reporter");
                         String mediaImg = jsonObject.getString("media_img");
+
+                        Log.d("dateTest",date);
 
                         // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
                         news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);

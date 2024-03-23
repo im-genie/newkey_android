@@ -25,13 +25,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.widget.PopupWindow;
 import android.view.ViewGroup.LayoutParams;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,6 +42,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -68,14 +72,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        preferences=view.getContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
-        String email=preferences.getString("email", null);
-        userName=view.findViewById(R.id.userName);
-        name=view.findViewById(R.id.name);
+        preferences = view.getContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
+        String email = preferences.getString("email", null);
+        userName = view.findViewById(R.id.userName);
+        name = view.findViewById(R.id.name);
 
         StringBuilder nameUrl = new StringBuilder();
         nameUrl.append("http://13.124.230.98:8080/user/info").append("?email=").append(email);
-        nameQueue=Volley.newRequestQueue(view.getContext());
+        nameQueue = Volley.newRequestQueue(view.getContext());
 
         //사용자 프로필,이름 가져오기
         JSONObject jsonRequest = new JSONObject();
@@ -96,11 +100,10 @@ public class HomeFragment extends Fragment {
                     e.printStackTrace();
                 }
                 try {
-                    if(result!=null) {
+                    if (result != null) {
                         userName.setText(result.getString("name"));
-                        name.setText("뉴키는 "+result.getString("name")+"님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?");
-                    }
-                    else{
+                        name.setText("뉴키는 " + result.getString("name") + "님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?");
+                    } else {
                         Toast.makeText(getContext(), "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
@@ -124,19 +127,25 @@ public class HomeFragment extends Fragment {
         request.setShouldCache(false);
         nameQueue.add(request);
 
-        // 추천뉴스
         recommendList = new ArrayList<>();
         recommendQueue = Volley.newRequestQueue(view.getContext());
-        String recommendUrl = "http://15.164.199.177:5000/politic";
+        String recommendUrl = "http://15.164.199.177:5000/recommend";
 
-        final JsonArrayRequest recommendRequest = new JsonArrayRequest(Request.Method.GET, recommendUrl, null, new Response.Listener<JSONArray>() {
+        //추천뉴스
+        final StringRequest recommendRequest=new StringRequest(Request.Method.POST, recommendUrl, new Response.Listener<String>() {
             @Override
-            public void onResponse(JSONArray response) {
-                //s3에서 기사 받아와 배열에 저장
+            public void onResponse(String response) {
+                Log.d("res",response);
+                JSONArray jsonArray = null;
                 try {
-                    // 예시: 응답으로부터 필요한 데이터를 파싱하여 처리
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject jsonObject = response.getJSONObject(i);
+                    jsonArray = new JSONArray(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
                         String id = jsonObject.getString("id");
                         String title = jsonObject.getString("title");
                         String content = jsonObject.getString("origin_content");
@@ -149,36 +158,45 @@ public class HomeFragment extends Fragment {
                         String mediaImg = jsonObject.getString("media_img");
 
                         // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
+                        news1_item newsData = new news1_item(id, title, content, press, date, img, summary, key, reporter, mediaImg);
                         recommendList.add(newsData);
 
                         // 이후에 newsList를 사용하여 원하는 처리를 진행
                         //Adapter
-                        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-                        RecyclerView recyclerView=view.findViewById(R.id.recommendation_recyclerview);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                        RecyclerView recyclerView = view.findViewById(R.id.recommendation_recyclerview);
                         recyclerView.setLayoutManager(layoutManager);
-                        RecommendationAdapter adapter=new RecommendationAdapter(recommendList);
+                        RecommendationAdapter adapter = new RecommendationAdapter(recommendList);
                         recyclerView.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
+                Log.d("추천 오류",error.toString());
             }
-        });
+        }){
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", email); // 로그인 아이디로 바꾸기
+                return params;
+            }
+        };
 
         recommendRequest.setRetryPolicy(new DefaultRetryPolicy(
-                1000000,  // 기본 타임아웃 (기본값: 2500ms)
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                1000000, // 기본 타임아웃 시간을 조정
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 재시도 횟수
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT // 백오프 멀티플라이어
         ));
 
-        recommendRequest.setShouldCache(false);
-        recommendQueue.add(recommendRequest);
+        recommendRequest.setShouldCache(false); // 캐시 사용 여부
+        recommendQueue.add(recommendRequest); // 올바른 변수명으로 수정
+
 
         // 추천뉴스 - 더보기 버튼
         LinearLayout layout_goto_recommendation = view.findViewById(R.id.layout_goto_recommendation);

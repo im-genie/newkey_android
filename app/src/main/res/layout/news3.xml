@@ -211,6 +211,43 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="12dp" />
                     <ImageView
+                        android:id="@+id/polygon_where"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/polygon"
+                        app:layout_constraintStart_toStartOf="@id/when"
+                        app:layout_constraintTop_toBottomOf="@id/when"
+                        android:foregroundGravity="center"
+                        android:layout_marginTop="14dp"/>
+                    <TextView
+                        android:id="@+id/textView_where"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="어디서"
+                        android:textColor="@color/gray_100"
+                        app:layout_constraintStart_toEndOf="@id/polygon_what"
+                        app:layout_constraintTop_toBottomOf="@id/when"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/pretendardmedium"
+                        android:textSize="12dp" />
+                    <TextView
+                        android:id="@+id/where"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/polygon_what"
+                        android:text="서울 광진구보건소 선별진료소"
+                        android:textColor="@color/gray_100"
+                        android:layout_marginTop="8.5dp"
+                        android:background="@drawable/news3_radius2"
+                        android:paddingBottom="12.5dp"
+                        android:paddingTop="12.5dp"
+                        android:paddingLeft="12dp"
+                        android:paddingRight="12dp"
+                        android:fontFamily="@font/pretendardregular"
+                        android:textSize="12dp" />
+                    <ImageView
                         android:id="@+id/polygon_what"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
@@ -237,7 +274,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/polygon_what"
-                        android:text="서울 광진구보건소 선별진료소"
+                        android:text="코로나 검사 체취"
                         android:textColor="@color/gray_100"
                         android:layout_marginTop="8.5dp"
                         android:background="@drawable/news3_radius2"

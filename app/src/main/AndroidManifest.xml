@@ -64,6 +64,7 @@
         <activity android:name=".news2_living" />
         <activity android:name=".news2_world" />
         <activity android:name=".news2_it" />
+        <activity android:name=".news2_entertainment" />
         <activity android:name=".news2_opinion" />
         <activity android:name=".news2_sports" />
         <activity android:name=".news3_activity" />
