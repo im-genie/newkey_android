@@ -435,7 +435,90 @@ public class HomeFragment extends Fragment {
         top2_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_1.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_2.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_3.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_4.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_5.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_6.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_7.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_8.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_9.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_10.getText().toString());
+                startActivity(intent);
             }
         });
 

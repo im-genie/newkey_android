@@ -1,5 +1,8 @@
 package com.example.newkey;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,36 +10,48 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapter.ViewHolder> {
 
-    private List<String> recentSearchList;
+    List<String> recentSearchList;
+    SharedPreferences preferences;
+    public static final String preference = "newkey";
+    RequestQueue queue;
+    String email;
 
     // 데이터 리스트를 여기에 추가해야 합니다.
     public RecentSearchAdapter(List<String> recentSearchList) {
         this.recentSearchList = recentSearchList;
     }
 
-    // 데이터를 외부에서 삭제하는 메서드
-    public void removeItem(int position) {
-        recentSearchList.remove(position);
-        notifyItemRemoved(position);
-    }
-
-    // 어댑터의 데이터를 모두 삭제하는 메서드
-    public void clearAllItems() {
-        recentSearchList.clear();
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recentsearch, parent, false);
-        return new ViewHolder(view);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recentsearch, parent, false);
+        queue= Volley.newRequestQueue(v.getContext());
+        preferences=v.getContext().getSharedPreferences("newkey",  Context.MODE_PRIVATE);
+        email=preferences.getString("email", null);
+
+        return new ViewHolder(v);
     }
 
     @Override
@@ -49,6 +64,36 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapte
             // 해당 검색어 삭제 로직 추가
             recentSearchList.remove(position);
             notifyDataSetChanged();
+
+            String url = "http://15.164.199.177:5000/searchDelete";
+            final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.d("searchDelete",response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("searchDeleteError",error.toString());
+                }
+            }){
+                //@Nullable
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("user_id", email);
+                    params.put("keyword", searchItem);
+                    return params;
+                }
+            };
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+
+            request.setShouldCache(false);
+            queue.add(request);
         });
     }
 
