@@ -158,6 +158,7 @@ public class MypageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MypageActivity.this, ChooseTopicsActivity.class);
+                intent.putExtra("join","0");
                 startActivity(intent);
             }
         });

@@ -74,6 +74,8 @@ public class Cardnews1Fragment extends Fragment {
         queue = Volley.newRequestQueue(view.getContext());
         String url = "http://15.164.199.177:5000/hot5";
 
+
+
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -111,7 +113,8 @@ public class Cardnews1Fragment extends Fragment {
                     Glide.with(view.getContext()).load(mediaImg).into(mediaCircleImg);
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    Log.d("해당 기사 없음",e.toString());
                 }
             }
         }, new Response.ErrorListener() {

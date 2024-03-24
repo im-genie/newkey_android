@@ -72,7 +72,8 @@ public class NicknameActivity extends AppCompatActivity {
                             boolean isSuccess = response.getBoolean("isSuccess");
 
                             if (isSuccess) {
-                                Intent intent = new Intent(getApplicationContext(), CatActivity1.class);
+                                Intent intent = new Intent(getApplicationContext(), ChooseTopicsActivity.class);
+                                intent.putExtra("join","1");
                                 startActivity(intent);
                             } else {
                                 next.setClickable(false);
