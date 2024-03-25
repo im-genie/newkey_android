@@ -53,17 +53,17 @@
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/새로운알림생기면"
+        android:id="@+id/alrimText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="새로운 알림이 생기면 알려드릴게요."
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Newkey123456" />
+        app:layout_constraintTop_toBottomOf="@+id/alrimImage" />
 
     <ImageView
-        android:id="@+id/Newkey123456"
+        android:id="@+id/alrimImage"
         android:layout_width="140dp"
         android:layout_height="140dp"
         app:layout_constraintBottom_toBottomOf="parent"

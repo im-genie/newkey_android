@@ -1,8 +1,11 @@
 package com.example.newkey;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -15,20 +18,48 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class notification1 extends AppCompatActivity {
 
-    private RecyclerView rv_noti;
-    private AlrimAdapter alrimAdapter;
-    // private MyReceiver myReceiver; // 수신기 인스턴스 변수 추가
+    RequestQueue queue;
+    List<AlrimItem> alrimItems;
+    private SharedPreferences preferences;
+    public static final String preference = "newkey";
+    Boolean isAlrim,isAlrimDelete;
+    ImageView alrimImage;
+    TextView alrimText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification1);
+
+        preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
+        isAlrim=preferences.getBoolean("alrim", true);
+        isAlrimDelete=preferences.getBoolean("alrimDelete", false);
+        alrimImage=findViewById(R.id.alrimImage);
+        alrimText=findViewById(R.id.alrimText);
 
         // 뒤로가기 버튼
         ImageButton button_back = findViewById(R.id.button_back);
@@ -60,12 +91,17 @@ public class notification1 extends AppCompatActivity {
                     hideFragment();
 
                     // 기존에는 숨겨진 Newkey123456 아이콘과 설명글이 보이도록 변경
-                    findViewById(R.id.Newkey123456).setVisibility(View.VISIBLE);
-                    findViewById(R.id.새로운알림생기면).setVisibility(View.VISIBLE);
+                    alrimImage.setVisibility(View.VISIBLE);
+                    alrimText.setVisibility(View.VISIBLE);
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("alrimDelete",true);
+                    editor.apply();
                 }
             });
         }
 
+        /*
         // 리사이클러뷰 초기화
         rv_noti = findViewById(R.id.rv_noti);
         rv_noti.setLayoutManager(new LinearLayoutManager(notification1.this));
@@ -74,17 +110,79 @@ public class notification1 extends AppCompatActivity {
         rv_noti.addItemDecoration(spaceDecoration);
 
         // 어댑터 초기화
-        alrimAdapter = new AlrimAdapter();
+        //alrimAdapter = new AlrimAdapter();
         rv_noti.setAdapter(alrimAdapter);
+         */
 
-        // TODO : 알림 데이터 추가 (테스트 데이터)
-        List<AlrimItem> alrimItems = new ArrayList<>();
-        alrimItems.add(new AlrimItem("알림 제목 1", "몇시간 전", 0));
-        alrimItems.add(new AlrimItem("알림 제목 2", "몇시간 전", 1));
-        alrimItems.add(new AlrimItem("알림 제목 3", "몇시간 전", 0));
+        // 알림 데이터 추가
+        alrimItems = new ArrayList<>();
+        queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://15.164.199.177:5000/alrim";
+
+        //isAlrimDelete
+        if(isAlrim){
+            final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    Log.d("success!!", "success!! " + response.toString());
+
+                    //s3에서 기사 받아와 배열에 저장
+                    try {
+                        // 예시: 응답으로부터 필요한 데이터를 파싱하여 처리
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject jsonObject = response.getJSONObject(i);
+                            String id = jsonObject.getString("id");
+                            String title = jsonObject.getString("title");
+                            String content = jsonObject.getString("origin_content");
+                            String press = jsonObject.getString("media");
+                            String date = jsonObject.getString("date");
+                            String img = jsonObject.getString("img");
+                            String summary=jsonObject.getString("summary");
+                            String key=jsonObject.getString("key");
+                            String reporter = jsonObject.getString("reporter");
+                            String mediaImg = jsonObject.getString("media_img");
+                            int type = jsonObject.getInt("type");
+
+                            // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
+                            AlrimItem alrimData = new AlrimItem(id,title,content,press,date,img,summary,key,reporter,mediaImg,type);
+                            alrimItems.add(alrimData);
+                            Log.d("test!!!!",alrimItems.toString());
+                        }
+
+                        LinearLayoutManager layoutManager=new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+                        RecyclerView recyclerView=findViewById(R.id.rv_noti);
+                        recyclerView.setLayoutManager(layoutManager);
+                        AlrimAdapter adapter=new AlrimAdapter(alrimItems);
+                        recyclerView.setAdapter(adapter);
+
+                    } catch (Exception e) {
+                        Log.d("test~!",e.toString());
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("fail!!",error.toString());
+                }
+            });
+
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+
+            request.setShouldCache(false);
+            queue.add(request);
+        }
+        else{
+            alrimImage.setVisibility(View.VISIBLE);
+            alrimText.setVisibility(View.VISIBLE);
+        }
 
         // 어댑터에 데이터 설정
-        alrimAdapter.setAlrimItems(alrimItems);
+        //alrimAdapter.setAlrimItems(alrimItems);
 
         /*
         // 알림 데이터가 있다면 프래그먼트를 표시하는 메서드 호출

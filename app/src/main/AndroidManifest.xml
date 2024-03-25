@@ -116,6 +116,9 @@
         <activity
             android:name=".ProfileActivity"
             android:exported="true" />
+        <activity
+            android:name=".AlrimSetting"
+            android:exported="true" />
     </application>
 
 </manifest>

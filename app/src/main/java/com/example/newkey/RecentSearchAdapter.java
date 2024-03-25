@@ -1,6 +1,7 @@
 package com.example.newkey;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,9 +38,11 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapte
     public static final String preference = "newkey";
     RequestQueue queue;
     String email;
+    Context context;
 
     // 데이터 리스트를 여기에 추가해야 합니다.
-    public RecentSearchAdapter(List<String> recentSearchList) {
+    public RecentSearchAdapter(Context context,List<String> recentSearchList) {
+        this.context=context;
         this.recentSearchList = recentSearchList;
     }
 
@@ -58,6 +61,16 @@ public class RecentSearchAdapter extends RecyclerView.Adapter<RecentSearchAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String searchItem = recentSearchList.get(position);
         holder.textSearch.setText(searchItem);
+
+        holder.textSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SearchViewActivity.class);
+                intent.putExtra("search", holder.textSearch.getText().toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
 
         // 삭제 버튼 클릭 이벤트 처리
         holder.buttonDelete.setOnClickListener(v -> {

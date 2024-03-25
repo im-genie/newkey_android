@@ -39,7 +39,7 @@ public class RecentSearchFragment extends Fragment {
         recentSearchList = new ArrayList<>(); // TODO : 여기에 실제 데이터를 가져와서 넣어주세요
 
         // 어댑터를 생성하고 RecyclerView에 설정
-        adapter = new RecentSearchAdapter(recentSearchList);
+        adapter = new RecentSearchAdapter(getContext(),recentSearchList);
         recyclerViewRecentSearch.setAdapter(adapter);
 
         // 테스트 데이터 추가
