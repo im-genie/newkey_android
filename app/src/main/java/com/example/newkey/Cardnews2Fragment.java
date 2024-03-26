@@ -1,64 +1,154 @@
 package com.example.newkey;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Cardnews2Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Cardnews2Fragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    RequestQueue queue;
+    ImageView imageView,content;
+    CircleImageView mediaCircleImg;
+    TextView when,where,who,how,what,why;
+    TextView titleText,dateText,reporterText,publisherText;
+    String fiveWOneHUrl="http://15.164.199.177:5000/5w1h";
+    String keyword;
+    news1_item newsData;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Cardnews2Fragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Cardnews2Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Cardnews2Fragment newInstance(String param1, String param2) {
-        Cardnews2Fragment fragment = new Cardnews2Fragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    // 키워드 전달받는 생성자
+    public Cardnews2Fragment(String kw) {
+        this.keyword = kw;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ViewGroup view=(ViewGroup) inflater.inflate(R.layout.fragment_cardnews2, container, false);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cardnews2, container, false);
+        titleText=view.findViewById(R.id.title);
+        dateText=view.findViewById(R.id.date);
+        content=view.findViewById(R.id.content);
+        reporterText=view.findViewById(R.id.reporter);
+        publisherText=view.findViewById(R.id.publisher);
+        imageView=view.findViewById(R.id.imageView);
+        mediaCircleImg=view.findViewById(R.id.mediaCircleImg);
+
+        when=view.findViewById(R.id.when);
+        where=view.findViewById(R.id.where);
+        who=view.findViewById(R.id.who);
+        how=view.findViewById(R.id.how);
+        what=view.findViewById(R.id.what);
+        why=view.findViewById(R.id.why);
+
+        queue = Volley.newRequestQueue(view.getContext());
+        String url = "http://15.164.199.177:5000/hot5";
+
+        final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("res!!",response);
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    JSONObject jsonObject = jsonArray.getJSONObject(1);
+
+                    String id = jsonObject.getString("id");
+                    String title = jsonObject.getString("title");
+                    String content = jsonObject.getString("origin_content");
+                    String press = jsonObject.getString("media");
+                    String date = jsonObject.getString("date");
+                    String img = jsonObject.getString("img");
+                    String summary = jsonObject.getString("summary");
+                    String key = jsonObject.getString("key");
+                    String reporter = jsonObject.getString("reporter");
+                    String mediaImg = jsonObject.getString("media_img");
+
+                    // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
+                    newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
+
+                    titleText.setText(newsData.getTitle());
+                    dateText.setText(newsData.getDate());
+                    reporterText.setText(newsData.getReporter()+" 기자");
+                    publisherText.setText(newsData.getPublisher());
+
+                    Glide.with(view.getContext()).load(mediaImg).into(mediaCircleImg);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error);
+            }
+        }){
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("keyword", keyword); // 로그인 아이디로 바꾸기
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        queue.add(request);
+
+        //기사 전문
+        content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), news3_activity.class);
+                Log.d("newsId",newsData.getId());
+                intent.putExtra("id", newsData.getId());
+                intent.putExtra("title", newsData.getTitle());
+                intent.putExtra("content", newsData.getContent());
+                intent.putExtra("publisher", newsData.getPublisher());
+                intent.putExtra("reporter", newsData.getReporter());
+                intent.putExtra("date", newsData.getDate());
+                intent.putExtra("img", newsData.getImg());
+                intent.putExtra("summary", newsData.getSummary());
+                intent.putExtra("key", newsData.getKey());
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        return view;
     }
 }

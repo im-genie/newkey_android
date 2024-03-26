@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,10 +13,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewKey"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
-            android:name=".MainActivity"
+            android:name=".PopularKeywordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SearchViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LogoActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,77 +30,95 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".news1_activity"/>
-        <activity android:name=".news2_politics"/>
-        <activity android:name=".news2_economy"/>
-        <activity android:name=".news2_society"/>
-        <activity android:name=".news2_entertainment"/>
-        <activity android:name=".news2_living"/>
-        <activity android:name=".news2_world"/>
-        <activity android:name=".news2_it"/>
-        <activity android:name=".news2_opinion"/>
-        <activity android:name=".news2_sports"/>
-        <activity android:name=".news3_activity"/>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ConsentActivity"
+            android:exported="true" />
+        <activity
+            android:name=".EmailRegisterActivity1"
+            android:exported="true" />
+        <activity
+            android:name=".EmailRegisterActivity2"
+            android:exported="true" />
+        <activity
+            android:name=".PwRegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".PwFindActivity1"
+            android:exported="true" />
+        <activity
+            android:name=".PwFindActivity2"
+            android:exported="true" />
+        <activity
+            android:name=".NicknameActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CatActivity1"
+            android:exported="true" />
+        <activity
+            android:name=".CatActivity2"
+            android:exported="true" />
+        <activity
+            android:name=".news1_activity"
+            android:exported="true" /> <!-- <activity android:name=".news1_activity"/> -->
+        <activity android:name=".news2_politics" />
+        <activity android:name=".news2_economy" />
+        <activity android:name=".news2_society" />
+        <activity android:name=".news2_living" />
+        <activity android:name=".news2_world" />
+        <activity android:name=".news2_it" />
+        <activity android:name=".news2_entertainment" />
+        <activity android:name=".news2_opinion" />
+        <activity android:name=".news2_sports" />
+        <activity android:name=".news3_activity" />
+        <activity android:name=".notification1" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
         <activity
             android:name=".NotificationActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".SearchActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".NewsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".MypageActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".KeywordActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".RecommendationActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".LogoutActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ChangePasswordActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ViewHistoryActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ChooseTopicsActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ViewScrapActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ChangeIdActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".notification1"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AlrimSetting"
-            android:exported="false" />
-        <activity
-            android:name=".search1"
-            android:exported="false" />
-
-        <receiver
-            android:name=".notification1"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.example.newkey.NOTIFICATION_RECEIVED" />
-            </intent-filter>
-        </receiver>
+            android:exported="true" />
     </application>
 
 </manifest>
-
-
-

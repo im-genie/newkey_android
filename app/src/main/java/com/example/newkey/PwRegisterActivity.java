@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -19,7 +20,7 @@ import com.android.volley.toolbox.Volley;
 public class PwRegisterActivity extends AppCompatActivity {
     EditText pw,pwCheck;
     TextView pwRightText,pwSameText;
-    Button next;
+    ImageView next;
     private StringBuilder url;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
@@ -38,7 +39,7 @@ public class PwRegisterActivity extends AppCompatActivity {
         pwSameText.setText("비밀번호가 일치하지 않습니다");
         next=findViewById(R.id.next);
         next.setClickable(false);
-        queue= Volley.newRequestQueue(this);
+        queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
 
         pw.addTextChangedListener(new TextWatcher() {

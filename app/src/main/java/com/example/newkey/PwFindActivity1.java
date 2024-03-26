@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.io.UnsupportedEncodingException;
 
 public class PwFindActivity1 extends AppCompatActivity {
     private EditText email1,email2,code;
-    private Button codeSend,codeCheck,next;
+    private Button codeSend,codeCheck;
+    private ImageView next;
     private TextView emailDpCheckText;
     private String email;
     private StringBuilder url;
@@ -44,7 +46,6 @@ public class PwFindActivity1 extends AppCompatActivity {
 
         email1=findViewById(R.id.email1);
         email2=findViewById(R.id.email2);
-        emailDpCheckText=findViewById(R.id.emailDpCheckText);
         next=findViewById(R.id.next);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue= Volley.newRequestQueue(this);

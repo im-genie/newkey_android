@@ -1,8 +1,7 @@
 package com.example.newkey;
 
-import static com.google.android.material.internal.ViewUtils.dpToPx;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,35 +25,38 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.widget.PopupWindow;
 import android.view.ViewGroup.LayoutParams;
 import android.content.Context;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-
-    private RecommendationAdapter recommendationAdapter;
-    private List<RecommendationItem> newsItems;
-
+    private List<news1_item> recommendList;
     private boolean isOpened = false;
-
-    public HomeFragment() {
-    }
-
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    RequestQueue recommendQueue, hotQueue, nameQueue;
+    private SharedPreferences preferences;
+    public static final String preference = "newkey";
+    TextView userName,name;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,18 +72,131 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // 추천뉴스 - recyclerView 구현
-        recyclerView = view.findViewById(R.id.recommendation_recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        preferences = view.getContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
+        String email = preferences.getString("email", null);
+        userName = view.findViewById(R.id.userName);
+        name = view.findViewById(R.id.name);
 
-        newsItems = new ArrayList<>(); // newsItems.add(new NewsItem("제목", "언론사", "시간", "이미지 URL"));
-        newsItems.add(new RecommendationItem("중국 메인뉴스 등장한 AI 앵커…\"표정, 몸짓, 억양 성공적 구현\"\n", "더 차이나", "어제", "https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202402/14/a586f091-7a01-4a59-820a-7a065c761778.jpg"));
-        newsItems.add(new RecommendationItem("박성재 후보자, 절세 효과 누리면서 아내는 탈세 의혹 [뉴스AS]\n", "한겨례", "6시간 전", "https://flexible.img.hani.co.kr/flexible/normal/800/536/imgdb/original/2024/0214/20240214501487.jpg"));
-        newsItems.add(new RecommendationItem("'은퇴' 기보배 \"대한민국 양궁 선수로 산다는 건…\"\n", "연합뉴스 TV", "2시간 전", "https://yonhapnewstv-prod.s3.ap-northeast-2.amazonaws.com/article/AKR/20240214/AKR20240214141400641_01_i_P4.jpg"));
+        StringBuilder nameUrl = new StringBuilder();
+        nameUrl.append("http://13.124.230.98:8080/user/info").append("?email=").append(email);
+        nameQueue = Volley.newRequestQueue(view.getContext());
 
-        recommendationAdapter = new RecommendationAdapter(newsItems);
-        recyclerView.setAdapter(recommendationAdapter);
+        //사용자 프로필,이름 가져오기
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("email", email);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, nameUrl.toString(), jsonRequest, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("success", response.toString());
+                JSONObject result = null;
+
+                try {
+                    result = response.getJSONObject("result");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (result != null) {
+                        userName.setText(result.getString("name"));
+                        name.setText("뉴키는 " + result.getString("name") + "님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?");
+                    } else {
+                        Toast.makeText(getContext(), "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle error
+                Log.d("test", "Mypage error: " + error.toString());
+            }
+        });
+
+        //이 부분에 추가
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                100000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+        request.setShouldCache(false);
+        nameQueue.add(request);
+
+        recommendList = new ArrayList<>();
+        recommendQueue = Volley.newRequestQueue(view.getContext());
+        String recommendUrl = "http://15.164.199.177:5000/recommend";
+
+        //추천뉴스
+        final StringRequest recommendRequest=new StringRequest(Request.Method.POST, recommendUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("res",response);
+                JSONArray jsonArray = null;
+                try {
+                    jsonArray = new JSONArray(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String id = jsonObject.getString("id");
+                        String title = jsonObject.getString("title");
+                        String content = jsonObject.getString("origin_content");
+                        String press = jsonObject.getString("media");
+                        String date = jsonObject.getString("date");
+                        String img = jsonObject.getString("img");
+                        String summary=jsonObject.getString("summary");
+                        String key=jsonObject.getString("key");
+                        String reporter = jsonObject.getString("reporter");
+                        String mediaImg = jsonObject.getString("media_img");
+
+                        // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
+                        news1_item newsData = new news1_item(id, title, content, press, date, img, summary, key, reporter, mediaImg);
+                        recommendList.add(newsData);
+
+                        // 이후에 newsList를 사용하여 원하는 처리를 진행
+                        //Adapter
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                        RecyclerView recyclerView = view.findViewById(R.id.recommendation_recyclerview);
+                        recyclerView.setLayoutManager(layoutManager);
+                        RecommendationAdapter adapter = new RecommendationAdapter(recommendList);
+                        recyclerView.setAdapter(adapter);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("추천 오류",error.toString());
+            }
+        }){
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", email); // 로그인 아이디로 바꾸기
+                return params;
+            }
+        };
+
+        recommendRequest.setRetryPolicy(new DefaultRetryPolicy(
+                1000000, // 기본 타임아웃 시간을 조정
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 재시도 횟수
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT // 백오프 멀티플라이어
+        ));
+
+        recommendRequest.setShouldCache(false); // 캐시 사용 여부
+        recommendQueue.add(recommendRequest); // 올바른 변수명으로 수정
+
 
         // 추천뉴스 - 더보기 버튼
         LinearLayout layout_goto_recommendation = view.findViewById(R.id.layout_goto_recommendation);
@@ -185,6 +300,76 @@ public class HomeFragment extends Fragment {
         TextView top_4 = view.findViewById(R.id.top_4);
         TextView top_5 = view.findViewById(R.id.top_5);
 
+        // 실시간 인기 키워드 순위 열기 접기
+        TextView top2_1 = view.findViewById(R.id.top2_1);
+        TextView top2_2 = view.findViewById(R.id.top2_2);
+        TextView top2_3 = view.findViewById(R.id.top2_3);
+        TextView top2_4 = view.findViewById(R.id.top2_4);
+        TextView top2_5 = view.findViewById(R.id.top2_5);
+        TextView top2_6 = view.findViewById(R.id.top2_6);
+        TextView top2_7 = view.findViewById(R.id.top2_7);
+        TextView top2_8 = view.findViewById(R.id.top2_8);
+        TextView top2_9 = view.findViewById(R.id.top2_9);
+        TextView top2_10 = view.findViewById(R.id.top2_10);
+
+        hotQueue = Volley.newRequestQueue(view.getContext());
+        String hotUrl = "http://15.164.199.177:5000/hot";
+
+        JsonArrayRequest hotRequest = new JsonArrayRequest(Request.Method.GET, hotUrl, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    // JSON 배열에서 각각의 단어 추출
+                    String t1 = response.getString(0);
+                    String t2 = response.getString(1);
+                    String t3 = response.getString(2);
+                    String t4 = response.getString(3);
+                    String t5 = response.getString(4);
+                    String t2_6 = response.getString(5);
+                    String t2_7 = response.getString(6);
+                    String t2_8 = response.getString(7);
+                    String t2_9 = response.getString(8);
+                    String t2_10 = response.getString(9);
+
+                    // 각 TextView에 설정
+                    top_1.setText(t1);
+                    top_2.setText(t2);
+                    top_3.setText(t3);
+                    top_4.setText(t4);
+                    top_5.setText(t5);
+
+                    top2_1.setText(t1);
+                    top2_2.setText(t2);
+                    top2_3.setText(t3);
+                    top2_4.setText(t4);
+                    top2_5.setText(t5);
+                    top2_6.setText(t2_6);
+                    top2_7.setText(t2_7);
+                    top2_8.setText(t2_8);
+                    top2_9.setText(t2_9);
+                    top2_10.setText(t2_10);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // 에러 처리
+            }
+        });
+
+        hotRequest.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        hotRequest.setShouldCache(false);
+        hotQueue.add(hotRequest);
+
+
         top_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,12 +431,96 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // 실시간 인기 키워드 순위 열기 접기
-        FrameLayout keyword_6 = view.findViewById(R.id.keyword_6);
-        FrameLayout keyword_7 = view.findViewById(R.id.keyword_7);
-        FrameLayout keyword_8 = view.findViewById(R.id.keyword_8);
-        FrameLayout keyword_9 = view.findViewById(R.id.keyword_9);
-        FrameLayout keyword_10 = view.findViewById(R.id.keyword_10);
+        //실시간 인기 키워드 순위
+        top2_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_1.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_2.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_3.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_4.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_5.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_6.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_7.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_8.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_9.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        top2_10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
+                intent.putExtra("popular", top2_10.getText().toString());
+                startActivity(intent);
+            }
+        });
 
         TextView keyword_open_close_text = view.findViewById(R.id.keyword_open_close_text);
         ImageView keyword_open_close_image = view.findViewById(R.id.keyword_open_close_image);
@@ -260,6 +529,11 @@ public class HomeFragment extends Fragment {
 
         LinearLayout keyword_open_close = view.findViewById(R.id.keyword_open_close);
 
+        FrameLayout keyword_6 = view.findViewById(R.id.keyword_6);
+        FrameLayout keyword_7 = view.findViewById(R.id.keyword_7);
+        FrameLayout keyword_8 = view.findViewById(R.id.keyword_8);
+        FrameLayout keyword_9 = view.findViewById(R.id.keyword_9);
+        FrameLayout keyword_10 = view.findViewById(R.id.keyword_10);
 
         keyword_open_close.setOnClickListener(new View.OnClickListener() {
             @Override

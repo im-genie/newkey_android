@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsentActivity extends AppCompatActivity {
-    Button next;
+    ImageView next;
     List<ImageView> imageViewCheckedList;
     List<ImageView> imageViewUncheckedList;
 
