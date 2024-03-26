@@ -4,31 +4,40 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp"
-    android:layout_marginRight="8dp">
+    android:layout_marginRight="8dp"
+    app:cardElevation="0dp">
     <ImageView
         android:id="@+id/news1_hot_item"
         android:layout_width="220dp"
         android:layout_height="132dp"
         android:src="@drawable/test1"
         android:scaleType="centerCrop" />
-    <TextView
-        android:id="@+id/news1_hot_item_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="기사 제목"
-        android:textColor="@color/gray_100"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:fontFamily="@font/pretendardregular"
-        android:textSize="12dp"
-        android:maxLines="2"/>
-    <ImageView
-        android:id="@+id/news1_bookmark"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/bookmark_unchecked"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="184dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/black_gradation"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/news1_hot_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기사 제목"
+            android:textColor="@color/gray_100"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/pretendardregular"
+            android:textSize="12dp"
+            android:maxLines="2"/>
+        <ImageView
+            android:id="@+id/news1_bookmark"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/bookmark_unchecked"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="184dp"/>
+    </FrameLayout>
 </androidx.cardview.widget.CardView>
