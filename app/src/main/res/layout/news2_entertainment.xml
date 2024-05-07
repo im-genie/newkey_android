@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HOT 생활 뉴스"
+            android:text="HOT 연예 뉴스"
             android:textColor="@color/gray_100"
             android:layout_marginTop="45dp"
             android:layout_marginBottom="21dp"

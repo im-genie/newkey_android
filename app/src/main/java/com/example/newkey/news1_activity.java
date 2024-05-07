@@ -2,12 +2,15 @@ package com.example.newkey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -20,9 +23,10 @@ public class news1_activity extends AppCompatActivity {
     private ViewPager2 viewPagerHotNews; // HOT 뉴스를 위한 ViewPager2
     private TabLayout tabLayout;
     private RecyclerView recyclerView; // 가로 RecyclerView
+    private RecyclerView recyclerView_vertical; //세로 Recyclerview
 
     private TextView news1Information1;
-    private ImageView news1Information2;
+    private ImageView news1Information2, news1Logo, news1Notification, news1Search;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +36,11 @@ public class news1_activity extends AppCompatActivity {
         viewPagerHotNews = findViewById(R.id.viewPagerHotNews);
         viewPagerNews = findViewById(R.id.viewPagerNews);
         recyclerView = findViewById(R.id.news1_hot_recyclerview);
-        tabLayout = findViewById(R.id.toolbar);
+        recyclerView_vertical = findViewById(R.id.news1_recyclerview);
 
+        recyclerView_vertical.setNestedScrollingEnabled(false); //세로 스크롤 막기
+
+        tabLayout = findViewById(R.id.toolbar);
 
         viewPagerNews.setAdapter(new news1_fragment_adapter(this));
         viewPagerHotNews.setAdapter(new news1_hot_fragment_adapter(this));
@@ -44,8 +51,13 @@ public class news1_activity extends AppCompatActivity {
         news1Information1.setOnClickListener(getMoreClickListener(tabLayout.getSelectedTabPosition()));
         news1Information2.setOnClickListener(getMoreClickListener(tabLayout.getSelectedTabPosition()));
 
+        news1Logo=findViewById(R.id.news1_logo);
+
+        news1Search=findViewById(R.id.news1_search);
+        news1Notification=findViewById(R.id.news1_notification);
+
         new TabLayoutMediator(tabLayout, viewPagerNews, (tab, position) -> {
-            String[] tabTitles = {"정치", "경제", "사회", "생활", "세계", "IT", "오피니언", "스포츠"};
+            String[] tabTitles = {"정치", "경제", "사회","연예", "생활", "세계", "IT", "오피니언", "스포츠"};
             tab.setText(tabTitles[position]);
         }).attach();
 
@@ -54,6 +66,8 @@ public class news1_activity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 tabLayout.selectTab(tabLayout.getTabAt(position));
+
+                scrollToTopOfNestedScrollView(); //viewpager 동작할 때 마다 맨 위로 화면 옮기기
             }
         });
 
@@ -97,15 +111,45 @@ public class news1_activity extends AppCompatActivity {
             }
         });
 
+        news1Logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(news1_activity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        news1Logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(news1_activity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        news1Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(news1_activity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        news1Notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(news1_activity.this, NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
 
         ImageView button_home = findViewById(R.id.button_home);
         ImageView button_feed = findViewById(R.id.button_feed);
         ImageView button_person = findViewById(R.id.button_person);
 
 
-
         // 네비게이션 바: Home
-
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,19 +207,29 @@ public class news1_activity extends AppCompatActivity {
                 return v -> startActivity(new Intent(this, news2_economy.class));
             case 2: // 사회
                 return v -> startActivity(new Intent(this, news2_society.class));
-            case 3: // 생활
+            case 3: // 연예
+                return v -> startActivity(new Intent(this, news2_entertainment.class));
+            case 4: // 생활
                 return v -> startActivity(new Intent(this, news2_living.class));
-            case 4: // 세계
+            case 5: // 세계
                 return v -> startActivity(new Intent(this, news2_world.class));
-            case 5: // IT
+            case 6: // IT
                 return v -> startActivity(new Intent(this, news2_it.class));
-            case 6: // 오피니언
+            case 7: // 오피니언
                 return v -> startActivity(new Intent(this, news2_opinion.class));
-            case 7: // 스포츠
+            case 8: // 스포츠
                 return v -> startActivity(new Intent(this, news2_sports.class));
             default:
                 // 기본적으로 아무 동작도 하지 않는 리스너 반환
-                return v -> {};
+                return v -> {
+                };
+        }
+    }
+
+    private void scrollToTopOfNestedScrollView() {
+        NestedScrollView nestedScrollView = findViewById(R.id.news1_scroll);
+        if (nestedScrollView != null) {
+            nestedScrollView.scrollTo(0, 0);  // NestedScrollView의 스크롤 위치를 맨 위로 설정
         }
     }
 }
