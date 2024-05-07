@@ -1,18 +1,19 @@
 package com.example.newkey;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConsentActivity extends AppCompatActivity {
-    Button next;
     List<ImageView> imageViewCheckedList;
     List<ImageView> imageViewUncheckedList;
 
@@ -21,10 +22,25 @@ public class ConsentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consent);
 
-        next = findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
+        // 버튼과 텍스트, 이미지 뷰 찾기
+        final ConstraintLayout nextButtonLayout = findViewById(R.id.next);
+        final TextView nextButtonText = findViewById(R.id.agree_text);
+        final ImageView nextButtonImage = findViewById(R.id.check_image);
+
+        // next 버튼 클릭 리스너 설정
+        nextButtonLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 배경색 변경
+                nextButtonLayout.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
+
+                // 텍스트 색상 변경
+                nextButtonText.setTextColor(getResources().getColor(R.color.gray_600));
+
+                // 이미지 변경
+                nextButtonImage.setImageResource(R.drawable.check_gray);
+
+                // 새 액티비티로 이동
                 Intent intent = new Intent(getApplicationContext(), EmailRegisterActivity1.class);
                 startActivity(intent);
             }

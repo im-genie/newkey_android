@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +31,7 @@ import java.io.UnsupportedEncodingException;
 
 public class EmailRegisterActivity2 extends AppCompatActivity {
     EditText code;
-    Button codeCheck,next;
+    Button codeCheck, next;
     TextView codeRightText;
     private StringBuilder url;
     private SharedPreferences preferences;
@@ -40,12 +43,37 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_register2);
 
-        code=findViewById(R.id.code);
-        codeCheck=findViewById(R.id.codeCheck);
-        codeRightText=findViewById(R.id.codeRightText);
-        next=findViewById(R.id.next);
-        preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        queue= Volley.newRequestQueue(this);
+        code = findViewById(R.id.code);
+        codeCheck = findViewById(R.id.codeCheck);
+        codeRightText = findViewById(R.id.codeRightText);
+        next = findViewById(R.id.next);
+        preferences = getSharedPreferences(preference, Context.MODE_PRIVATE);
+        queue = Volley.newRequestQueue(this);
+
+        // 인증코드 확인 버튼의 초기 상태 설정
+        codeCheck.setEnabled(false);
+        codeCheck.setBackgroundColor(Color.LTGRAY); // 비활성화 시 배경색 설정
+
+        // 인증코드 입력 내용 변경 감지
+        code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // 인증번호가 6자리인 경우만 버튼 활성화
+                if (charSequence.length() == 6) {
+                    codeCheck.setEnabled(true);
+                    codeCheck.setBackgroundColor(Color.WHITE); // 활성화 시 배경색 설정
+                } else {
+                    codeCheck.setEnabled(false);
+                    codeCheck.setBackgroundColor(Color.LTGRAY); // 비활성화 시 배경색 설정
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
 
         // 인증코드 확인 버튼
         codeCheck.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +140,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                     }
                 });
 
-                request.setShouldCache(false); //이전 결과가 있어도 새로 요청하여 응답을 보여준다.
+                request.setShouldCache(false); // 이전 결과가 있어도 새로 요청하여 응답을 보여준다.
                 request.setRetryPolicy(new DefaultRetryPolicy(100000000,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
