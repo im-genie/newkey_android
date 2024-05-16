@@ -8,9 +8,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class LogoActivity extends AppCompatActivity {
-    Button login,register;
+    Button login;
+    TextView register;
     SharedPreferences preferences;
     public static final String preference = "newkey";
     long userIdx = 0;
