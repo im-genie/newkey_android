@@ -27,6 +27,8 @@ import java.io.UnsupportedEncodingException;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 public class MypageActivity extends Activity {
 
     private SharedPreferences preferences;
