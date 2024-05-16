@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -28,6 +29,7 @@ import java.io.UnsupportedEncodingException;
 public class LoginActivity extends AppCompatActivity {
     EditText email1,email2,pw;
     Button login,pwFind;
+    ImageView back;
     RequestQueue queue;
     SharedPreferences preferences;
     String email;
@@ -43,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         email2=findViewById(R.id.email2);
         pw=findViewById(R.id.pw);
         pwFind=findViewById(R.id.pwFind);
+        back=findViewById(R.id.back);
         queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         String url="http://13.124.230.98:8080/user/login";
@@ -113,6 +116,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), PwFindActivity1.class);
+                startActivity(intent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LogoActivity.class);
                 startActivity(intent);
             }
         });

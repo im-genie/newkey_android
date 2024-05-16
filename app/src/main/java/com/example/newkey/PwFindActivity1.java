@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 public class PwFindActivity1 extends AppCompatActivity {
     private EditText email1,email2,code;
     private Button codeSend,codeCheck;
-    private ImageView next;
+    private ImageView next, codeRightView;
     private TextView emailDpCheckText;
     private String email;
     private StringBuilder url;
@@ -54,6 +54,8 @@ public class PwFindActivity1 extends AppCompatActivity {
         codeSend=findViewById(R.id.codeSend);
         codeCheck=findViewById(R.id.codeCheck);
         codeRightText=findViewById(R.id.codeRightText);
+        codeRightView=findViewById(R.id.codeRightView);
+
         next=findViewById(R.id.next);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue=Volley.newRequestQueue(this);
@@ -160,8 +162,9 @@ public class PwFindActivity1 extends AppCompatActivity {
 
                                 // 인증코드 맞는 경우
                                 if (isCorrected) {
-                                    codeRightText.setTextColor(getResources().getColor(R.color.green));
+                                    codeRightText.setTextColor(getResources().getColor(R.color.key_green_400));
                                     codeRightText.setText("인증이 완료되었습니다");
+                                    codeRightView.setVisibility(View.VISIBLE);
                                     next.setClickable(true);
                                 }
                             } else {
