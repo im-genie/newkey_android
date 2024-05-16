@@ -7,14 +7,25 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class news2_entertainment extends AppCompatActivity {
     private ImageView news2Back;
-    private RecyclerView recyclerView;
-    private news2_adapter adapter;
-    private List<news2_item> news2Items;
+    private List<news1_item> itemList;
+    RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +33,6 @@ public class news2_entertainment extends AppCompatActivity {
         setContentView(R.layout.news2_entertainment);
 
         news2Back = findViewById(R.id.news2_back);
-        recyclerView = findViewById(R.id.news2_recyclerview);
-
         news2Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,21 +41,61 @@ public class news2_entertainment extends AppCompatActivity {
             }
         });
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemList = new ArrayList<>();
+        queue = Volley.newRequestQueue(getApplicationContext());
+        String url = "http://15.164.199.177:5000/politic";
 
-        news2Items = loadNews2Items();
+        final JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //s3에서 기사 받아와 배열에 저장
+                try {
+                    // 예시: 응답으로부터 필요한 데이터를 파싱하여 처리
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String id = jsonObject.getString("id");
+                        String title = jsonObject.getString("title");
+                        String content = jsonObject.getString("origin_content");
+                        String press = jsonObject.getString("media");
+                        String date = jsonObject.getString("date");
+                        String img = jsonObject.getString("img");
+                        String summary = jsonObject.getString("summary");
+                        String key = jsonObject.getString("key");
+                        String reporter = jsonObject.getString("reporter");
+                        String mediaImg = jsonObject.getString("media_img");
 
-        adapter = new news2_adapter(news2Items);
-        recyclerView.setAdapter(adapter);
-    }
+                        // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
+                        news1_item newsData = new news1_item(id, title, content, press, date, img, summary, key, reporter, mediaImg);
+                        itemList.add(newsData);
 
-    private List<news2_item> loadNews2Items() {
-        List<news2_item> items2 = new ArrayList<>();
-        items2.add(new news2_item("연예 제목1", "출판사1", "시간1", "https://a-static.besthdwallpaper.com/nct-127-jaehyun-neo-zone-album-shoot-wallpaper-2560x1600-113961_7.jpg"));
-        items2.add(new news2_item("연예 제목2", "출판사2", "시간2", "https://a-static.besthdwallpaper.com/nct-127-jaehyun-neo-zone-album-shoot-wallpaper-2560x1600-113961_7.jpg"));
-        items2.add(new news2_item("연예 제목1", "출판사1", "시간1", "https://a-static.besthdwallpaper.com/nct-127-jaehyun-neo-zone-album-shoot-wallpaper-2560x1600-113961_7.jpg"));
-        items2.add(new news2_item("연예 제목2", "출판사2", "시간2", "https://a-static.besthdwallpaper.com/nct-127-jaehyun-neo-zone-album-shoot-wallpaper-2560x1600-113961_7.jpg"));
-        return items2;
+                        // 이후에 newsList를 사용하여 원하는 처리를 진행
+                        //Adapter
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+                        RecyclerView recyclerView = findViewById(R.id.news2_recyclerview);
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        recyclerView.setLayoutManager(layoutManager);
+                        news2_adapter adapter = new news2_adapter(itemList);
+                        recyclerView.setAdapter(adapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error);
+            }
+        });
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        queue.add(request);
     }
 }

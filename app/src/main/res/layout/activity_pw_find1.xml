@@ -18,7 +18,6 @@
         android:gravity="bottom"
         >
 
-
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="26dp"
@@ -30,8 +29,8 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="46dp"
-            android:layout_weight="1"
             android:layout_marginStart="10dp"
+            android:layout_weight="1"
             android:text="비밀번호 변경"
             android:textColor="@color/gray_100"
             android:textSize="24dp" />
@@ -114,6 +113,7 @@
                     android:background="@drawable/rounded_corner_15"
                     android:backgroundTint="@color/gray_400"
                     android:hint="naver.com"
+                    android:textColor="@color/gray_100"
                     android:textColorHint="@color/gray_300"
                     android:textSize="14dp" />
 
@@ -166,6 +166,7 @@
                 android:backgroundTint="@color/gray_400"
                 android:hint="인증코드 6자리"
                 android:paddingStart="16dp"
+                android:textColor="@color/gray_100"
                 android:textColorHint="@color/gray_300"
                 android:textSize="14dp" />
 
@@ -203,12 +204,11 @@
                 android:id="@+id/codeRightText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="인증번호가 일치합니다."
                 android:layout_marginStart="4dp"
-                android:textColor="@color/key_green_400"
-                android:textSize="10dp"
-                />
+                android:layout_weight="1"
+                android:text="인증번호가 일치하지 않습니다."
+                android:textColor="@color/red"
+                android:textSize="10dp" />
 
         </LinearLayout>
 
@@ -252,7 +252,6 @@
 
 
         <LinearLayout
-            android:id="@+id/next"
             android:layout_width="87dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
@@ -265,7 +264,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
-                android:id="@+id/imageView4"
+                android:id="@+id/next"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_weight="1"

@@ -111,6 +111,7 @@
                     android:layout_height="wrap_content"
                     android:hint="naver.com"
                     android:fontFamily="@font/pretendardregular"
+                    android:textColor="@color/gray_100"
                     android:backgroundTint="@color/gray_400"
                     android:background="@drawable/rounded_corner_15"
                     android:textColorHint="@color/gray_300"
@@ -140,16 +141,24 @@
             android:layout_width="230dp"
             android:layout_height="20dp"
             android:gravity="center"
-            android:text="사용 가능한 이메일입니다."
+            android:text=""
             android:textColor="@color/key_green_400"
             android:layout_marginTop="10dp"
             android:textSize="12dp"
             android:fontFamily="@font/pretendardregular"
             android:layout_gravity="center" />
 
-
-
-
+          <ImageView
+            android:id="@+id/next"
+            android:layout_width="87dp"
+            android:layout_height="40dp"
+            android:background="@drawable/rounded_corner_15"
+            android:backgroundTint="@color/gray_400"
+            android:gravity="center"
+            android:layout_gravity="right"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            app:srcCompat="@drawable/back" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout

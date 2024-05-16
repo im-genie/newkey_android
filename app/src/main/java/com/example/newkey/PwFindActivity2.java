@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,10 +31,9 @@ import java.io.UnsupportedEncodingException;
 
 public class PwFindActivity2 extends AppCompatActivity {
     EditText pw,pwCheck;
-    TextView pwRightText,pwSameText;
-    Button next;
-    private StringBuilder url;
-    private SharedPreferences preferences;
+    TextView pwSameText,next;
+    StringBuilder url;
+    SharedPreferences preferences;
     RequestQueue queue;
 
     @Override

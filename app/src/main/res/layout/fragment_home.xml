@@ -26,6 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="은경"
@@ -55,18 +56,20 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="뉴키는 은경님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?"
-                    android:fontFamily="@font/pretendardregular"
-                    android:textSize="12dp"
-                    android:textColor="@color/gray_100"
-                    android:lineSpacingMultiplier="1.2"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginBottom="19dp">
-                </TextView>
+                    android:layout_marginBottom="19dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="뉴키는 은경님을 위한 뉴스를 추천해 드려요. \n관심사를 설정하러 가볼까요?"
+                    android:textColor="@color/gray_100"
+                    android:textSize="12dp"></TextView>
+
                 <LinearLayout
                     android:id="@+id/layout_goto_mypage"
                     android:layout_width="wrap_content"
@@ -341,7 +344,8 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:src="@drawable/button_down"
-                        android:layout_gravity="center"></ImageView>
+                        android:layout_gravity="center">
+                    </ImageView>
                 </LinearLayout>
             </FrameLayout>
             <View
@@ -372,6 +376,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="하네다공항 항공기 충돌"
@@ -379,7 +384,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -397,6 +403,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -404,7 +411,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="54dp">
+                        android:layout_marginLeft="54dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -422,6 +430,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -429,7 +438,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -447,6 +457,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -454,7 +465,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -472,6 +484,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -479,7 +492,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -498,6 +512,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -505,7 +520,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -524,6 +540,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -531,7 +548,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -550,6 +568,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -557,7 +576,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -576,6 +596,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -583,7 +604,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <FrameLayout
@@ -602,6 +624,7 @@
                         android:layout_marginLeft="24dp">
                     </TextView>
                     <TextView
+                        android:id="@+id/top2_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="어쩌구 저쩌구 안녕하세요"
@@ -609,7 +632,8 @@
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
                         android:layout_gravity="left|center"
-                        android:layout_marginLeft="55dp">
+                        android:layout_marginLeft="55dp"
+                        android:clickable="true">
                     </TextView>
                 </FrameLayout>
                 <View

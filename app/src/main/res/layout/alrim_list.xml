@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/alrim_list"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:clipToOutline="true"
+    android:background="@drawable/round2"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal" >
+
+        <View
+            android:id="@+id/journalism"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/journalism" />
+
+        <TextView
+            android:id="@+id/rv_noti_yesterday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/pretendardmedium"
+            android:gravity="top"
+            android:text="어제의 HOT 뉴스"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/alrim_time_yesterday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendardregular"
+            android:text="3시간 전"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="12dp"
+            android:textColor="#9AA0A6"
+            android:textSize="10dp" />
+
+        <View
+            android:id="@+id/readcheck"
+            android:layout_width="4dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="11dp"
+            android:background="@drawable/ellipse" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/rv_noti_content_yesterday"
+            android:layout_width="267dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="38dp"
+            android:layout_marginTop="0dp"
+            android:fontFamily="@font/pretendardmedium"
+            android:gravity="center_vertical"
+            android:text="'의료쇼핑 막아라'...한해 뭐시기"
+            android:textColor="#9AA0A6"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
