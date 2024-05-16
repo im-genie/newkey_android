@@ -80,12 +80,12 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
                                 // 이메일 중복 여부에 따라 처리
                                 if (emailExists) {
                                     // 이메일이 중복되면
-                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.red));
+                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.key_red_100));
                                     emailDpCheckText.setText("중복된 이메일입니다");
                                     emailDpCheckText.setClickable(false);
                                 } else {
                                     // 이메일이 중복되지 않으면
-                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.green));
+                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.key_green_400));
                                     emailDpCheckText.setText("사용 가능한 이메일입니다");
                                     next.setClickable(true);
                                 }

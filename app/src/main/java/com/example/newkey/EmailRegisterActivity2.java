@@ -82,14 +82,14 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
 
                                 // 인증코드 맞는 경우
                                 if (isCorrected) {
-                                    codeRightText.setTextColor(getResources().getColor(R.color.green));
+                                    codeRightText.setTextColor(getResources().getColor(R.color.key_green_400));
                                     codeRightText.setText("인증이 완료되었습니다");
                                     next.setClickable(true);
                                 }
                             } else {
                                 next.setClickable(false);
                                 Log.d("test", "인증코드 맞지 않음");
-                                Toast.makeText(EmailRegisterActivity2.this, "인증코드가 맞지 않습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EmailRegisterActivity2.this, "인증코드가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

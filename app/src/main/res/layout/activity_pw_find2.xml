@@ -113,11 +113,13 @@
             app:layout_constraintTop_toBottomOf="@+id/pw">
 
             <ImageView
+                android:id="@+id/pwRightView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/checkpw" />
+                app:srcCompat="@drawable/checkpw"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/pwRightText"
@@ -125,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:text="올바른 형태의 비밀번호입니다."
+                android:text=""
                 android:textColor="@color/key_green_400"
                 android:textSize="10dp" />
         </LinearLayout>
@@ -163,12 +165,13 @@
             android:layout_marginTop="12dp">
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/pwSameView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/checkpw"
-                android:layout_marginTop="1dp"/>
+                android:layout_marginTop="1dp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/pwSameText"
@@ -176,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_weight="1"
-                android:text="비밀번호가 일치합니다."
+                android:text=""
                 android:textColor="@color/key_green_400"
                 android:textSize="10dp" />
         </LinearLayout>

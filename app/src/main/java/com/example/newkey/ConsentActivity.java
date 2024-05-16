@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConsentActivity extends AppCompatActivity {
-    ImageView next;
+    ImageView back, next;
     List<ImageView> imageViewCheckedList;
     List<ImageView> imageViewUncheckedList;
 
@@ -20,6 +20,15 @@ public class ConsentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consent);
+
+        back=findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LogoActivity.class);
+                startActivity(intent);
+            }
+        });
 
         next = findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {

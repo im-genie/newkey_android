@@ -17,6 +17,7 @@
     <color name="key_yellow_300">#EFFFB0</color>
     <color name="key_yellow_200">#F5FFCC</color>
     <color name="key_yellow_100">#FBFFE9</color>
+    <color name="key_red_100">#E95454</color>
     <color name="gray_600">#171717</color>
     <color name="gray_500">#2D2F32</color>
     <color name="gray_500_40">#662D2F32</color>

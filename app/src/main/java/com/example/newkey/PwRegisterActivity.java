@@ -19,8 +19,8 @@ import com.android.volley.toolbox.Volley;
 
 public class PwRegisterActivity extends AppCompatActivity {
     EditText pw,pwCheck;
-    TextView pwRightText,pwSameText;
-    ImageView next;
+    TextView pwRightText, pwSameText;
+    ImageView next, pwRightView, pwSameView;
     private StringBuilder url;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
@@ -33,10 +33,17 @@ public class PwRegisterActivity extends AppCompatActivity {
 
         pw=findViewById(R.id.pw);
         pwCheck=findViewById(R.id.pwCheck);
+
+        pwRightText=findViewById(R.id.pwRightText);
+        pwRightText.setTextColor(getResources().getColor(R.color.key_red_100));
+        pwRightText.setText("영어, 숫자 조합 6자리 이상이어야 합니다");
+        pwRightView=findViewById(R.id.pwRightView);
+
         pwSameText=findViewById(R.id.pwSameText);
-        pwSameText.setVisibility(View.VISIBLE);
-        pwSameText.setTextColor(getResources().getColor(R.color.red));
+        pwSameText.setTextColor(getResources().getColor(R.color.key_red_100));
         pwSameText.setText("비밀번호가 일치하지 않습니다");
+        pwSameView=findViewById(R.id.pwSameView);
+
         next=findViewById(R.id.next);
         next.setClickable(false);
         queue=Volley.newRequestQueue(this);
@@ -50,14 +57,16 @@ public class PwRegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!pw.getText().toString().equals("") && pw.getText().toString().equals(pwCheck.getText().toString())) {
-                    pwSameText.setTextColor(getResources().getColor(R.color.green));
-                    pwSameText.setText("비밀번호가 일치합니다");
-                    next.setClickable(true);
+                String pwText = pw.getText().toString();
+
+                if (pwText.length() >= 6 && pwText.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$")) {
+                    pwRightText.setTextColor(getResources().getColor(R.color.key_green_400));
+                    pwRightText.setText("올바른 형태의 비밀번호입니다.");
+                    pwRightView.setVisibility(View.VISIBLE);
                 } else {
-                    pwSameText.setTextColor(getResources().getColor(R.color.red));
-                    pwSameText.setText("비밀번호가 일치하지 않습니다");
-                    next.setClickable(false);
+                    pwRightText.setTextColor(getResources().getColor(R.color.key_red_100));
+                    pwRightText.setText("영어, 숫자 조합 6자리 이상이어야 합니다.");
+                    pwRightView.setVisibility(View.INVISIBLE);
                 }
             }
 
@@ -75,13 +84,17 @@ public class PwRegisterActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!pw.getText().toString().equals("") && pw.getText().toString().equals(pwCheck.getText().toString())) {
-                    pwSameText.setTextColor(getResources().getColor(R.color.green));
+                String pwText = pw.getText().toString();
+
+                if (!pwText.equals("") && pwText.equals(pwCheck.getText().toString())) {
+                    pwSameText.setTextColor(getResources().getColor(R.color.key_green_400));
                     pwSameText.setText("비밀번호가 일치합니다");
+                    pwSameView.setVisibility(View.VISIBLE);
                     next.setClickable(true);
                 } else {
-                    pwSameText.setTextColor(getResources().getColor(R.color.red));
+                    pwSameText.setTextColor(getResources().getColor(R.color.key_red_100));
                     pwSameText.setText("비밀번호가 일치하지 않습니다");
+                    pwSameView.setVisibility(View.INVISIBLE);
                     next.setClickable(false);
                 }
             }
