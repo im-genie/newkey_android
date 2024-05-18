@@ -31,6 +31,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"/>
                 <TextView
+                    android:id="@+id/publisher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray_100"
@@ -51,6 +52,7 @@
             </LinearLayout>
         </LinearLayout>
         <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -68,6 +70,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="27dp">
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -81,6 +84,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <TextView
+                android:id="@+id/reporter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_300"
@@ -100,6 +104,7 @@
             android:layout_gravity="center"
             app:cardCornerRadius="12dp">
             <ImageView
+                android:id="@+id/newsImg"
                 android:layout_width="match_parent"
                 android:layout_height="202dp"
                 android:scaleType="centerCrop"
@@ -463,6 +468,7 @@
             android:layout_marginTop="16dp"/>
 
         <TextView
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
