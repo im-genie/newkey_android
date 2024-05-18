@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.io.UnsupportedEncodingException;
 
 public class EmailRegisterActivity2 extends AppCompatActivity {
     EditText code;
-    Button codeCheck,next;
+    Button codeCheck;
+    private ImageView next;
     TextView codeRightText;
     private StringBuilder url;
     private SharedPreferences preferences;
@@ -80,14 +82,14 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
 
                                 // 인증코드 맞는 경우
                                 if (isCorrected) {
-                                    codeRightText.setTextColor(getResources().getColor(R.color.green));
+                                    codeRightText.setTextColor(getResources().getColor(R.color.key_green_400));
                                     codeRightText.setText("인증이 완료되었습니다");
                                     next.setClickable(true);
                                 }
                             } else {
                                 next.setClickable(false);
                                 Log.d("test", "인증코드 맞지 않음");
-                                Toast.makeText(EmailRegisterActivity2.this, "인증코드가 맞지 않습니다", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EmailRegisterActivity2.this, "인증코드가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -116,6 +118,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                 request.setRetryPolicy(new DefaultRetryPolicy(100000000,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
                 queue.add(request);
             }
         });

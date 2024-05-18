@@ -12,20 +12,21 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class KeywordActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_keyword);
 
-        // CardnewsFragment 띄우기
-        ViewPager2 viewPager = findViewById(R.id.card_news_layout);
-        MyFragmentAdapter adapter = new MyFragmentAdapter(this);
-        viewPager.setAdapter(adapter);
-
         // keyword 이름 설정
         String receivedText = getIntent().getStringExtra("keyword");
         TextView textView = findViewById(R.id.top_keyword);
         textView.setText(receivedText);
+
+        // CardNewsFragment 띄우기
+        ViewPager2 viewPager = findViewById(R.id.card_news_layout);
+        MyFragmentAdapter adapter = new MyFragmentAdapter(this, receivedText);
+        viewPager.setAdapter(adapter);
 
         // 뒤로가기 - Main Activity로 이동
         ImageView cardnews_back = findViewById(R.id.cardnews_back);
@@ -53,6 +54,7 @@ public class KeywordActivity extends AppCompatActivity {
                 button_person.setImageResource(R.drawable.person);
             }
         });
+
         // 네비게이션 바: news
         button_feed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,7 @@ public class KeywordActivity extends AppCompatActivity {
                 button_person.setImageResource(R.drawable.person);
             }
         });
+
         // 네비게이션 바: mypage
         button_person.setOnClickListener(new View.OnClickListener() {
             @Override

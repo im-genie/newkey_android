@@ -1,0 +1,22 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <!-- track의 너비 설정 -->
+            <size android:width="50dp" />
+            <!-- 배경에 대한 속성들 설정 -->
+            <solid android:color="@color/gray_400" /> <!-- track 색상 설정 (하얀색) -->
+            <corners android:radius="14dp" /> <!-- round 설정 (높이의 절반값으로 설정하여 원형이 될 수 있도록) -->
+        </shape>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <!-- track의 높이 설정 -->
+                <size android:height="32dp" />
+                <!-- track 색상 설정 (항상 하얀색이므로 추가하지 않아도 됨) -->
+                <!-- round 설정 (높이의 절반값으로 설정하여 원형이 될 수 있도록) -->
+                <corners android:radius="14dp" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

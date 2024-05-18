@@ -17,6 +17,7 @@
     <color name="key_yellow_300">#EFFFB0</color>
     <color name="key_yellow_200">#F5FFCC</color>
     <color name="key_yellow_100">#FBFFE9</color>
+    <color name="key_red_100">#E95454</color>
     <color name="gray_600">#171717</color>
     <color name="gray_500">#2D2F32</color>
     <color name="gray_500_40">#662D2F32</color>
@@ -30,4 +31,8 @@
     <color name="gray_000_40">#66000000</color>
     <color name="gray_600_90">#E6171717</color>
     <color name="green_tooltip">#BBFFD0</color>
+    <color name="back">#393E3F</color>
+    <color name="back2">#050B2C</color>
+    <color name="blue_main">#6C91BF</color>
+    <color name="green_main">#5FB0B7</color>
 </resources>

@@ -5,13 +5,20 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private SharedPreferences preferences;
+    public static final String preference = "newkey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
         // 알림 클릭이벤트
         ImageView main_activity_linearlayout1_imageview3 = findViewById(R.id.main_activity_linearlayout1_imageview3);
-        main_activity_linearlayout1_imageview2.setOnClickListener(new View.OnClickListener() {
+        main_activity_linearlayout1_imageview3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                Intent intent = new Intent(MainActivity.this, notification1.class);
                 startActivity(intent);
             }
         });
@@ -95,6 +102,8 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment myFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_activity_framelayout1_linearlayout1, myFragment);
         fragmentTransaction.commit();
+
+
     }
 
     @Override

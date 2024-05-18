@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.io.UnsupportedEncodingException;
 
 public class EmailRegisterActivity1 extends AppCompatActivity {
     private EditText email1,email2;
-    private Button emailDpCheck,next;
+    private Button emailDpCheck;
+    private ImageView next;
     private TextView emailDpCheckText;
     private String email;
     private StringBuilder url;
@@ -78,12 +80,12 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
                                 // 이메일 중복 여부에 따라 처리
                                 if (emailExists) {
                                     // 이메일이 중복되면
-                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.red));
+                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.key_red_100));
                                     emailDpCheckText.setText("중복된 이메일입니다");
                                     emailDpCheckText.setClickable(false);
                                 } else {
                                     // 이메일이 중복되지 않으면
-                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.green));
+                                    emailDpCheckText.setTextColor(getResources().getColor(R.color.key_green_400));
                                     emailDpCheckText.setText("사용 가능한 이메일입니다");
                                     next.setClickable(true);
                                 }

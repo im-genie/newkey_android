@@ -39,11 +39,11 @@
             android:layout_marginBottom="12dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/news2_publisher_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                app:srcCompat="@drawable/news2_publisher_icon"
+                android:src="@drawable/news2_publisher_icon"
                 android:layout_gravity="center"/>
 
             <TextView
