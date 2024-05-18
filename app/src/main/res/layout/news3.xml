@@ -473,7 +473,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="16dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="46dp"
             android:fontFamily="@font/pretendardregular"
