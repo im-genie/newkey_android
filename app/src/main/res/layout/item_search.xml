@@ -10,6 +10,8 @@
         android:id="@+id/item_search_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/test1"
         android:scaleType="centerCrop"
         android:layout_alignParentStart="true"/>
@@ -18,6 +20,8 @@
         android:id="@+id/item_search_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="8dp"
         android:text="4분 전"
         android:textColor="@color/gray_300"
         android:layout_alignParentEnd="true"
@@ -34,6 +38,7 @@
         android:layout_toEndOf="@id/item_search_image"
         android:layout_alignTop="@id/item_search_image"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:layout_toStartOf="@id/item_search_time"
         android:fontFamily="@font/pretendardregular"
         android:textSize="10dp"/>
@@ -45,8 +50,9 @@
         android:text="미국, 중국에 유화책 훈풍도 강사·비자 차단…중국 '정치적 산탄' 방패"
         android:textColor="@color/white"
         android:layout_below="@id/item_search_name"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
         android:layout_toEndOf="@id/item_search_image"
         android:fontFamily="@font/pretendardregular"
         android:textSize="12dp"/>
@@ -57,6 +63,6 @@
         android:layout_height="2dp"
         android:background="@color/gray_500_40_100"
         android:layout_below="@id/item_search_title"
-        android:layout_marginTop="65dp"/>
+        android:layout_marginTop="56dp"/>
 
 </RelativeLayout>
