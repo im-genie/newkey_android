@@ -475,6 +475,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="46dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/pretendardregular"
             android:text="코로나19 선별진료소 운영이 2023년 12월31일 종료됐다. 2020년 1월20일 국내에서 코로나19 환자가 발생해 문을 연 이후 1441일 만이다. 지난달 31일 서울 광진구보건소 선별진료소를 찾았다.
                 \n\n운영 종료 시간이 되자 검체 채취를 하던 의료진이 익숙하게 물품을 정리하고 퇴근 준비를 했다. 보건소 직원이 진료소 앞을 지나가자 검체 채취실에 있던 직원이 검사 받으러 온 거야?라며 장난스럽게 미소를 지었다. 일상적인 퇴근 같았지만 불을 끄고 진료소를 나서는 의료진의 얼굴에는 시원섭섭함이 남은 듯했다. 불 꺼진 검체 채취실에는 사용하지 않은 의료폐기물 봉투만 남았다.
