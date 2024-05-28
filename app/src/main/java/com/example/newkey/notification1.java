@@ -1,44 +1,42 @@
 package com.example.newkey;
 
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class notification1 extends AppCompatActivity {
 
@@ -49,11 +47,24 @@ public class notification1 extends AppCompatActivity {
     Boolean isAlrim,isAlrimDelete;
     ImageView alrimImage;
     TextView alrimText;
+    private static final String CHANNEL_ID = "newkey_channel";
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification1);
+
+        // 알림 권한 확인 및 요청
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        REQUEST_NOTIFICATION_PERMISSION);
+            }
+        }
 
         preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         isAlrim=preferences.getBoolean("alrim", true);
@@ -101,18 +112,15 @@ public class notification1 extends AppCompatActivity {
             });
         }
 
-        /*
-        // 리사이클러뷰 초기화
-        rv_noti = findViewById(R.id.rv_noti);
-        rv_noti.setLayoutManager(new LinearLayoutManager(notification1.this));
-
-        RecyclerDecoration spaceDecoration = new RecyclerDecoration(8);
-        rv_noti.addItemDecoration(spaceDecoration);
-
-        // 어댑터 초기화
-        //alrimAdapter = new AlrimAdapter();
-        rv_noti.setAdapter(alrimAdapter);
-         */
+        Button btnSendNotification = findViewById(R.id.btn_send_notification);
+        if (btnSendNotification != null) {
+            btnSendNotification.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendNotification("테스트 알림", "이것은 테스트 알림입니다.");
+                }
+            });
+        }
 
         // 알림 데이터 추가
         alrimItems = new ArrayList<>();
@@ -155,6 +163,11 @@ public class notification1 extends AppCompatActivity {
                         AlrimAdapter adapter=new AlrimAdapter(alrimItems);
                         recyclerView.setAdapter(adapter);
 
+                        // 새로운 알림 데이터가 있을 때 푸시 알림 표시
+                        if (!alrimItems.isEmpty()) {
+                            sendNotification("새로운 알림", "새로운 알림이 도착했습니다.");
+                        }
+
                     } catch (Exception e) {
                         Log.d("test~!",e.toString());
                         e.printStackTrace();
@@ -180,39 +193,6 @@ public class notification1 extends AppCompatActivity {
             alrimImage.setVisibility(View.VISIBLE);
             alrimText.setVisibility(View.VISIBLE);
         }
-
-        // 어댑터에 데이터 설정
-        //alrimAdapter.setAlrimItems(alrimItems);
-
-        /*
-        // 알림 데이터가 있다면 프래그먼트를 표시하는 메서드 호출
-        if (savedInstanceState == null) {
-            // 프래그먼트를 동적으로 추가
-            showFragment();
-        }
-         */
-
-        // TODO: 여기에 알림 데이터의 여부를 확인하는 코드를 추가
-        /*
-        // 예시: 알림 데이터가 있다고 가정
-        boolean hasNotificationData = true;
-
-        // 알림 데이터가 있으면 fr_alrim 프래그먼트 표시
-        if (hasNotificationData) {
-            showFragment();
-
-            // 알림 전송 코드 호출
-            sendNotification("알림 제목", "알림 내용");
-        } else {
-            // 알림 데이터가 없으면 fr_alrim 프래그먼트 숨김
-            frAlrim.setVisibility(View.GONE);
-        }
-
-        // 수신기 등록
-        myReceiver = new MyReceiver();
-        IntentFilter intentFilter = new IntentFilter("com.example.newkey.NOTIFICATION_SENT");
-        registerReceiver(myReceiver, intentFilter);
-         */
     }
 
     private void hideFragment() {
@@ -224,46 +204,51 @@ public class notification1 extends AppCompatActivity {
     private void showFragment() {
         // 프래그먼트가 추가될 부분을 표시합니다.
         findViewById(R.id.fr_alrim).setVisibility(View.VISIBLE);
+
     }
 
-
-    /*
-    // 알림을 수신하는 메서드
-    public class MyReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // 알림이 수신되었을 때 실행되는 코드를 작성
-            // 여기에서는 리사이클러뷰에 데이터를 추가하거나 업데이트하는 등의 작업을 수행
-
-            // 예: 리사이클러뷰 어댑터에 데이터 추가 및 업데이트
-            // TODO : alrimAdapter.addData(new AlrimItem("New Notification", "Content of the notification"));
-            alrimAdapter.notifyDataSetChanged();
+    // 권한 요청 결과 처리
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("Notification", "Notification permission granted");
+            } else {
+                Log.d("Notification", "Notification permission denied");
+            }
         }
     }
 
-
-    // 알림을 전송하는 메서드
-    private void sendNotification(String title, String content) {
-        // NotificationManager 가져오기
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // 알림 채널 생성 (Android 8.0 이상에서 필요)
+    private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("channel_id", "Channel Name", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
-        }
+            CharSequence name = "NewKeyChannel";
+            String description = "Channel for NewKey notifications";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
 
-        // 알림 빌더 생성
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "channel_id")
-                .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(title) // TODO : 알림 제목
-                .setContentText(content) // TODO : 알림 내용
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+            // 디버깅 로그 추가
+            Log.d("Notification", "Notification channel created");
+        }
+    }
+
+    private void sendNotification(String title, String content) {
+        createNotificationChannel();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification) // 작은 아이콘 설정
+                .setContentTitle(title)
+                .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        // 알림 표시
-        // TODO : notificationManager.notify(notificationId, builder.build());
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(1, builder.build());
+
+        // 디버깅 로그 추가
+        Log.d("Notification", "Notification sent");
     }
-     */
-
-
 }

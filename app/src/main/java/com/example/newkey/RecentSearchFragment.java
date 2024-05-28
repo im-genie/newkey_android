@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -17,7 +16,6 @@ import java.util.List;
 
 public class RecentSearchFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private RecentSearchAdapter adapter;
     private List<String> recentSearchList;
 
