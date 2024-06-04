@@ -13,7 +13,4 @@
     <style name="CustomSwitchStyle" parent="Widget.AppCompat.CompoundButton.Switch">
         <item name="android:trackTint">#72F6CE</item> <!-- Track (스위치 바 부분) 색상 -->
     </style>
-
-
-
 </resources>
