@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +43,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
     RequestQueue queue;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+    int cnt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,10 +75,10 @@ public class ChooseTopicsActivity extends AppCompatActivity {
         String email=preferences.getString("email", null);
 
         complete = findViewById(R.id.completeButton);
+        complete.setClickable(false);
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(getIntent().getStringExtra("join").equals("1")){
 
                     for (Integer buttonId : buttonStates.keySet()) {
@@ -249,10 +249,22 @@ public class ChooseTopicsActivity extends AppCompatActivity {
                 if (!isActive) {
                     button.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.key_yellow_300));
                     button.setTextColor(ContextCompat.getColor(this, R.color.gray_600));
+
+                    cnt++;
+                    if(cnt >= 1) {
+                        complete.setClickable(true);
+                        complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
+                    }
                 } else {
                     button.setBackgroundTintList(null);
                     button.setBackgroundResource(R.drawable.radius_100);
                     button.setTextColor(ContextCompat.getColor(this, R.color.gray_100));
+
+                    cnt--;
+                    if(cnt == 0) {
+                        complete.setClickable(false);
+                        complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+                    }
                 }
             });
         }
