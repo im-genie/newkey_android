@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         back=findViewById(R.id.back);
         queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        String url="http://13.124.230.98:8080/user/login";
+        String url="http://43.201.113.167:8080/user/login";
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -44,7 +44,8 @@
             android:exported="true" />
         <activity
             android:name=".PwRegisterActivity"
-            android:exported="true" />
+            android:exported="true">
+        </activity>
         <activity
             android:name=".PwFindActivity1"
             android:exported="true" />

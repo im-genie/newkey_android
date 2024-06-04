@@ -1,16 +1,21 @@
 package com.example.newkey;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,24 +35,59 @@ import java.io.UnsupportedEncodingException;
 public class EmailRegisterActivity2 extends AppCompatActivity {
     EditText code;
     Button codeCheck;
-    private ImageView next;
-    TextView codeRightText;
+    private ImageView nextArrow;
+    TextView codeRightText,nextText;
     private StringBuilder url;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
     RequestQueue queue;
+    LinearLayout next;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_register2);
 
-        code=findViewById(R.id.code);
-        codeCheck=findViewById(R.id.codeCheck);
-        codeRightText=findViewById(R.id.codeRightText);
+        code = findViewById(R.id.code);
+        codeCheck = findViewById(R.id.codeCheck);
+        codeRightText = findViewById(R.id.codeRightText);
+        next = findViewById(R.id.next);
+        nextText=findViewById(R.id.next_text);
         next=findViewById(R.id.next);
-        preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        queue= Volley.newRequestQueue(this);
+        nextArrow=findViewById(R.id.next_arrow);
+        preferences = getSharedPreferences(preference, Context.MODE_PRIVATE);
+        queue = Volley.newRequestQueue(this);
+
+        // Initially disable the codeCheck button
+        codeCheck.setEnabled(false);
+        codeCheck.setBackgroundColor(Color.GRAY); // Set initial color to gray
+
+        // Add TextWatcher to EditText to monitor text changes
+        code.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // No action needed before text changes
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Enable the button and change color if text length is 6 or more
+                if (charSequence.length() == 6) {
+                    codeCheck.setEnabled(true);
+                    codeCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
+                    codeCheck.setTextColor(ContextCompat.getColor(EmailRegisterActivity2.this, R.color.gray_600));
+                } else {
+                    codeCheck.setEnabled(false);
+                    codeCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+                    codeCheck.setTextColor(ContextCompat.getColor(EmailRegisterActivity2.this, R.color.gray_300));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // No action needed after text changes
+            }
+        });
 
         // 인증코드 확인 버튼
         codeCheck.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +97,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                 JSONObject jsonRequest = new JSONObject();
 
                 try {
-                    url.append("http://13.124.230.98:8080/user/emails/verifications");
+                    url.append("http://43.201.113.167:8080/user/emails/verifications");
 
                     String correctCode = preferences.getString("correctCode", "");
                     jsonRequest.put("correctCode", correctCode);
@@ -84,11 +124,26 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                                 if (isCorrected) {
                                     codeRightText.setTextColor(getResources().getColor(R.color.key_green_400));
                                     codeRightText.setText("인증이 완료되었습니다");
+
+                                    next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
+                                    nextText.setTextColor(getResources().getColor(R.color.gray_600));
+                                    nextArrow.setImageResource(R.drawable.next_black);
                                     next.setClickable(true);
                                 }
+                                else{
+                                    next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+                                    nextText.setTextColor(getResources().getColor(R.color.gray_100));
+                                    nextArrow.setImageResource(R.drawable.next);
+                                    next.setClickable(false);
+
+                                    Toast.makeText(EmailRegisterActivity2.this, "인증코드가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
+                                next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+                                nextText.setTextColor(getResources().getColor(R.color.gray_100));
+                                nextArrow.setImageResource(R.drawable.next);
                                 next.setClickable(false);
-                                Log.d("test", "인증코드 맞지 않음");
+
                                 Toast.makeText(EmailRegisterActivity2.this, "인증코드가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {

@@ -78,7 +78,7 @@ public class HomeFragment extends Fragment {
         name = view.findViewById(R.id.name);
 
         StringBuilder nameUrl = new StringBuilder();
-        nameUrl.append("http://13.124.230.98:8080/user/info").append("?email=").append(email);
+        nameUrl.append("http://43.201.113.167:8080/user/info").append("?email=").append(email);
         nameQueue = Volley.newRequestQueue(view.getContext());
 
         //사용자 프로필,이름 가져오기
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment {
                         String title = jsonObject.getString("title");
                         String content = jsonObject.getString("origin_content");
                         String press = jsonObject.getString("media");
-                        String date = jsonObject.getString("date");
+                        String date = jsonObject.getString("date_diff");
                         String img = jsonObject.getString("img");
                         String summary=jsonObject.getString("summary");
                         String key=jsonObject.getString("key");

@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     ImageView yellow,green,blue,newkey;
     Button complete;
     String selected="";
-    String url="http://13.124.230.98:8080/user/profileSave";
+    String url="http://43.201.113.167:8080/user/profileSave";
     SharedPreferences preferences;
     public static final String preference = "newkey";
     RequestQueue queue;
