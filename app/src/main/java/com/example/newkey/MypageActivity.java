@@ -35,7 +35,7 @@ public class MypageActivity extends Activity {
     public static final String preference = "newkey";
     Long userIdx;
     String email;
-    ImageView profileImg,back;
+    ImageView profileImg;
     TextView profileName;
     RequestQueue queue;
     StringBuilder url;
@@ -52,10 +52,8 @@ public class MypageActivity extends Activity {
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email","");
 
-        back=findViewById(R.id.back);
-
         url = new StringBuilder();
-        url.append("http://13.124.230.98:8080/user/info").append("?email=").append(email);
+        url.append("http://43.201.113.167:8080/user/info").append("?email=").append(email);
 
         //사용자 프로필,이름 가져오기
         JSONObject jsonRequest = new JSONObject();
@@ -169,14 +167,6 @@ public class MypageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MypageActivity.this, PwFindActivity1.class);
-                startActivity(intent);
-            }
-        });
-        
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, HomeFragment.class);
                 startActivity(intent);
             }
         });

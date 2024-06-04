@@ -46,11 +46,11 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/key_green_400"
+            android:backgroundTint="@color/gray_400"
             android:text="완료"
             android:layout_marginTop="700dp"
             android:layout_marginStart="280dp"
-            android:textColor="@color/black"
+            android:textColor="@color/gray_100"
             android:textSize="18dp" />
 
     </FrameLayout>
