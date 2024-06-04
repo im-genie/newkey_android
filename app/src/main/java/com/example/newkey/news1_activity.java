@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,9 @@ public class news1_activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news1);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
         viewPagerHotNews = findViewById(R.id.viewPagerHotNews);
         viewPagerNews = findViewById(R.id.viewPagerNews);
