@@ -60,12 +60,6 @@
             android:name=".NicknameActivity"
             android:exported="true" />
         <activity
-            android:name=".CatActivity1"
-            android:exported="true" />
-        <activity
-            android:name=".CatActivity2"
-            android:exported="true" />
-        <activity
             android:name=".news1_activity"
             android:exported="true" /> <!-- <activity android:name=".news1_activity"/> -->
         <activity android:name=".news2_politics" />
