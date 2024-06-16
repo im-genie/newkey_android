@@ -57,7 +57,7 @@ public class news2_politics extends AppCompatActivity {
                         String title = jsonObject.getString("title");
                         String content = jsonObject.getString("origin_content");
                         String press = jsonObject.getString("media");
-                        String date = jsonObject.getString("date");
+                        String date = jsonObject.getString("date_diff");
                         String img = jsonObject.getString("img");
                         String summary = jsonObject.getString("summary");
                         String key = jsonObject.getString("key");

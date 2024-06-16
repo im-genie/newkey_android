@@ -133,6 +133,7 @@
 
 
         <LinearLayout
+            android:id="@+id/next"
             android:layout_width="87dp"
             android:layout_height="40dp"
             android:background="@drawable/radius_100"
@@ -146,14 +147,14 @@
 
 
             <ImageView
-                android:id="@+id/next"
+                android:id="@+id/next_arrow"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="16dp"
                 app:srcCompat="@drawable/button_next" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/next_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
