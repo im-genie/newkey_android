@@ -1,6 +1,7 @@
 package com.example.newkey;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,28 +10,85 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class news1_politics extends Fragment {
-    private RecyclerView recyclerView;
-    private news1_adapter adapter;
     private List<news1_item> itemList;
+    RequestQueue queue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.news1_politics, container, false);
 
-        recyclerView = view.findViewById(R.id.news1_politics_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         itemList = new ArrayList<>();
+        queue = Volley.newRequestQueue(view.getContext());
+        String url = "http://15.164.199.177:5000/politic";
 
-        itemList.add(new news1_item("정치 기사 1", "언론사 A", "1시간 전", "https://example.com/imageA.jpg"));
-        itemList.add(new news1_item("정치 기사 2", "언론사 B", "2시간 전", "https://example.com/imageB.jpg"));
+        final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d("success!!", "success!! " + response.toString());
+                //s3에서 기사 받아와 배열에 저장
+                try {
+                    // 예시: 응답으로부터 필요한 데이터를 파싱하여 처리
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String id = jsonObject.getString("id");
+                        String title = jsonObject.getString("title");
+                        String content = jsonObject.getString("origin_content");
+                        String press = jsonObject.getString("media");
+                        String date = jsonObject.getString("date_diff");
+                        String img = jsonObject.getString("img");
+                        String summary=jsonObject.getString("summary");
+                        String key=jsonObject.getString("key");
+                        String reporter = jsonObject.getString("reporter");
+                        String mediaImg = jsonObject.getString("media_img");
 
-        adapter = new news1_adapter(itemList);
-        recyclerView.setAdapter(adapter);
+                        Log.d("dateTest",date);
+
+                        // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
+                        news1_item newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
+                        itemList.add(newsData);
+
+                        // 이후에 newsList를 사용하여 원하는 처리를 진행
+                        //Adapter
+                        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
+                        RecyclerView recyclerView=view.findViewById(R.id.news1_politics_recyclerview);
+                        recyclerView.setLayoutManager(layoutManager);
+                        news1_adapter adapter=new news1_adapter(itemList);
+                        recyclerView.setAdapter(adapter);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("fail!!",error.toString());
+            }
+        });
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        queue.add(request);
 
         return view;
     }

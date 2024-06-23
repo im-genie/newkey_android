@@ -1,17 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="5dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/gray_600">
 
-    <ImageView
-        android:id="@+id/news1_item_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/test1"
-        android:scaleType="centerCrop"
-        android:layout_alignParentStart="true"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/news1_item_cardview"
+        android:layout_width="72dp"
+        android:layout_height="56dp"
+        app:cardCornerRadius="2dp">
+        <ImageView
+            android:id="@+id/news1_item_image"
+            android:layout_width="72dp"
+            android:layout_height="56dp"
+            android:src="@drawable/test1"
+            android:scaleType="centerCrop"
+            android:layout_alignParentStart="true" />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/news1_item_time"
@@ -20,9 +25,10 @@
         android:text="4분 전"
         android:textColor="@color/gray_300"
         android:layout_alignParentEnd="true"
-        android:layout_alignTop="@id/news1_item_image"
+        android:layout_alignTop="@+id/news1_item_cardview"
         android:fontFamily="@font/pretendardregular"
-        android:textSize="10dp"/>
+        android:textSize="10dp"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/news1_item_name"
@@ -30,32 +36,35 @@
         android:layout_height="wrap_content"
         android:text="한국일보"
         android:textColor="@color/gray_300"
-        android:layout_toEndOf="@id/news1_item_image"
-        android:layout_alignTop="@id/news1_item_image"
+        android:layout_toEndOf="@+id/news1_item_cardview"
+        android:layout_alignTop="@+id/news1_item_cardview"
         android:layout_marginStart="12dp"
         android:layout_toStartOf="@id/news1_item_time"
         android:fontFamily="@font/pretendardregular"
-        android:textSize="10dp"/>
+        android:textSize="10dp"
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/news1_item_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="미국, 중국에 유화책 훈풍도 강사·비자 차단…중국 '정치적 산탄' 방패"
         android:textColor="@color/white"
         android:layout_below="@id/news1_item_name"
         android:layout_marginTop="8dp"
         android:layout_marginStart="12dp"
-        android:layout_toEndOf="@id/news1_item_image"
+        android:layout_toEndOf="@+id/news1_item_cardview"
         android:fontFamily="@font/pretendardregular"
-        android:textSize="12dp"/>
+        android:textSize="12dp"
+        android:maxLines="2"/>
 
     <View
         android:id="@+id/news1_item_divider"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/gray_500_40_100"
-        android:layout_below="@id/news1_item_title"
-        android:layout_marginTop="65dp"/>
+        android:layout_below="@+id/news1_item_cardview"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
 
 </RelativeLayout>

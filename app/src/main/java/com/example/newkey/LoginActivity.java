@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -28,8 +29,9 @@ import java.io.UnsupportedEncodingException;
 public class LoginActivity extends AppCompatActivity {
     EditText email1,email2,pw;
     Button login,pwFind;
+    ImageView back;
     RequestQueue queue;
-    SharedPreferences sharedPreferences;
+    SharedPreferences preferences;
     String email;
     public static final String preference = "newkey";
 
@@ -43,9 +45,10 @@ public class LoginActivity extends AppCompatActivity {
         email2=findViewById(R.id.email2);
         pw=findViewById(R.id.pw);
         pwFind=findViewById(R.id.pwFind);
-        queue= Volley.newRequestQueue(this);
-        sharedPreferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        String url="http://13.124.230.98:8080/user/login";
+        back=findViewById(R.id.back);
+        queue=Volley.newRequestQueue(this);
+        preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
+        String url="http://43.201.113.167:8080/user/login";
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +77,9 @@ public class LoginActivity extends AppCompatActivity {
                             if(result!=null) {
                                 userIdx = result.getLong("userIdx");
 
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                SharedPreferences.Editor editor = preferences.edit();
                                 editor.putLong("userIdx",userIdx);
+                                editor.putString("email",email);
                                 editor.commit();
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -92,18 +96,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // Handle error
+                        Toast.makeText(getApplicationContext(), "회원 정보가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
                         Log.e("test", "Login error: " + error.toString());
-                        if (error.networkResponse != null && error.networkResponse.data != null) {
-                            try {
-                                String errorResponse = new String(error.networkResponse.data, "utf-8");
-                                JSONObject jsonObject = new JSONObject(errorResponse);
-                                String errorMessage = jsonObject.getString("errorMessage");
-                                // Handle BaseException
-                                Log.e("test", "BaseException: " + errorMessage);
-                            } catch (UnsupportedEncodingException | JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
                     }
                 });
 
@@ -122,6 +116,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), PwFindActivity1.class);
+                startActivity(intent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LogoActivity.class);
                 startActivity(intent);
             }
         });

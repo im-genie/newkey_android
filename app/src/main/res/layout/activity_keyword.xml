@@ -80,7 +80,8 @@
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/icon_circle_background"
                 android:padding="10dp"
-                android:src="@drawable/home_green"></ImageView>
+                android:src="@drawable/home_green">
+            </ImageView>
 
             <View
                 android:layout_width="0dp"

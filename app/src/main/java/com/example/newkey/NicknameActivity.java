@@ -1,16 +1,18 @@
 package com.example.newkey;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -39,9 +41,34 @@ public class NicknameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nickname);
 
         nickname=findViewById(R.id.nickname);
-        queue= Volley.newRequestQueue(this);
+        queue=Volley.newRequestQueue(this);
         next=findViewById(R.id.next);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
+
+        nickname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // No action needed before text changes
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() >= 1) {
+                    next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
+                    next.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_600));
+                    next.setEnabled(true);
+                } else {
+                    next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+                    next.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_100));
+                    next.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // No action needed after text changes
+            }
+        });
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +80,7 @@ public class NicknameActivity extends AppCompatActivity {
                 String email=preferences.getString("email", null);
                 String pw=preferences.getString("pw", null);
                 try {
-                    url.append("http://13.124.230.98:8080/user/join");
+                    url.append("http://43.201.113.167:8080/user/join");
                     jsonRequest.put("email", email);
                     jsonRequest.put("password", pw);
                     jsonRequest.put("name", nickname.getText().toString());
@@ -61,6 +88,7 @@ public class NicknameActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+                //회원가입
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url.toString(), jsonRequest, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -71,17 +99,14 @@ public class NicknameActivity extends AppCompatActivity {
                             boolean isSuccess = response.getBoolean("isSuccess");
 
                             if (isSuccess) {
-                                Intent intent = new Intent(getApplicationContext(), LogoActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), ChooseTopicsActivity.class);
+                                intent.putExtra("join","1");
                                 startActivity(intent);
-                                Toast.makeText(NicknameActivity.this, "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
                             } else {
                                 next.setClickable(false);
-                                Log.d("test", "회원가입 실패");
-                                Toast.makeText(NicknameActivity.this, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(NicknameActivity.this, "JSON 파싱 오류입니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
