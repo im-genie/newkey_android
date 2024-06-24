@@ -166,7 +166,7 @@ public class HomeFragment extends Fragment {
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                         RecyclerView recyclerView = view.findViewById(R.id.recommendation_recyclerview);
                         recyclerView.setLayoutManager(layoutManager);
-                        RecommendationAdapter adapter = new RecommendationAdapter(recommendList);
+                        RecommendationAdapter adapter = new RecommendationAdapter(getContext(),recommendList);
                         recyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
