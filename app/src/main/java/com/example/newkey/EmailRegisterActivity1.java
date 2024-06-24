@@ -37,7 +37,7 @@ import java.util.regex.Pattern;
 public class EmailRegisterActivity1 extends AppCompatActivity {
     private EditText email1,email2;
     private Button emailDpCheck;
-    private ImageView nextArrow;
+    private ImageView nextArrow, back;
     private TextView emailDpCheckText, nextText;
     private String email;
     private StringBuilder url;
@@ -234,6 +234,14 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void validateEmail() {
@@ -259,4 +267,10 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
             next.setClickable(false);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

@@ -36,7 +36,7 @@ public class PwFindActivity2 extends AppCompatActivity {
     TextView pwRightText, pwSameText, nextText;
     LinearLayout next;
     StringBuilder url;
-    ImageView pwRightView, pwSameView;
+    ImageView pwRightView, pwSameView, back;
     SharedPreferences preferences;
     RequestQueue queue;
 
@@ -231,5 +231,19 @@ public class PwFindActivity2 extends AppCompatActivity {
 
             }
         });
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

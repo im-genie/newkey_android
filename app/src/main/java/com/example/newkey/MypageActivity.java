@@ -184,4 +184,12 @@ public class MypageActivity extends Activity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        // 뒤로가기 버튼을 눌렀을 때 MainActivity를 시작하도록 설정
+        Intent intent = new Intent(MypageActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
 }
