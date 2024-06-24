@@ -12,9 +12,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/real_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/real_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewKey"
         android:usesCleartextTraffic="true"
@@ -118,6 +118,9 @@
         <activity
             android:name=".AlrimSetting"
             android:exported="true" />
+
+        <receiver android:name=".NotificationReceiver" />
+
     </application>
 
 </manifest>
