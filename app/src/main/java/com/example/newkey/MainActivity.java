@@ -9,12 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,8 +22,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // ActionBar 숨기기
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         // 검색 클릭이벤트
         ImageView main_activity_linearlayout1_imageview2 = findViewById(R.id.main_activity_linearlayout1_imageview2);
@@ -49,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView main_activity_linearlayout1_imageview1=findViewById(R.id.main_activity_linearlayout1_imageview1);
-
+        ImageView main_activity_linearlayout1_imageview1 = findViewById(R.id.main_activity_linearlayout1_imageview1);
         main_activity_linearlayout1_imageview1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,12 +57,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 네비게이션 바
         ImageView button_home = findViewById(R.id.button_home);
         ImageView button_feed = findViewById(R.id.button_feed);
         ImageView button_person = findViewById(R.id.button_person);
 
-        // 네비게이션 바: Home
-
+        // Home 버튼 클릭
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 네비게이션 바: news
+        // News 버튼 클릭
         button_feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 button_person.setImageResource(R.drawable.person);
             }
         });
-        // 네비게이션 바: mypage
+
+        // MyPage 버튼 클릭
         button_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,12 +101,9 @@ public class MainActivity extends AppCompatActivity {
         // HomeFragment 띄우기
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         HomeFragment myFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_activity_framelayout1_linearlayout1, myFragment);
         fragmentTransaction.commit();
-
-
     }
 
     @Override

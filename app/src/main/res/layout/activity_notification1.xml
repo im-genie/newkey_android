@@ -37,17 +37,6 @@
         android:textSize="19dp"
         />
 
-    <Button
-        android:id="@+id/btn_send_notification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="푸시 알림 보내기"
-        android:layout_marginTop="29dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <ImageButton
         android:id="@+id/button_setting"
         android:layout_width="24dp"
