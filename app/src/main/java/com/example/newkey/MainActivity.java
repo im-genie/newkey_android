@@ -1,13 +1,20 @@
 package com.example.newkey;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -16,11 +23,22 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 알림 권한 확인 및 요청
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        REQUEST_NOTIFICATION_PERMISSION);
+            }
+        }
 
         // ActionBar 숨기기
         ActionBar actionBar = getSupportActionBar();
@@ -116,5 +134,18 @@ public class MainActivity extends AppCompatActivity {
         button_home.setImageResource(R.drawable.home_green);
         button_feed.setImageResource(R.drawable.feed);
         button_person.setImageResource(R.drawable.person);
+    }
+
+    // 권한 요청 결과 처리
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("Notification", "Notification permission granted");
+            } else {
+                Log.d("Notification", "Notification permission denied");
+            }
+        }
     }
 }
