@@ -37,6 +37,8 @@ public class RecommendationActivity extends AppCompatActivity {
     RequestQueue recommendQueue;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+
+    ImageView back_recommendation_to_main;
     String email;
 
     @Override
@@ -119,12 +121,20 @@ public class RecommendationActivity extends AppCompatActivity {
 
         // 뒤로가기 - Main Activity로 이동
         ImageView back_recommendation_to_main = findViewById(R.id.back_recommendation_to_main);
+
         back_recommendation_to_main.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RecommendationActivity.this, MainActivity.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                finish();
             }
         });
+
+
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

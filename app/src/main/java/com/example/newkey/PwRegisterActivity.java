@@ -22,7 +22,7 @@ import com.android.volley.toolbox.Volley;
 public class PwRegisterActivity extends AppCompatActivity {
     EditText pw,pwCheck;
     TextView pwRightText, pwSameText, nextText;
-    ImageView nextArrow, pwRightView, pwSameView;
+    ImageView nextArrow, pwRightView, pwSameView, back;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
     RequestQueue queue;
@@ -167,5 +167,19 @@ public class PwRegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

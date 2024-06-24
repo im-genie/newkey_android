@@ -14,7 +14,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -136,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         button_person.setImageResource(R.drawable.person);
     }
 
+
     // 권한 요청 결과 처리
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -148,4 +151,32 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private boolean backPressedOnce = false;
+    private Toast backToast;
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedOnce) {
+            if (backToast != null) {
+                backToast.cancel();
+            }
+            super.onBackPressed();
+            return;
+        }
+
+        this.backPressedOnce = true;
+        backToast = Toast.makeText(this, "한 번 더 누를 시, 어플이 종료됩니다.", Toast.LENGTH_SHORT);
+        backToast.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                backPressedOnce = false;
+            }
+        }, 3000); // 3초
+    }
+
+
 }
+

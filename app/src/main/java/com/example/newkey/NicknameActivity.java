@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -33,6 +34,8 @@ public class NicknameActivity extends AppCompatActivity {
     private StringBuilder url;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+
+    ImageView back;
     RequestQueue queue;
 
     @Override
@@ -134,5 +137,19 @@ public class NicknameActivity extends AppCompatActivity {
                 queue.add(request);
             }
         });
+
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

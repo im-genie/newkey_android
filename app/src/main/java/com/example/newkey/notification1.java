@@ -72,8 +72,7 @@ public class notification1 extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -226,6 +225,13 @@ public class notification1 extends AppCompatActivity {
         // 디버깅 로그 추가
         Log.d("Notification", "Notification sent");
     }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 
     private void setDailyAlarms() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
