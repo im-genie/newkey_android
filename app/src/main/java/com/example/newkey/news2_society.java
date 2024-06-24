@@ -75,7 +75,7 @@ public class news2_society extends AppCompatActivity {
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setLayoutManager(layoutManager);
-                        news2_adapter adapter = new news2_adapter(itemList);
+                        news2_adapter adapter = new news2_adapter(getApplicationContext(), itemList);
                         recyclerView.setAdapter(adapter);
                     }
                 } catch (Exception e) {

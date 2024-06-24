@@ -86,7 +86,7 @@ public class RecommendationActivity extends AppCompatActivity {
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
                         RecyclerView recyclerView = findViewById(R.id.recommendation_recyclerview2);
                         recyclerView.setLayoutManager(layoutManager);
-                        RecommendationBigsizeAdapter adapter = new RecommendationBigsizeAdapter(recommendList);
+                        RecommendationBigsizeAdapter adapter = new RecommendationBigsizeAdapter(getApplicationContext(),recommendList);
                         recyclerView.setAdapter(adapter);
                     } catch (JSONException e) {
                         e.printStackTrace();
