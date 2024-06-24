@@ -38,6 +38,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import java.util.Calendar;
+
 public class notification1 extends AppCompatActivity {
 
     RequestQueue queue;
@@ -107,16 +112,6 @@ public class notification1 extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putBoolean("alrimDelete",true);
                     editor.apply();
-                }
-            });
-        }
-
-        Button btnSendNotification = findViewById(R.id.btn_send_notification);
-        if (btnSendNotification != null) {
-            btnSendNotification.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendNotification("테스트 알림", "이것은 테스트 알림입니다.");
                 }
             });
         }
@@ -192,6 +187,9 @@ public class notification1 extends AppCompatActivity {
             alrimImage.setVisibility(View.VISIBLE);
             alrimText.setVisibility(View.VISIBLE);
         }
+
+        // 알림 설정
+        setDailyAlarms();
     }
 
     private void hideFragment() {
@@ -239,7 +237,7 @@ public class notification1 extends AppCompatActivity {
         createNotificationChannel();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_notification) // 작은 아이콘 설정
+                .setSmallIcon(R.drawable.real_icon) // 작은 아이콘 설정
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -251,9 +249,33 @@ public class notification1 extends AppCompatActivity {
         Log.d("Notification", "Notification sent");
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
 
+
+    private void setDailyAlarms() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.SECOND, 0);
+
+        // 오전 8시 알림
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+        // 오후 8시 알림을 위한 새로운 PendingIntent
+        PendingIntent pendingIntentEvening = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.SECOND, 0);
+
+        // 오후 8시 알림
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentEvening);
+    }
 }
