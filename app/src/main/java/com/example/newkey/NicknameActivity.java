@@ -73,6 +73,13 @@ public class NicknameActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("nickname", nickname.getText().toString());
+                editor.commit();
+
+                Intent intent = new Intent(getApplicationContext(), ChooseTopicsActivity.class);
+                startActivity(intent);
+                /*
                 url = new StringBuilder();
                 JSONObject jsonRequest = new JSONObject();
 
@@ -132,6 +139,7 @@ public class NicknameActivity extends AppCompatActivity {
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 queue.add(request);
+                */
             }
         });
     }
