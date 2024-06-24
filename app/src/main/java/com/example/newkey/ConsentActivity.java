@@ -30,8 +30,7 @@ public class ConsentActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LogoActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -115,4 +114,10 @@ public class ConsentActivity extends AppCompatActivity {
         nextArrow.setImageResource(R.drawable.check_black); // 체크된 이미지로 설정
         agreeText.setTextColor(ContextCompat.getColor(this, R.color.gray_600)); // 검은색으로 설정
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

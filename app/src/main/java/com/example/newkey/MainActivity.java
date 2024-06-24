@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -121,4 +122,30 @@ public class MainActivity extends AppCompatActivity {
         button_feed.setImageResource(R.drawable.feed);
         button_person.setImageResource(R.drawable.person);
     }
+
+    private boolean backPressedOnce = false;
+    private Toast backToast;
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedOnce) {
+            if (backToast != null) {
+                backToast.cancel();
+            }
+            super.onBackPressed();
+            return;
+        }
+
+        this.backPressedOnce = true;
+        backToast = Toast.makeText(this, "한 번 더 누를 시, 어플이 종료됩니다.", Toast.LENGTH_SHORT);
+        backToast.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                backPressedOnce = false;
+            }
+        }, 3000); // 3초
+    }
+
 }

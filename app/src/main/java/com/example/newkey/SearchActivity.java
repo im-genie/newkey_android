@@ -95,8 +95,7 @@ public class SearchActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }
@@ -194,4 +193,10 @@ public class SearchActivity extends AppCompatActivity {
         request.setShouldCache(false);
         queue.add(request);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

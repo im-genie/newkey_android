@@ -53,5 +53,17 @@
             android:textColor="@color/gray_100"
             android:textSize="18dp" />
 
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:backgroundTint="@color/gray_400"
+            android:text="뒤로가기"
+            android:layout_marginTop="600dp"
+            android:layout_marginStart="280dp"
+            android:textColor="@color/gray_100"
+            android:textSize="18dp"
+            android:src="@drawable/back"/>
+
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

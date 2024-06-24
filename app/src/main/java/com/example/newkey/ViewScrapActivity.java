@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ import java.util.Map;
 public class ViewScrapActivity extends AppCompatActivity {
     private List<news1_item> itemList;
     RequestQueue queue;
+    ImageView back;
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
@@ -125,5 +127,19 @@ public class ViewScrapActivity extends AppCompatActivity {
                 finish(); // 현재 액티비티 종료
             }
         });
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }
