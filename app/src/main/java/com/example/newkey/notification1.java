@@ -147,11 +147,6 @@ public class notification1 extends AppCompatActivity {
                         AlrimAdapter adapter=new AlrimAdapter(alrimItems);
                         recyclerView.setAdapter(adapter);
 
-                        // 새로운 알림 데이터가 있을 때 푸시 알림 표시
-                        if (!alrimItems.isEmpty()) {
-                            sendNotification("새로운 알림", "새로운 알림이 도착했습니다.");
-                        }
-
                     } catch (Exception e) {
                         Log.d("test~!",e.toString());
                         e.printStackTrace();
@@ -214,7 +209,7 @@ public class notification1 extends AppCompatActivity {
         createNotificationChannel();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.real_icon) // 작은 아이콘 설정
+                .setSmallIcon(R.drawable.push_noti) // 작은 아이콘 설정
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -248,8 +243,8 @@ public class notification1 extends AppCompatActivity {
 
         // 오후 8시 알림을 위한 새로운 PendingIntent
         PendingIntent pendingIntentEvening = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        calendar.set(Calendar.HOUR_OF_DAY, 15);
-        calendar.set(Calendar.MINUTE, 44);
+        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.MINUTE, 00);
         calendar.set(Calendar.SECOND, 0);
 
         // 오후 8시 알림
