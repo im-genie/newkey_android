@@ -218,8 +218,7 @@ public class news3_activity extends AppCompatActivity {
         news3back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(news3_activity.this, news1_activity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -350,4 +349,10 @@ public class news3_activity extends AppCompatActivity {
         });
          */
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

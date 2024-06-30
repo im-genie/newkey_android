@@ -42,6 +42,7 @@ import java.util.Set;
 public class ChooseTopicsActivity extends AppCompatActivity {
 
     HashMap<Integer, Boolean> buttonStates;
+    ImageView back;
     List<Topic> topics = new ArrayList<>();
     Button complete;
     HashMap<Integer, Integer> catDict;
@@ -145,6 +146,14 @@ public class ChooseTopicsActivity extends AppCompatActivity {
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 joinQueue.add(joinRequest);
+            }
+        });
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -403,5 +412,10 @@ public class ChooseTopicsActivity extends AppCompatActivity {
             button.setTextColor(ContextCompat.getColor(this, R.color.gray_100));
             buttonStates.put(buttonId, false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

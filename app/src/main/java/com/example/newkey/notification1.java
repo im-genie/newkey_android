@@ -61,16 +61,6 @@ public class notification1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification1);
 
-        // 알림 권한 확인 및 요청
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                        REQUEST_NOTIFICATION_PERMISSION);
-            }
-        }
-
         preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         isAlrim=preferences.getBoolean("alrim", true);
         isAlrimDelete=preferences.getBoolean("alrimDelete", false);
@@ -82,8 +72,7 @@ public class notification1 extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -205,19 +194,6 @@ public class notification1 extends AppCompatActivity {
 
     }
 
-    // 권한 요청 결과 처리
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d("Notification", "Notification permission granted");
-            } else {
-                Log.d("Notification", "Notification permission denied");
-            }
-        }
-    }
-
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "NewKeyChannel";
@@ -250,6 +226,13 @@ public class notification1 extends AppCompatActivity {
         Log.d("Notification", "Notification sent");
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
     private void setDailyAlarms() {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
@@ -265,8 +248,8 @@ public class notification1 extends AppCompatActivity {
 
         // 오후 8시 알림을 위한 새로운 PendingIntent
         PendingIntent pendingIntentEvening = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        calendar.set(Calendar.HOUR_OF_DAY, 20);
-        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.HOUR_OF_DAY, 15);
+        calendar.set(Calendar.MINUTE, 44);
         calendar.set(Calendar.SECOND, 0);
 
         // 오후 8시 알림

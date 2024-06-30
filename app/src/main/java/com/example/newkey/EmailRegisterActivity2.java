@@ -35,7 +35,7 @@ import java.io.UnsupportedEncodingException;
 public class EmailRegisterActivity2 extends AppCompatActivity {
     EditText code;
     Button codeCheck;
-    private ImageView nextArrow;
+    private ImageView nextArrow, back;
     TextView codeRightText,nextText;
     private StringBuilder url;
     private SharedPreferences preferences;
@@ -185,5 +185,18 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

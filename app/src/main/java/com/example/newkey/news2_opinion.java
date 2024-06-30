@@ -98,4 +98,9 @@ public class news2_opinion extends AppCompatActivity {
         request.setShouldCache(false);
         queue.add(request);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }
