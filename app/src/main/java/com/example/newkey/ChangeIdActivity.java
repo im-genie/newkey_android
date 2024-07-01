@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -37,7 +41,7 @@ public class ChangeIdActivity extends Activity {
 
         // 컴포넌트 초기화
         editUserId = findViewById(R.id.editUserId);
-        ImageButton backFromProfile = findViewById(R.id.backFromProfile);
+        LinearLayout backFromProfile = findViewById(R.id.backFromProfile);
         Button completeButton = findViewById(R.id.completeButton);
 
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
@@ -99,6 +103,5 @@ public class ChangeIdActivity extends Activity {
                 Intent intent = new Intent(ChangeIdActivity.this, MypageActivity.class);
                 startActivity(intent);
             }
-        });
-    }
-}
+        });}}
+
