@@ -243,7 +243,7 @@ public class notification1 extends AppCompatActivity {
 
         // 오후 8시 알림을 위한 새로운 PendingIntent
         PendingIntent pendingIntentEvening = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        calendar.set(Calendar.HOUR_OF_DAY, 20);
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
         calendar.set(Calendar.MINUTE, 00);
         calendar.set(Calendar.SECOND, 0);
 
