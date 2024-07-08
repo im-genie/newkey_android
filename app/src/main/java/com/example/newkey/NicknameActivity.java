@@ -47,6 +47,8 @@ public class NicknameActivity extends AppCompatActivity {
         next=findViewById(R.id.next);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
 
+        next.setEnabled(false);
+
         nickname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
