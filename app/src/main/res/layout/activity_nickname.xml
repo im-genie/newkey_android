@@ -6,64 +6,111 @@
     android:layout_height="match_parent"
     tools:context=".NicknameActivity"
     android:background="@color/black"
-    android:backgroundTint="@color/black">
+    android:backgroundTint="@color/black"
+>
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/back_from_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
-
-        <TextView
-            android:id="@+id/nicknameTitle"
-            android:layout_width="350dp"
-            android:layout_height="76dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="128dp"
-            android:text="사용하실 \n별명을 입력해 주세요"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textColorHint="@color/gray_100"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/nickname"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="249dp"
-            android:layout_marginEnd="20dp"
-            android:ems="10"
-            android:hint="뉴키123"
-            android:inputType="text"
-            android:textColor="@color/gray_500"
-            android:textColorHint="@color/gray_300"
-            android:background="@drawable/rounded_corner_15"/>
-
-        <Button
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/gray_400"
-            android:text="완료"
-            android:layout_marginTop="700dp"
-            android:layout_marginStart="280dp"
-            android:textColor="@color/gray_100"
-            android:textSize="18dp" />
+        android:layout_height="80dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="20dp">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:backgroundTint="@color/gray_400"
-            android:text="뒤로가기"
-            android:layout_marginTop="600dp"
-            android:layout_marginStart="280dp"
-            android:textColor="@color/gray_100"
-            android:textSize="18dp"
-            android:src="@drawable/back"/>
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="15dp"
+            app:srcCompat="@drawable/back" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_weight="1"
+            android:text="회원 가입"
+            android:textColor="@color/gray_100"
+            android:textSize="24dp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/nicknameTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="76dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:text="사용하실 \n별명을 입력해 주세요"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gray_100"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_from_history" />
+
+
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="39dp"
+        android:backgroundTint="@color/gray_400"
+        android:text="다음"
+        android:textColor="@color/gray_100"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/radius_100"/>
+
+    <EditText
+        android:id="@+id/nickname"
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/radius_8"
+        android:backgroundTint="@color/gray_400"
+        android:ems="10"
+        android:fontFamily="@font/pretendardregular"
+        android:paddingStart="12dp"
+        android:textColor="@color/gray_100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nicknameTitle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="16dp"
+        android:text="별명"
+        android:fontFamily="@font/pretendardmedium"
+        android:textSize="14dp"
+        android:textColor="@color/gray_100"
+        app:layout_constraintBottom_toTopOf="@+id/nickname"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="17dp"
+        android:text="0/10"
+        android:fontFamily="@font/pretendardregular"
+        android:textSize="14dp"
+        android:textColor="@color/gray_100"
+        app:layout_constraintBottom_toBottomOf="@+id/nickname"
+        app:layout_constraintEnd_toEndOf="@+id/nickname"
+        app:layout_constraintTop_toTopOf="@+id/nickname" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

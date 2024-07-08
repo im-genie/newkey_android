@@ -1,11 +1,13 @@
 package com.example.newkey;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -97,11 +99,30 @@ public class MypageActivity extends Activity {
                     e.printStackTrace();
                 }
             }
+
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 // Handle error
                 Log.d("test", "mypage error: " + error.toString());
+            }
+        });
+
+        // 네비게이션 바
+        ImageView button_home = findViewById(R.id.button_home);
+        ImageView button_feed = findViewById(R.id.button_feed);
+        ImageView button_person = findViewById(R.id.button_person);
+
+        // Home 버튼 클릭
+        button_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MypageActivity.this, MainActivity.class);
+                startActivity(intent);
+                button_home.setImageResource(R.drawable.home);
+                button_feed.setImageResource(R.drawable.feed);
+                button_person.setImageResource(R.drawable.person_green);
             }
         });
 
@@ -174,16 +195,47 @@ public class MypageActivity extends Activity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
-                startActivity(intent);
-
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.remove("userIdx");
-                editor.remove("email");
-                editor.apply();
+                showLogoutDialog();
             }
         });
     }
+
+        private void showLogoutDialog() {
+            // 팝업 다이얼로그를 띄우는 메서드
+            AlertDialog.Builder builder = new AlertDialog.Builder(MypageActivity.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialogView = inflater.inflate(R.layout.logout_dialog, null);
+            builder.setView(dialogView);
+
+            Button btnConfirm = dialogView.findViewById(R.id.btn_confirm);
+            Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
+
+            AlertDialog dialog = builder.create();
+
+            btnConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 로그아웃 처리
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.remove("userIdx");
+                    editor.remove("email");
+                    editor.apply();
+
+                    Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
+                    startActivity(intent);
+                    dialog.dismiss(); // 다이얼로그 닫기
+                }
+            });
+
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss(); // 다이얼로그 닫기
+                }
+            });
+
+            dialog.show();
+        };
     @Override
     public void onBackPressed() {
         // 뒤로가기 버튼을 눌렀을 때 MainActivity를 시작하도록 설정

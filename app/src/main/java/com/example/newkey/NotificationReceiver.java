@@ -16,7 +16,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         createNotificationChannel(context);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.real_icon) // 작은 아이콘 설정
+                .setSmallIcon(R.drawable.push_noti) // 작은 아이콘 설정
                 .setContentTitle("정기 알림")
                 .setContentText("지정된 시간이 되었습니다.")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
