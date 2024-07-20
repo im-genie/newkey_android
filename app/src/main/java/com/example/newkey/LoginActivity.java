@@ -1,5 +1,7 @@
 package com.example.newkey;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -8,6 +10,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,12 +32,13 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText email1,email2,pw;
+    EditText email1,pw;
+    private Spinner email2;
     Button login,pwFind;
     ImageView back;
     RequestQueue queue;
     SharedPreferences preferences;
-    String email;
+    String email,selectedEmail;
     public static final String preference = "newkey";
 
     @Override
@@ -49,12 +54,34 @@ public class LoginActivity extends AppCompatActivity {
         back=findViewById(R.id.back);
         queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        String url="http://43.201.113.167:8080/user/login";
 
+        // Spinner에 들어갈 항목들
+        String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net"};
+
+        // ArrayAdapter를 사용하여 Spinner에 항목 연결
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        email2.setAdapter(adapter);
+
+        // Spinner의 항목이 선택되었을 때의 동작 설정
+        email2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 선택된 항목의 내용 받아서 출력
+                selectedEmail = parent.getItemAtPosition(position).toString();
+                Log.d(TAG, "Selected item: " + selectedEmail);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 아무 항목도 선택되지 않았을 때의 동작 (필요한 경우 구현)
+            }
+        });
+
+        String url="http://43.201.113.167:8080/user/login";
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email=email1.getText().toString()+"@"+email2.getText().toString();
+                email=email1.getText().toString()+"@"+selectedEmail;
 
                 JSONObject jsonRequest = new JSONObject();
                 try {
