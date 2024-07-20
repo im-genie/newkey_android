@@ -47,7 +47,7 @@ public class ChangeIdActivity extends Activity {
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
 
-        String url="http://13.124.230.98:8080/user/nameSave";
+        String url="http://43.201.113.167:8080/user/nameSave";
         queue=Volley.newRequestQueue(getApplicationContext());
 
         // 이미지 버튼 클릭 이벤트 처리: 화면을 닫고 이전 화면으로 돌아감
