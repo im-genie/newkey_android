@@ -1,36 +1,53 @@
 package com.example.newkey;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class news2_world extends AppCompatActivity {
     private ImageView news2Back;
     private List<news1_item> itemList;
-    RequestQueue queue;
+    RequestQueue recommendQueue, bookQueue;
+    Set<String> storedNewsIds = new HashSet<>();
+    private SharedPreferences preferences;
+    public static final String preference = "newkey";
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.news2_world);
+
+        preferences = getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
+        email = preferences.getString("email", null);
 
         news2Back = findViewById(R.id.news2_back);
         news2Back.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +59,22 @@ public class news2_world extends AppCompatActivity {
         });
 
         itemList = new ArrayList<>();
-        queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "http://15.164.199.177:5000/sport";
+        recommendQueue = Volley.newRequestQueue(getApplicationContext());
+        bookQueue = Volley.newRequestQueue(getApplicationContext());
+
+        // 저장 & 추천 뉴스 불러오기
+        fetchStoredNews();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+
+    // 추천 뉴스 불러오기
+    private void recommend() {
+        String url = "http://15.164.199.177:5000/world";
 
         final JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -57,7 +88,7 @@ public class news2_world extends AppCompatActivity {
                         String title = jsonObject.getString("title");
                         String content = jsonObject.getString("origin_content");
                         String press = jsonObject.getString("media");
-                        String date = jsonObject.getString("date");
+                        String date = jsonObject.getString("date_diff");
                         String img = jsonObject.getString("img");
                         String summary = jsonObject.getString("summary");
                         String key = jsonObject.getString("key");
@@ -75,7 +106,7 @@ public class news2_world extends AppCompatActivity {
                         recyclerView.setHasFixedSize(true);
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                         recyclerView.setLayoutManager(layoutManager);
-                        news2_adapter adapter = new news2_adapter(itemList);
+                        news2_adapter adapter = new news2_adapter(getApplicationContext(), itemList, storedNewsIds);
                         recyclerView.setAdapter(adapter);
                     }
                 } catch (Exception e) {
@@ -96,11 +127,57 @@ public class news2_world extends AppCompatActivity {
         ));
 
         request.setShouldCache(false);
-        queue.add(request);
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+        recommendQueue.add(request);
     }
 
+    // 저장 뉴스 불러오기
+    private void fetchStoredNews() {
+        String url="http://15.164.199.177:5000/storedNews";
+
+        final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONArray jsonArray = new JSONArray();
+                try {
+                    jsonArray = new JSONArray(response);
+                } catch (JSONException e) {
+                    Log.d("JSONParseError", e.toString());
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        storedNewsIds.add(jsonObject.getString("id"));
+                    } catch (JSONException e) {
+                        Log.d("res!!",response);
+                        e.printStackTrace();
+                    }
+                }
+                // 추천 뉴스 불러오기
+                recommend();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("storeViewError",error.toString());
+            }
+        }){
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", email); // 로그인 아이디로 바꾸기
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        bookQueue.add(request);
+    }
 }

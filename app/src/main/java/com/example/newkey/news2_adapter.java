@@ -21,9 +21,15 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,18 +39,19 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+    Set<String> storedNewsIds = new HashSet<>();
 
-    public news2_adapter(List<news1_item> newsItems) {
+    public news2_adapter(Context context, List<news1_item> newsItems, Set<String> storedNewsIds) {
         this.newsItems = newsItems;
+        this.queue = Volley.newRequestQueue(context);
+        this.preferences = context.getSharedPreferences("newkey", Context.MODE_PRIVATE);
+        this.email = preferences.getString("email", null);
+        this.storedNewsIds = storedNewsIds;
     }
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news2_recyclerview, parent, false);
-        queue=Volley.newRequestQueue(view.getContext());
-        preferences=view.getContext().getSharedPreferences(preference,Context.MODE_PRIVATE);
-        email=preferences.getString("email", null);
-
         return new NewsViewHolder(view);
     }
 
@@ -68,6 +75,16 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
         Glide.with(holder.itemView.getContext())
                 .load(newsItem.getMediaImg())
                 .into(holder.newsCircleImage);
+
+
+        // 저장 뉴스 목록에 해당 뉴스 id 있으면 북마크 표시
+        if (storedNewsIds.contains(newsItem.getId())) {
+            holder.isClicked = Boolean.TRUE;
+            holder.bookMark.setImageResource(R.drawable.bookmark_checked);
+        } else {
+            holder.isClicked = Boolean.FALSE;
+            holder.bookMark.setImageResource(R.drawable.bookmark_unchecked);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

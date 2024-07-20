@@ -49,9 +49,10 @@ public class PwRegisterActivity extends AppCompatActivity {
         nextText=findViewById(R.id.next_text);
         next=findViewById(R.id.next);
         nextArrow=findViewById(R.id.next_arrow);
-        next.setClickable(false);
         queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
+
+        next.setEnabled(false);
 
         pw.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,7 +74,7 @@ public class PwRegisterActivity extends AppCompatActivity {
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_600));
                         nextArrow.setImageResource(R.drawable.next_black);
-                        next.setClickable(true);
+                        next.setEnabled(true);
 
                         pwSameText.setTextColor(getResources().getColor(R.color.key_green_400));
                         pwSameText.setText("비밀번호가 일치합니다");
@@ -87,7 +88,7 @@ public class PwRegisterActivity extends AppCompatActivity {
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_100));
                         nextArrow.setImageResource(R.drawable.next);
-                        next.setClickable(false);
+                        next.setEnabled(false);
                     }
                 }
                 // 비밀번호가 6자리 이상이 아니거나 적절한 형식이 아닌 경우
@@ -99,7 +100,7 @@ public class PwRegisterActivity extends AppCompatActivity {
                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                     nextText.setTextColor(getResources().getColor(R.color.gray_100));
                     nextArrow.setImageResource(R.drawable.next);
-                    next.setClickable(false);
+                    next.setEnabled(false);
                 }
             }
 
@@ -128,25 +129,25 @@ public class PwRegisterActivity extends AppCompatActivity {
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_600));
                         nextArrow.setImageResource(R.drawable.next_black);
-                        next.setClickable(true);
+                        next.setEnabled(true);
                     }
                     else{
                         pwRightText.setText("영어, 숫자 조합 6자리 이상이어야 합니다");
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_100));
                         nextArrow.setImageResource(R.drawable.next);
-                        next.setClickable(false);
+                        next.setEnabled(false);
                     }
                 } else {
                     pwSameText.setTextColor(getResources().getColor(R.color.key_red_100));
                     pwSameText.setText("비밀번호가 일치하지 않습니다");
                     pwSameView.setVisibility(View.INVISIBLE);
-                    next.setClickable(false);
+                    next.setEnabled(false);
 
                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                     nextText.setTextColor(getResources().getColor(R.color.gray_100));
                     nextArrow.setImageResource(R.drawable.next);
-                    next.setClickable(false);
+                    next.setEnabled(false);
                 }
             }
 
