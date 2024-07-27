@@ -25,12 +25,18 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -43,18 +49,19 @@ public class RecommendationBigsizeAdapter extends RecyclerView.Adapter<Recommend
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+    Set<String> storedNewsIds = new HashSet<>();
 
-    public RecommendationBigsizeAdapter(List<news1_item> recommendationItems) {
+    public RecommendationBigsizeAdapter(Context context, List<news1_item> recommendationItems, Set<String> storedNewsIds) {
         this.newsItems = recommendationItems;
+        this.queue = Volley.newRequestQueue(context);
+        this.preferences = context.getSharedPreferences("newkey", Context.MODE_PRIVATE);
+        this.email = preferences.getString("email", null);
+        this.storedNewsIds = storedNewsIds;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recommendation_item_bigsize, parent, false);
-        queue= Volley.newRequestQueue(v.getContext());
-        preferences=v.getContext().getSharedPreferences("newkey",  Context.MODE_PRIVATE);
-        email=preferences.getString("email", null);
-
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -64,6 +71,7 @@ public class RecommendationBigsizeAdapter extends RecyclerView.Adapter<Recommend
         news1_item newsItem = newsItems.get(position);
         holder.setItem(newsItem);
 
+        // 뉴스 이미지 없으면 언론사, 있으면 해당 이미지로 표시
         if(newsItem.getImg().equals("none")){
             new ImageLoadTask(holder.imageView).loadImage(newsItem.getMediaImg());
         }
@@ -73,6 +81,16 @@ public class RecommendationBigsizeAdapter extends RecyclerView.Adapter<Recommend
 
         new ImageLoadTask(holder.circleImageView).loadImage(newsItem.getMediaImg());
 
+        // 저장 뉴스 목록에 해당 뉴스 id 있으면 북마크 표시
+        if (storedNewsIds.contains(newsItem.getId())) {
+            holder.isClicked = Boolean.TRUE;
+            holder.bookmarkBigImageView.setImageResource(R.drawable.bookmark_checked);
+        } else {
+            holder.isClicked = Boolean.FALSE;
+            holder.bookmarkBigImageView.setImageResource(R.drawable.bookmark_unchecked);
+        }
+        
+        // 뉴스 클릭
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
