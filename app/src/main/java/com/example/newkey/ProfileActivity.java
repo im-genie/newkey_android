@@ -58,10 +58,28 @@ public class ProfileActivity extends AppCompatActivity {
         blue = findViewById(R.id.profile_blue);
         newkey = findViewById(R.id.profile_newkey);
 
+
+        final int yellowSelectedResId = R.drawable.koko; // 선택된 상태 이미지
+        final int yellowDefaultResId = R.drawable.profile_yellow; // 기본 이미지
+
+        final int greenSelectedResId = R.drawable.koko;
+        final int greenDefaultResId = R.drawable.profile_green;
+
+        final int blueSelectedResId = R.drawable.koko;
+        final int blueDefaultResId = R.drawable.profile_blue;
+
+        final int newkeySelectedResId = R.drawable.koko;
+        final int newkeyDefaultResId = R.drawable.profile_newkey;
+
+
         yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selected = "yellow";
+                yellow.setImageResource(yellowSelectedResId);
+                green.setImageResource(greenDefaultResId);
+                blue.setImageResource(blueDefaultResId);
+                newkey.setImageResource(newkeyDefaultResId);
             }
         });
 
@@ -69,6 +87,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selected = "green";
+                yellow.setImageResource(yellowDefaultResId);
+                green.setImageResource(greenSelectedResId);
+                blue.setImageResource(blueDefaultResId);
+                newkey.setImageResource(newkeyDefaultResId);
             }
         });
 
@@ -76,6 +98,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selected = "blue";
+                yellow.setImageResource(yellowDefaultResId);
+                green.setImageResource(greenDefaultResId);
+                blue.setImageResource(blueSelectedResId);
+                newkey.setImageResource(newkeyDefaultResId);
             }
         });
 
@@ -83,6 +109,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selected = "newkey";
+                yellow.setImageResource(yellowDefaultResId);
+                green.setImageResource(greenDefaultResId);
+                blue.setImageResource(blueDefaultResId);
+                newkey.setImageResource(newkeySelectedResId);
             }
         });
 
