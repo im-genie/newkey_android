@@ -61,6 +61,8 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue=Volley.newRequestQueue(this);
 
+        emailDpCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+
         emailDpCheck.setClickable(false);
         TextWatcher emailTextWatcher = new TextWatcher() {
             @Override

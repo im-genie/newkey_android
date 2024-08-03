@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -45,6 +47,8 @@ public class NicknameActivity extends AppCompatActivity {
         next=findViewById(R.id.next);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
 
+        final TextView textViewCount=findViewById(R.id.textView6);
+
         nickname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -53,6 +57,12 @@ public class NicknameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length()>10){
+                    nickname.setText(charSequence.subSequence(0,10));
+                    nickname.setSelection(10);
+                    Toast.makeText(NicknameActivity.this, "최대 10자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                }
+                textViewCount.setText(charSequence.length()+"/10");
                 if (charSequence.length() >= 1) {
                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                     next.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_600));

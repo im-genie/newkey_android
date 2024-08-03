@@ -1,6 +1,7 @@
 package com.example.newkey;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,8 @@ public class LogoActivity extends AppCompatActivity {
     public static final String preference = "newkey";
     long userIdx = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +29,8 @@ public class LogoActivity extends AppCompatActivity {
         register=findViewById(R.id.register);
         preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         userIdx=preferences.getLong("userIdx", 0);
+
+        login.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
 
         // 로그인 상태인 경우, 메인 액티비티로 이동
         if (userIdx != 0) {

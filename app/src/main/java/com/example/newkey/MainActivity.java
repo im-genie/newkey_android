@@ -2,11 +2,15 @@ package com.example.newkey;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -14,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         // 검색 클릭이벤트
         ImageView main_activity_linearlayout1_imageview2 = findViewById(R.id.main_activity_linearlayout1_imageview2);
@@ -49,8 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView main_activity_linearlayout1_imageview1=findViewById(R.id.main_activity_linearlayout1_imageview1);
-
+        ImageView main_activity_linearlayout1_imageview1 = findViewById(R.id.main_activity_linearlayout1_imageview1);
         main_activity_linearlayout1_imageview1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView button_person = findViewById(R.id.button_person);
 
         // 네비게이션 바: Home
-
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 button_person.setImageResource(R.drawable.person);
             }
         });
+
         // 네비게이션 바: mypage
         button_person.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,8 +110,6 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment myFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_activity_framelayout1_linearlayout1, myFragment);
         fragmentTransaction.commit();
-
-
     }
 
     @Override
