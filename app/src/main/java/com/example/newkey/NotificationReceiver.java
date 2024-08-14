@@ -16,12 +16,13 @@ public class NotificationReceiver extends BroadcastReceiver {
         createNotificationChannel(context);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.push_noti) // 작은 아이콘 설정
-                .setContentTitle("정기 알림")
-                .setContentText("지정된 시간이 되었습니다.")
+                .setSmallIcon(R.drawable.noti_icon) // 작은 아이콘 설정
+                .setContentTitle("Newkey 뉴키")
+                .setContentText("HOT 뉴스를 확인해보세요!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             // 알림 ID를 고유하게 설정
             int notificationId = (int) System.currentTimeMillis();

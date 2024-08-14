@@ -95,7 +95,7 @@ public class notification1 extends AppCompatActivity {
                     // fr_alrim을 숨김
                     hideFragment();
 
-                    // 기존에는 숨겨진 Newkey123456 아이콘과 설명글이 보이도록 변경
+                    // 기존에는 숨겨진 Newkey123456 아이콘과 설명글이 보이도록 함
                     alrimImage.setVisibility(View.VISIBLE);
                     alrimText.setVisibility(View.VISIBLE);
 
@@ -174,7 +174,8 @@ public class notification1 extends AppCompatActivity {
         }
 
         // 알림 설정
-        setDailyAlarms();
+        setDailyAlarms(this);
+
     }
 
     private void hideFragment() {
@@ -198,9 +199,10 @@ public class notification1 extends AppCompatActivity {
             channel.setDescription(description);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
 
-            // 디버깅 로그 추가
             Log.d("Notification", "Notification channel created");
         }
     }
@@ -209,7 +211,7 @@ public class notification1 extends AppCompatActivity {
         createNotificationChannel();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.push_noti) // 작은 아이콘 설정
+                .setSmallIcon(R.drawable.noti_icon_2) // 작은 아이콘 설정
                 .setContentTitle(title)
                 .setContentText(content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -227,27 +229,29 @@ public class notification1 extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    public static void setDailyAlarms(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, NotificationReceiver.class);
 
-    private void setDailyAlarms() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        setAlarm(context, alarmManager, intent, 0, 16, 24); //첫번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 1, 16, 27); //두ㅗㅗ번째 알림 시간 설정
+    }
+
+    public static void setAlarm(Context context, AlarmManager alarmManager, Intent intent, int requestCode, int hour, int minute) {
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 8);
-        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, 0);
 
-        // 오전 8시 알림
+        // 현재 시간을 기준으로 알람 시간을 설정
+        if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+        }
+
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        // 오후 8시 알림을 위한 새로운 PendingIntent
-        PendingIntent pendingIntentEvening = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-        calendar.set(Calendar.HOUR_OF_DAY, 21);
-        calendar.set(Calendar.MINUTE, 00);
-        calendar.set(Calendar.SECOND, 0);
-
-        // 오후 8시 알림
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntentEvening);
+        Log.d("Alarm", "Alarm set for " + hour + ":" + minute);
     }
 }
