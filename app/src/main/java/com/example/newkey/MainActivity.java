@@ -22,6 +22,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import android.app.Activity;
+import com.example.newkey.notification1;
+
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
@@ -42,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
                         REQUEST_NOTIFICATION_PERMISSION);
             }
         }
+
+        // 알림 설정
+        notification1.setDailyAlarms(this);
 
         // ActionBar 숨기기
         ActionBar actionBar = getSupportActionBar();
