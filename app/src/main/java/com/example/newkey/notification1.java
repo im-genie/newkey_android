@@ -233,8 +233,8 @@ public class notification1 extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
 
-        setAlarm(context, alarmManager, intent, 0, 16, 24); //첫번째 알림 시간 설정
-        setAlarm(context, alarmManager, intent, 1, 16, 27); //두ㅗㅗ번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 0, 8, 0); //첫번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 1, 20, 0); //두번째 알림 시간 설정
     }
 
     public static void setAlarm(Context context, AlarmManager alarmManager, Intent intent, int requestCode, int hour, int minute) {
