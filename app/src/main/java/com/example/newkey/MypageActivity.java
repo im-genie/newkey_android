@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.Window;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -211,6 +214,9 @@ public class MypageActivity extends Activity {
             Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
 
             AlertDialog dialog = builder.create();
+            Window window = dialog.getWindow();
+            if (window != null) {
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));}
 
             btnConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
