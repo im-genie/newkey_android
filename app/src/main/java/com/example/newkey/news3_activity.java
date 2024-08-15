@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,10 +41,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class news3_activity extends AppCompatActivity {
 
@@ -54,6 +63,7 @@ public class news3_activity extends AppCompatActivity {
     private SharedPreferences preferences;
     public static final String preference = "newkey";
     String fiveWOneHUrl="http://15.164.199.177:5000/5w1h";
+    private static final Executor executor = Executors.newFixedThreadPool(4);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +102,10 @@ public class news3_activity extends AppCompatActivity {
         String reporter = getIntent().getStringExtra("reporter");
 
         Title.setText(title);
-        Content.setText(content);
+        if (Content != null) {
+            Content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT, new URLImageGetter(Content), null));
+        }
+        //Content.setText(content);
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
@@ -355,4 +368,51 @@ public class news3_activity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    private static class URLImageGetter implements Html.ImageGetter {
+        private final TextView textView;
+
+        public URLImageGetter(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public Drawable getDrawable(String source) {
+            final URLDrawable urlDrawable = new URLDrawable();
+            executor.execute(() -> {
+                try {
+                    InputStream is = (InputStream) new URL(source).getContent();
+                    Drawable d = Drawable.createFromStream(is, "src");
+                    if (d != null) {
+                        int width = d.getIntrinsicWidth();
+                        int height = d.getIntrinsicHeight();
+                        d.setBounds(0, 0, width, height);
+                    }
+                    urlDrawable.setDrawable(d);
+                    textView.post(() -> {
+                        textView.invalidate();
+                        textView.setText(textView.getText());
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            return urlDrawable;
+        }
+
+        private static class URLDrawable extends BitmapDrawable {
+            private Drawable drawable;
+
+            @Override
+            public void draw(Canvas canvas) {
+                if (drawable != null) {
+                    drawable.draw(canvas);
+                }
+            }
+
+            public void setDrawable(Drawable drawable) {
+                this.drawable = drawable;
+                setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+            }
+        }
+    }
 }
