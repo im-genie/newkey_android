@@ -132,6 +132,7 @@
             android:paddingStart="16dp"
             android:hint="영어, 숫자 조합 6자리 이상"
             android:textSize="18dp"
+            android:inputType="textPassword"
             android:background="@drawable/rounded_corner_15"
             android:layout_marginTop="10dp"/>
 

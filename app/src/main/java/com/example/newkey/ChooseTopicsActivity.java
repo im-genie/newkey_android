@@ -84,6 +84,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
 
         complete = findViewById(R.id.completeButton);
         complete.setEnabled(false);
+        complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

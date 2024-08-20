@@ -3,6 +3,7 @@ package com.example.newkey;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -54,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         back=findViewById(R.id.back);
         queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
+        
+        login.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
 
         // Spinner에 들어갈 항목들
         String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net"};
@@ -161,5 +164,4 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
 }

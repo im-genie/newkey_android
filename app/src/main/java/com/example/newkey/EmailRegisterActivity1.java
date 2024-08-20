@@ -95,6 +95,8 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
         });
 
         emailDpCheck.setEnabled(false);
+        emailDpCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+        
         TextWatcher emailTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
