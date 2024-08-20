@@ -68,6 +68,8 @@ public class PwFindActivity1 extends AppCompatActivity {
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue=Volley.newRequestQueue(this);
 
+        codeCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
+
         TextWatcher emailTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

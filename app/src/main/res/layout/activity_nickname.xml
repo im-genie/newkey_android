@@ -108,6 +108,7 @@
         android:fontFamily="@font/pretendardregular"
         android:textSize="14dp"
         android:textColor="@color/gray_100"
+        android:maxLength="10"
         app:layout_constraintBottom_toBottomOf="@+id/nickname"
         app:layout_constraintEnd_toEndOf="@+id/nickname"
         app:layout_constraintTop_toTopOf="@+id/nickname" />
