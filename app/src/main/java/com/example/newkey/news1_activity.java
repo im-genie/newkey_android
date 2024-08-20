@@ -35,9 +35,7 @@ public class news1_activity extends AppCompatActivity {
         setContentView(R.layout.news1);
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        actionBar.hide();
 
         viewPagerHotNews = findViewById(R.id.viewPagerHotNews);
         viewPagerNews = findViewById(R.id.viewPagerNews);

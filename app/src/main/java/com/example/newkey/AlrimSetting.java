@@ -35,8 +35,7 @@ public class AlrimSetting extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), notification1.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -67,4 +66,9 @@ public class AlrimSetting extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

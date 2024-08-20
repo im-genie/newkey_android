@@ -29,8 +29,7 @@ public class search1 extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -121,5 +120,11 @@ public class search1 extends AppCompatActivity {
         super.onStart();
         addTestDataToRecentSearch();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 
 }
