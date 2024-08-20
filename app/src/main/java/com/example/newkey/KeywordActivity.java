@@ -32,9 +32,8 @@ public class KeywordActivity extends AppCompatActivity {
         ImageView cardnews_back = findViewById(R.id.cardnews_back);
         cardnews_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(KeywordActivity.this, MainActivity.class);
-                startActivity(intent);
+            public void onClick(View v) {
+                finish();
             }
         });
 
@@ -79,4 +78,9 @@ public class KeywordActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
 }

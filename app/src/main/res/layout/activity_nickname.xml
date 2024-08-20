@@ -7,7 +7,7 @@
     tools:context=".NicknameActivity"
     android:background="@color/black"
     android:backgroundTint="@color/black"
-    >
+>
 
     <LinearLayout
         android:id="@+id/back_from_history"

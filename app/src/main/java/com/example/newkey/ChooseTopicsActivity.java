@@ -42,6 +42,7 @@ import java.util.Set;
 public class ChooseTopicsActivity extends AppCompatActivity {
 
     HashMap<Integer, Boolean> buttonStates;
+    ImageView back;
     List<Topic> topics = new ArrayList<>();
     Button complete;
     HashMap<Integer, Integer> catDict;
@@ -82,8 +83,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
         email=preferences.getString("email", null);
 
         complete = findViewById(R.id.completeButton);
-        complete.setClickable(false);
-
+        complete.setEnabled(false);
         complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
                 String nickname=preferences.getString("nickname", null);
 
                 try {
-                    url.append("http://43.201.113.167:8080/user/join");
+                    url.append("http://43.201.113.167:8080/user/join"); //43.201.113.167
                     jsonRequest.put("email", email);
                     jsonRequest.put("password", pw);
                     jsonRequest.put("name", nickname);
@@ -147,6 +147,14 @@ public class ChooseTopicsActivity extends AppCompatActivity {
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 joinQueue.add(joinRequest);
+            }
+        });
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -309,8 +317,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
         for (int buttonId : buttonIds) {
             Button button = findViewById(buttonId);
             buttonStates.put(buttonId, false);
-            button.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_500));
-            
+
             button.setOnClickListener(v -> {
                 boolean isActive = buttonStates.get(buttonId);
                 buttonStates.put(buttonId, !isActive);
@@ -321,7 +328,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
 
                     cnt++;
                     if(cnt >= 1) {
-                        complete.setClickable(true);
+                        complete.setEnabled(true);
                         complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                     }
                 } else {
@@ -331,7 +338,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
 
                     cnt--;
                     if(cnt == 0) {
-                        complete.setClickable(false);
+                        complete.setEnabled(false);
                         complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                     }
                 }
@@ -406,5 +413,10 @@ public class ChooseTopicsActivity extends AppCompatActivity {
             button.setTextColor(ContextCompat.getColor(this, R.color.gray_100));
             buttonStates.put(buttonId, false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

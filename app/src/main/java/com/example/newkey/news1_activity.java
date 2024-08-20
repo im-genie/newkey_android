@@ -238,4 +238,14 @@ public class news1_activity extends AppCompatActivity {
             nestedScrollView.scrollTo(0, 0);  // NestedScrollView의 스크롤 위치를 맨 위로 설정
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        // 뒤로가기 버튼을 눌렀을 때 MainActivity를 시작하도록 설정
+        Intent intent = new Intent(news1_activity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 }

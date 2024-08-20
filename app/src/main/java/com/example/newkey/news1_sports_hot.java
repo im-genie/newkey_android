@@ -65,7 +65,7 @@ public class news1_sports_hot extends Fragment {
                         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
                         RecyclerView recyclerView=view.findViewById(R.id.news1_sports_hot_recyclerview);
                         recyclerView.setLayoutManager(layoutManager);
-                        news1_hot_news_adapter adapter=new news1_hot_news_adapter(itemList);
+                        news1_hot_news_adapter adapter=new news1_hot_news_adapter(getContext(), itemList);
                         recyclerView.setAdapter(adapter);
                     }
                 } catch (Exception e) {
