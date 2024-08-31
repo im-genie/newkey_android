@@ -1,33 +1,60 @@
 package com.example.newkey;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+
+import android.util.Log;
+import android.os.Handler;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
+
+import android.app.Activity;
+import com.example.newkey.notification1;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 알림 권한 확인 및 요청
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        REQUEST_NOTIFICATION_PERMISSION);
+            }
+        }
+
+        // 알림 설정
+        notification1.setDailyAlarms(this);
+
+        // ActionBar 숨기기
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         // 검색 클릭이벤트
         ImageView main_activity_linearlayout1_imageview2 = findViewById(R.id.main_activity_linearlayout1_imageview2);
@@ -49,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ImageView main_activity_linearlayout1_imageview1=findViewById(R.id.main_activity_linearlayout1_imageview1);
-
+        ImageView main_activity_linearlayout1_imageview1 = findViewById(R.id.main_activity_linearlayout1_imageview1);
         main_activity_linearlayout1_imageview1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,12 +85,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 네비게이션 바
         ImageView button_home = findViewById(R.id.button_home);
         ImageView button_feed = findViewById(R.id.button_feed);
         ImageView button_person = findViewById(R.id.button_person);
 
-        // 네비게이션 바: Home
-
+        // Home 버튼 클릭
         button_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 네비게이션 바: news
+        // News 버튼 클릭
         button_feed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
                 button_person.setImageResource(R.drawable.person);
             }
         });
-        // 네비게이션 바: mypage
+
+        // MyPage 버튼 클릭
         button_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,12 +129,9 @@ public class MainActivity extends AppCompatActivity {
         // HomeFragment 띄우기
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         HomeFragment myFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_activity_framelayout1_linearlayout1, myFragment);
         fragmentTransaction.commit();
-
-
     }
 
     @Override
@@ -121,4 +145,44 @@ public class MainActivity extends AppCompatActivity {
         button_feed.setImageResource(R.drawable.feed);
         button_person.setImageResource(R.drawable.person);
     }
+
+
+    // 권한 요청 결과 처리
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("Notification", "Notification permission granted");
+            } else {
+                Log.d("Notification", "Notification permission denied");
+            }
+        }
+    }
+
+    private boolean backPressedOnce = false;
+    private Toast backToast;
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedOnce) {
+            if (backToast != null) {
+                backToast.cancel();
+            }
+            super.onBackPressed();
+            return;
+        }
+
+        this.backPressedOnce = true;
+        backToast = Toast.makeText(this, "한 번 더 누를 시, 어플이 종료됩니다.", Toast.LENGTH_SHORT);
+        backToast.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                backPressedOnce = false;
+            }
+        }, 3000); // 3초
+    }
+
 }

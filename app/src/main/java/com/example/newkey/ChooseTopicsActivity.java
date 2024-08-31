@@ -1,5 +1,6 @@
 package com.example.newkey;
 
+import android.adservices.topics.Topic;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,9 +23,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,21 +42,26 @@ import java.util.Set;
 public class ChooseTopicsActivity extends AppCompatActivity {
 
     HashMap<Integer, Boolean> buttonStates;
+    ImageView back;
     List<Topic> topics = new ArrayList<>();
     Button complete;
     HashMap<Integer, Integer> catDict;
     private ArrayList<Integer> catList;
-    RequestQueue queue;
+    RequestQueue joinQueue, catQueue;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
     int cnt = 0;
+    String registerUrl="http://15.164.199.177:5000/register";
+    String attentionUrl="http://15.164.199.177:5000/selCat";
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_topics);
 
-        queue = Volley.newRequestQueue(getApplicationContext());
+        joinQueue = Volley.newRequestQueue(getApplicationContext());
+        catQueue = Volley.newRequestQueue(getApplicationContext());
         buttonStates=new HashMap<>();
         catList = new ArrayList<>();
         catDict = new HashMap<>();
@@ -68,125 +79,190 @@ public class ChooseTopicsActivity extends AppCompatActivity {
         initializeButtons();
         setupResetButton();
 
-        String registerUrl="http://15.164.199.177:5000/register";
-        String attentionUrl="http://15.164.199.177:5000/selCat";
-
         preferences=getSharedPreferences(preference, MODE_PRIVATE);
-        String email=preferences.getString("email", null);
+        email=preferences.getString("email", null);
 
         complete = findViewById(R.id.completeButton);
-        complete.setClickable(false);
+        complete.setEnabled(false);
+        complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getIntent().getStringExtra("join").equals("1")){
 
-                    for (Integer buttonId : buttonStates.keySet()) {
-                        boolean isActive = buttonStates.get(buttonId);
-                        if (isActive) {
-                            // Button이 활성화 상태인 경우, 해당 buttonId에 매칭되는 catDict의 key를 찾아서 catList에 추가
-                            Integer key = getKey(catDict, buttonId);
+                StringBuilder url = new StringBuilder();
+                JSONObject jsonRequest = new JSONObject();
 
-                            if (key != null) {
-                                Integer value = catDict.get(key);
-                                catList.add(value);
+                preferences=getSharedPreferences("newkey", MODE_PRIVATE);
+                String pw=preferences.getString("pw", null);
+                String nickname=preferences.getString("nickname", null);
+
+                try {
+                    url.append("http://43.201.113.167:8080/user/join"); //43.201.113.167
+                    jsonRequest.put("email", email);
+                    jsonRequest.put("password", pw);
+                    jsonRequest.put("name", nickname);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                //회원가입
+                JsonObjectRequest joinRequest = new JsonObjectRequest(Request.Method.POST, url.toString(), jsonRequest, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("test", "NicknameActivity : 응답 - " + response.toString());
+
+                        try {
+                            // 서버 응답에서 필요한 정보 추출
+                            boolean isSuccess = response.getBoolean("isSuccess");
+
+                            if (isSuccess) {
+                                func1(); // 회원가입 하는 경우
+                            } else {
+                                func2(); // 회원가입 아닌 카테고리 변경인 경우
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("test", "에러뜸!!" + error.toString());
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            try {
+                                String errorResponse = new String(error.networkResponse.data, "utf-8");
+                                JSONObject jsonObject = new JSONObject(errorResponse);
+                                String errorMessage = jsonObject.getString("errorMessage");
+                                // Handle BaseException
+                                Log.d("test", "BaseException: " + errorMessage);
+                            } catch (UnsupportedEncodingException | JSONException e) {
+                                e.printStackTrace();
                             }
                         }
                     }
+                });
 
-                    final StringRequest request=new StringRequest(Request.Method.POST, registerUrl, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("res",response);
-
-                            Intent intent=new Intent(ChooseTopicsActivity.this,LogoActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(ChooseTopicsActivity.this, "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("회원가입 오류",error.toString());
-                            Toast.makeText(ChooseTopicsActivity.this, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }){
-                        //@Nullable
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<>();
-
-                            params.put("user_id", email); // 로그인 아이디로 바꾸기
-                            params.put("click_news", "[]");
-                            params.put("select_cat", catList.toString()); // 사용자가 선택한 선호 카테고리로 바꾸기
-                            params.put("stored_news", "[]");
-                            params.put("search", "[]");
-
-                            return params;
-                        }
-                    };
-                    request.setRetryPolicy(new DefaultRetryPolicy(
-                            1000000,  // 기본 타임아웃 (기본값: 2500ms)
-                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
-                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-                    ));
-
-                    request.setShouldCache(false);
-                    queue.add(request);
-                }
-
-                else if(getIntent().getStringExtra("join").equals("0")) {
-
-                    for (Integer buttonId : buttonStates.keySet()) {
-                        boolean isActive = buttonStates.get(buttonId);
-                        if (isActive) {
-                            // Button이 활성화 상태인 경우, 해당 buttonId에 매칭되는 catDict의 key를 찾아서 catList에 추가
-                            Integer key = getKey(catDict, buttonId);
-
-                            if (key != null) {
-                                Integer value = catDict.get(key);
-                                catList.add(value);
-                            }
-                        }
-                    }
-
-                    final StringRequest request=new StringRequest(Request.Method.POST, attentionUrl, new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.d("res",response);
-
-                            Intent intent=new Intent(ChooseTopicsActivity.this,MypageActivity.class);
-                            startActivity(intent);
-                            Toast.makeText(ChooseTopicsActivity.this, "관심사 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("관심사 오류",error.toString());
-                            Toast.makeText(ChooseTopicsActivity.this, "관심사 설정에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }){
-                        //@Nullable
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<>();
-
-                            params.put("user_id", email); // 로그인 아이디로 바꾸기
-                            params.put("select_cat", catList.toString()); // 사용자가 선택한 선호 카테고리로 바꾸기
-
-                            return params;
-                        }
-                    };
-                    request.setRetryPolicy(new DefaultRetryPolicy(
-                            1000000,  // 기본 타임아웃 (기본값: 2500ms)
-                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
-                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-                    ));
-
-                    request.setShouldCache(false);
-                    queue.add(request);
-                }
+                joinRequest.setShouldCache(false); //이전 결과가 있어도 새로 요청하여 응답을 보여준다.
+                joinRequest.setRetryPolicy(new DefaultRetryPolicy(100000000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                joinQueue.add(joinRequest);
             }
         });
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void func1() {
+        for (Integer buttonId : buttonStates.keySet()) {
+            boolean isActive = buttonStates.get(buttonId);
+            if (isActive) {
+                // Button이 활성화 상태인 경우, 해당 buttonId에 매칭되는 catDict의 key를 찾아서 catList에 추가
+                Integer key = getKey(catDict, buttonId);
+
+                if (key != null) {
+                    Integer value = catDict.get(key);
+                    catList.add(value);
+                }
+            }
+        }
+
+        final StringRequest request = new StringRequest(Request.Method.POST, registerUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("res", response);
+
+                Intent intent = new Intent(ChooseTopicsActivity.this, LogoActivity.class);
+                startActivity(intent);
+                Toast.makeText(ChooseTopicsActivity.this, "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("회원가입 오류", error.toString());
+                Toast.makeText(ChooseTopicsActivity.this, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("user_id", email); // 로그인 아이디로 바꾸기
+                params.put("click_news", "[]");
+                params.put("select_cat", catList.toString()); // 사용자가 선택한 선호 카테고리로 바꾸기
+                params.put("stored_news", "[]");
+                params.put("search", "[]");
+
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        catQueue.add(request);
+    }
+
+    private void func2(){
+
+        for (Integer buttonId : buttonStates.keySet()) {
+            boolean isActive = buttonStates.get(buttonId);
+            if (isActive) {
+                // Button이 활성화 상태인 경우, 해당 buttonId에 매칭되는 catDict의 key를 찾아서 catList에 추가
+                Integer key = getKey(catDict, buttonId);
+
+                if (key != null) {
+                    Integer value = catDict.get(key);
+                    catList.add(value);
+                }
+            }
+        }
+
+        final StringRequest request = new StringRequest(Request.Method.POST, attentionUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("res", response);
+
+                Intent intent = new Intent(ChooseTopicsActivity.this, MypageActivity.class);
+                startActivity(intent);
+                Toast.makeText(ChooseTopicsActivity.this, "관심사 설정을 완료했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("관심사 오류", error.toString());
+                Toast.makeText(ChooseTopicsActivity.this, "관심사 설정에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("user_id", email); // 로그인 아이디로 바꾸기
+                params.put("select_cat", catList.toString()); // 사용자가 선택한 선호 카테고리로 바꾸기
+
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        catQueue.add(request);
     }
 
     // buttonId에 해당하는 key를 찾기 위한 함수
@@ -252,7 +328,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
 
                     cnt++;
                     if(cnt >= 1) {
-                        complete.setClickable(true);
+                        complete.setEnabled(true);
                         complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                     }
                 } else {
@@ -262,7 +338,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
 
                     cnt--;
                     if(cnt == 0) {
-                        complete.setClickable(false);
+                        complete.setEnabled(false);
                         complete.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                     }
                 }
@@ -337,5 +413,10 @@ public class ChooseTopicsActivity extends AppCompatActivity {
             button.setTextColor(ContextCompat.getColor(this, R.color.gray_100));
             buttonStates.put(buttonId, false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

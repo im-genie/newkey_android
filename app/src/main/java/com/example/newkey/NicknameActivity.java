@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -30,9 +33,10 @@ import java.io.UnsupportedEncodingException;
 public class NicknameActivity extends AppCompatActivity {
     EditText nickname;
     Button next;
-    private StringBuilder url;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
+
+    ImageView back;
     RequestQueue queue;
 
     @Override
@@ -45,6 +49,9 @@ public class NicknameActivity extends AppCompatActivity {
         next=findViewById(R.id.next);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
 
+        final TextView textViewCount=findViewById(R.id.textView6);
+        next.setEnabled(false);
+
         nickname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -53,6 +60,12 @@ public class NicknameActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length()>10){
+                    nickname.setText(charSequence.subSequence(0,10));
+                    nickname.setSelection(10);
+                    Toast.makeText(NicknameActivity.this, "최대 10자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                }
+                textViewCount.setText(charSequence.length()+"/10");
                 if (charSequence.length() >= 1) {
                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                     next.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_600));
@@ -73,66 +86,27 @@ public class NicknameActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                url = new StringBuilder();
-                JSONObject jsonRequest = new JSONObject();
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("nickname", nickname.getText().toString());
+                editor.commit();
 
-                preferences=getSharedPreferences("newkey", MODE_PRIVATE);
-                String email=preferences.getString("email", null);
-                String pw=preferences.getString("pw", null);
-                try {
-                    url.append("http://43.201.113.167:8080/user/join");
-                    jsonRequest.put("email", email);
-                    jsonRequest.put("password", pw);
-                    jsonRequest.put("name", nickname.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                //회원가입
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url.toString(), jsonRequest, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("test", "NicknameActivity : 응답 - " + response.toString());
-
-                        try {
-                            // 서버 응답에서 필요한 정보 추출
-                            boolean isSuccess = response.getBoolean("isSuccess");
-
-                            if (isSuccess) {
-                                Intent intent = new Intent(getApplicationContext(), ChooseTopicsActivity.class);
-                                intent.putExtra("join","1");
-                                startActivity(intent);
-                            } else {
-                                next.setClickable(false);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("test", "에러뜸!!" + error.toString());
-                        if (error.networkResponse != null && error.networkResponse.data != null) {
-                            try {
-                                String errorResponse = new String(error.networkResponse.data, "utf-8");
-                                JSONObject jsonObject = new JSONObject(errorResponse);
-                                String errorMessage = jsonObject.getString("errorMessage");
-                                // Handle BaseException
-                                Log.d("test", "BaseException: " + errorMessage);
-                            } catch (UnsupportedEncodingException | JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
-
-                request.setShouldCache(false); //이전 결과가 있어도 새로 요청하여 응답을 보여준다.
-                request.setRetryPolicy(new DefaultRetryPolicy(100000000,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                queue.add(request);
+                Intent intent = new Intent(getApplicationContext(), ChooseTopicsActivity.class);
+                startActivity(intent);
             }
         });
+
+        back = findViewById(R.id.back);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
