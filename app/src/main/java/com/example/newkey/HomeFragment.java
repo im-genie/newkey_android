@@ -3,11 +3,13 @@ package com.example.newkey;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -253,6 +255,17 @@ public class HomeFragment extends Fragment {
         TextView top2_9 = view.findViewById(R.id.top2_9);
         TextView top2_10 = view.findViewById(R.id.top2_10);
 
+        FrameLayout keyword_1 = view.findViewById(R.id.keyword_1);
+        FrameLayout keyword_2 = view.findViewById(R.id.keyword_2);
+        FrameLayout keyword_3 = view.findViewById(R.id.keyword_3);
+        FrameLayout keyword_4 = view.findViewById(R.id.keyword_4);
+        FrameLayout keyword_5 = view.findViewById(R.id.keyword_5);
+        FrameLayout keyword_6 = view.findViewById(R.id.keyword_6);
+        FrameLayout keyword_7 = view.findViewById(R.id.keyword_7);
+        FrameLayout keyword_8 = view.findViewById(R.id.keyword_8);
+        FrameLayout keyword_9 = view.findViewById(R.id.keyword_9);
+        FrameLayout keyword_10 = view.findViewById(R.id.keyword_10);
+
         hotQueue = Volley.newRequestQueue(view.getContext());
         String hotUrl = "http://15.164.199.177:5000/hot";
 
@@ -310,7 +323,84 @@ public class HomeFragment extends Fragment {
         hotRequest.setShouldCache(false);
         hotQueue.add(hotRequest);
 
+        // top_1 ~ top_5의 클릭 범위 넓히기
+        final View parent_1 = (View) top_1.getParent();
+        final View parent_2 = (View) top_2.getParent();
+        final View parent_3 = (View) top_3.getParent();
+        final View parent_4 = (View) top_4.getParent();
+        final View parent_5 = (View) top_5.getParent();
 
+        parent_1.post(() -> {
+            Rect delegateArea = new Rect();
+            top_1.getHitRect(delegateArea);
+
+            // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
+            delegateArea.top -= 20;
+            delegateArea.bottom += 20;
+            delegateArea.left -= 20;
+            delegateArea.right += 20;
+
+            TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_1);
+            parent_1.setTouchDelegate(expandedArea);
+        });
+
+        parent_2.post(() -> {
+            Rect delegateArea = new Rect();
+            top_2.getHitRect(delegateArea);
+
+            // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
+            delegateArea.top -= 20;
+            delegateArea.bottom += 20;
+            delegateArea.left -= 20;
+            delegateArea.right += 20;
+
+            TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_2);
+            parent_2.setTouchDelegate(expandedArea);
+        });
+
+        parent_3.post(() -> {
+            Rect delegateArea = new Rect();
+            top_3.getHitRect(delegateArea);
+
+            // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
+            delegateArea.top -= 20;
+            delegateArea.bottom += 20;
+            delegateArea.left -= 20;
+            delegateArea.right += 20;
+
+            TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_3);
+            parent_3.setTouchDelegate(expandedArea);
+        });
+
+        parent_4.post(() -> {
+            Rect delegateArea = new Rect();
+            top_4.getHitRect(delegateArea);
+
+            // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
+            delegateArea.top -= 20;
+            delegateArea.bottom += 20;
+            delegateArea.left -= 20;
+            delegateArea.right += 20;
+
+            TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_4);
+            parent_4.setTouchDelegate(expandedArea);
+        });
+
+        parent_5.post(() -> {
+            Rect delegateArea = new Rect();
+            top_5.getHitRect(delegateArea);
+
+            // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
+            delegateArea.top -= 20;
+            delegateArea.bottom += 20;
+            delegateArea.left -= 20;
+            delegateArea.right += 20;
+
+            TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_5);
+            parent_5.setTouchDelegate(expandedArea);
+        });
+
+        // top_1 ~ top5의 클릭 이벤트
         top_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -373,7 +463,7 @@ public class HomeFragment extends Fragment {
         });
 
         //실시간 인기 키워드 순위
-        top2_1.setOnClickListener(new View.OnClickListener() {
+        keyword_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -382,7 +472,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_2.setOnClickListener(new View.OnClickListener() {
+        keyword_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -391,7 +481,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_3.setOnClickListener(new View.OnClickListener() {
+        keyword_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -400,7 +490,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_4.setOnClickListener(new View.OnClickListener() {
+        keyword_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -409,7 +499,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_5.setOnClickListener(new View.OnClickListener() {
+        keyword_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -418,7 +508,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_6.setOnClickListener(new View.OnClickListener() {
+        keyword_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -427,7 +517,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_7.setOnClickListener(new View.OnClickListener() {
+        keyword_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -436,7 +526,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_8.setOnClickListener(new View.OnClickListener() {
+        keyword_8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -445,7 +535,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_9.setOnClickListener(new View.OnClickListener() {
+        keyword_9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -454,7 +544,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        top2_10.setOnClickListener(new View.OnClickListener() {
+        keyword_10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PopularKeywordActivity.class);
@@ -469,12 +559,6 @@ public class HomeFragment extends Fragment {
         ScrollView home_scrollview = view.findViewById(R.id.home_scrollview);
 
         LinearLayout keyword_open_close = view.findViewById(R.id.keyword_open_close);
-
-        FrameLayout keyword_6 = view.findViewById(R.id.keyword_6);
-        FrameLayout keyword_7 = view.findViewById(R.id.keyword_7);
-        FrameLayout keyword_8 = view.findViewById(R.id.keyword_8);
-        FrameLayout keyword_9 = view.findViewById(R.id.keyword_9);
-        FrameLayout keyword_10 = view.findViewById(R.id.keyword_10);
 
         keyword_open_close.setOnClickListener(new View.OnClickListener() {
             @Override
