@@ -32,8 +32,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class news3_activity extends AppCompatActivity {
 
@@ -44,6 +50,7 @@ public class news3_activity extends AppCompatActivity {
     ImageView Img,bookMark;
     RequestQueue queue;
     String email;
+    Set<String> storedNewsIds = new HashSet<>();
     private SharedPreferences preferences;
     public static final String preference = "newkey";
     String fiveWOneHUrl="http://15.164.199.177:5000/5w1h";
@@ -90,7 +97,6 @@ public class news3_activity extends AppCompatActivity {
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
 
-        Log.d("test!!",imgUrl);
         if(imgUrl.equals("none")){
             imgUrl=mediaImgUrl;
         }
@@ -220,10 +226,11 @@ public class news3_activity extends AppCompatActivity {
 
         summaryCardView.setVisibility(View.GONE);
         news3SummaryArrow.setImageResource(R.drawable.news3_up);
-        summaryButton.setBackgroundColor(getResources().getColor(R.color.gray_500));
+        summaryButton.setBackgroundResource(R.drawable.news3_radius2);
+        summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
         Toast.makeText(getApplicationContext(), "요약이 준비되지 않았어요", Toast.LENGTH_SHORT).show();
 
-        final StringRequest request=new StringRequest(Request.Method.POST, fiveWOneHUrl, new Response.Listener<String>() {
+        final StringRequest fiveWOneHRequest=new StringRequest(Request.Method.POST, fiveWOneHUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("res",response);
@@ -236,6 +243,7 @@ public class news3_activity extends AppCompatActivity {
                 how.setText(response);
 
                 summaryCardView.setVisibility(View.VISIBLE);
+                summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                 summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                 news3SummaryArrow.setImageResource(R.drawable.news3_down);
                 Toast.makeText(getApplicationContext(), "해당 기사를 요약했어요", Toast.LENGTH_SHORT).show();
@@ -258,17 +266,72 @@ public class news3_activity extends AppCompatActivity {
                 return params;
             }
         };
-        request.setRetryPolicy(new DefaultRetryPolicy(
+        fiveWOneHRequest.setRetryPolicy(new DefaultRetryPolicy(
                 1000000,  // 기본 타임아웃 (기본값: 2500ms)
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
 
-        request.setShouldCache(false);
-        queue.add(request);
+        fiveWOneHRequest.setShouldCache(false);
+        queue.add(fiveWOneHRequest);
+
+        // 저장 뉴스 불러오기
+        String storeUrl="http://15.164.199.177:5000/storedNews";
+
+        final StringRequest storeRequest=new StringRequest(Request.Method.POST, storeUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JSONArray jsonArray = new JSONArray();
+                try {
+                    jsonArray = new JSONArray(response);
+                } catch (JSONException e) {
+                    Log.d("JSONParseError", e.toString());
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        storedNewsIds.add(jsonObject.getString("id"));
+                    } catch (JSONException e) {
+                        Log.d("res!!",response);
+                        e.printStackTrace();
+                    }
+                }
+
+                // 저장 뉴스 목록에 해당 뉴스 id 있으면 북마크 표시
+                if (storedNewsIds.contains(id)) {
+                    bookMark.setTag(true);
+                    bookMark.setImageResource(R.drawable.bookmark_checked);
+                } else {
+                    bookMark.setTag(false);
+                    bookMark.setImageResource(R.drawable.bookmark_unchecked);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("storeViewError",error.toString());
+            }
+        }){
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", email); // 로그인 아이디로 바꾸기
+                return params;
+            }
+        };
+        storeRequest.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        storeRequest.setShouldCache(false);
+        queue.add(storeRequest);
 
         // 육하원칙 요약 보여주기
-        /*
         summaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,16 +339,17 @@ public class news3_activity extends AppCompatActivity {
 
                 if (summaryCardView.getVisibility() == View.VISIBLE) {
                     summaryCardView.setVisibility(View.GONE);
+                    summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_up);
                 } else {
                     summaryCardView.setVisibility(View.VISIBLE);
+                    summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_down);
                 }
             }
         });
-         */
     }
 
     @Override

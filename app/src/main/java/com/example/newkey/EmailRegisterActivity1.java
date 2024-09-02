@@ -1,5 +1,7 @@
 package com.example.newkey;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -12,13 +14,17 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,15 +37,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class EmailRegisterActivity1 extends AppCompatActivity {
-    private EditText email1,email2;
+    private EditText email1;
+    private Spinner email2;
     private Button emailDpCheck;
     private ImageView nextArrow, back;
     private TextView emailDpCheckText, nextText;
-    private String email;
+    private String email, selectedEmail;
     private StringBuilder url;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
@@ -61,7 +70,33 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue=Volley.newRequestQueue(this);
 
-        emailDpCheck.setClickable(false);
+        next.setEnabled(false);
+
+        // Spinner에 들어갈 항목들
+        String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net"};
+
+        // ArrayAdapter를 사용하여 Spinner에 항목 연결
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        email2.setAdapter(adapter);
+
+        // Spinner의 항목이 선택되었을 때의 동작 설정
+        email2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 선택된 항목의 내용 받아서 출력
+                selectedEmail = parent.getItemAtPosition(position).toString();
+                Log.d(TAG, "Selected item: " + selectedEmail);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 아무 항목도 선택되지 않았을 때의 동작 (필요한 경우 구현)
+            }
+        });
+
+        emailDpCheck.setEnabled(false);
+        emailDpCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+        
         TextWatcher emailTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -80,17 +115,17 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
         };
 
         email1.addTextChangedListener(emailTextWatcher);
-        email2.addTextChangedListener(emailTextWatcher);
+        //email2.addTextChangedListener(emailTextWatcher);
 
         // 이메일 중복 체크
         emailDpCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 url = new StringBuilder();
-                email=email1.getText().toString()+"@"+email2.getText().toString();
+                email=email1.getText().toString()+"@"+selectedEmail;
 
                 try {
-                    url.append("http://43.201.113.167:8080/user/check-email").append("?email=").append(email);
+                    url.append("http://43.201.113.167:8080/user/check-email").append("?email=").append(email); //43.201.113.167
                     Log.d("test", "EmailRegisterActivity1 : 입력한 이메일 - " + email);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -117,7 +152,7 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
                                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                                     nextText.setTextColor(getResources().getColor(R.color.gray_100));
                                     nextArrow.setImageResource(R.drawable.next);
-                                    next.setClickable(false);
+                                    next.setEnabled(false);
                                 } else {
                                     // 이메일이 중복되지 않으면
                                     emailDpCheckText.setTextColor(getResources().getColor(R.color.key_green_400));
@@ -126,11 +161,11 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
                                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                                     nextText.setTextColor(getResources().getColor(R.color.gray_600));
                                     nextArrow.setImageResource(R.drawable.next_black);
-                                    next.setClickable(true);
+                                    next.setEnabled(true);
                                 }
                                 emailDpCheckText.setVisibility(View.VISIBLE);
                             } else {
-                                next.setClickable(false);
+                                next.setEnabled(false);
                                 // 요청 실패
                                 Toast.makeText(EmailRegisterActivity1.this, "서버 응답 오류", Toast.LENGTH_SHORT).show();
                             }
@@ -142,14 +177,14 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("test", "에러뜸!!" + error.toString());
+                        Log.d("test0", "에러뜸!!" + error.toString());
                         if (error.networkResponse != null && error.networkResponse.data != null) {
                             try {
                                 String errorResponse = new String(error.networkResponse.data, "utf-8");
                                 JSONObject jsonObject = new JSONObject(errorResponse);
                                 String errorMessage = jsonObject.getString("errorMessage");
                                 // Handle BaseException
-                                Log.d("test0", "BaseException: " + errorMessage);
+                                Log.d("test1", "BaseException: " + errorMessage);
                             } catch (UnsupportedEncodingException | JSONException e) {
                                 e.printStackTrace();
                             }
@@ -165,7 +200,7 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
             }
         });
 
-        // 다음 버튼 (이메일 전송도 같이 진행)
+        // 다음 버튼 (인증코드 전송)
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,7 +280,7 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
     }
 
     private void validateEmail() {
-        String email = email1.getText().toString() + "@" + email2.getText().toString();
+        String email = email1.getText().toString() + "@" + selectedEmail;
         String emailRegex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
         Pattern pattern = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
@@ -253,18 +288,18 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
         if (matcher.matches()) { // 알맞은 이메일 형식인 경우
             emailDpCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
             emailDpCheck.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_600));
-            emailDpCheck.setClickable(true);
+            emailDpCheck.setEnabled(true);
         } else { // 알맞지 않은 이메일 형식인 경우
             emailDpCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
             emailDpCheck.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_300));
-            emailDpCheck.setClickable(false);
+            emailDpCheck.setEnabled(false);
 
             emailDpCheckText.setText("");
 
             next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
             nextText.setTextColor(getResources().getColor(R.color.gray_100));
             nextArrow.setImageResource(R.drawable.next);
-            next.setClickable(false);
+            next.setEnabled(false);
         }
     }
 
@@ -272,5 +307,4 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
-
 }

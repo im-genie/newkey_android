@@ -42,6 +42,7 @@ public class ConsentActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        next.setEnabled(false);
 
         // 텍스트 뷰 초기화
         agreeText = findViewById(R.id.agree_text);
@@ -113,6 +114,7 @@ public class ConsentActivity extends AppCompatActivity {
         next.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.key_green_400)); // R.color.key_green_400는 실제 색상 리소스로 대체
         nextArrow.setImageResource(R.drawable.check_black); // 체크된 이미지로 설정
         agreeText.setTextColor(ContextCompat.getColor(this, R.color.gray_600)); // 검은색으로 설정
+        next.setEnabled(true);
     }
 
     @Override

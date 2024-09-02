@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-permission
         android:name="android.permission.POST_NOTIFICATIONS"
         android:minSdkVersion="33" />
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -42,22 +45,28 @@
             android:exported="true" />
         <activity
             android:name=".EmailRegisterActivity1"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".EmailRegisterActivity2"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".PwRegisterActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
         </activity>
         <activity
             android:name=".PwFindActivity1"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".PwFindActivity2"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".NicknameActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".news1_activity"
@@ -99,6 +108,7 @@
             android:exported="true" />
         <activity
             android:name=".ChangePasswordActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".ViewHistoryActivity"
@@ -111,6 +121,7 @@
             android:exported="true" />
         <activity
             android:name=".ChangeIdActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true" />
         <activity
             android:name=".ProfileActivity"
@@ -119,7 +130,12 @@
             android:name=".AlrimSetting"
             android:exported="true" />
 
-        <receiver android:name=".NotificationReceiver" />
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+
 
     </application>
 

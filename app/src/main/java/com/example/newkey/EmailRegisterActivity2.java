@@ -58,6 +58,8 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
         preferences = getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue = Volley.newRequestQueue(this);
 
+        next.setEnabled(false);
+
         // Initially disable the codeCheck button
         codeCheck.setEnabled(false);
         codeCheck.setBackgroundColor(Color.GRAY); // Set initial color to gray
@@ -97,7 +99,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                 JSONObject jsonRequest = new JSONObject();
 
                 try {
-                    url.append("http://43.201.113.167:8080/user/emails/verifications");
+                    url.append("http://43.201.113.167:8080/user/emails/verifications"); //43.201.113.167
 
                     String correctCode = preferences.getString("correctCode", "");
                     jsonRequest.put("correctCode", correctCode);
@@ -128,13 +130,13 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                                     nextText.setTextColor(getResources().getColor(R.color.gray_600));
                                     nextArrow.setImageResource(R.drawable.next_black);
-                                    next.setClickable(true);
+                                    next.setEnabled(true);
                                 }
                                 else{
                                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                                     nextText.setTextColor(getResources().getColor(R.color.gray_100));
                                     nextArrow.setImageResource(R.drawable.next);
-                                    next.setClickable(false);
+                                    next.setEnabled(false);
 
                                     Toast.makeText(EmailRegisterActivity2.this, "인증코드가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
                                 }
@@ -142,7 +144,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                                 next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                                 nextText.setTextColor(getResources().getColor(R.color.gray_100));
                                 nextArrow.setImageResource(R.drawable.next);
-                                next.setClickable(false);
+                                next.setEnabled(false);
 
                                 Toast.makeText(EmailRegisterActivity2.this, "인증코드가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
                             }

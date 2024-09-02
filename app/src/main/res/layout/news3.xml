@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".news3_activity"
     android:fillViewport="true">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black">
+        android:background="@color/gray_600">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="28dp">
-            <ImageView
-                android:id="@+id/news3_back"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/back"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="28dp"/>
-            <TextView
-                android:id="@+id/publisher"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray_100"
-                android:text="신문사"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="152dp"
-                android:layout_marginBottom="36dp"
-                android:layout_gravity="center"
-                android:fontFamily="@font/pretendardmedium"
-                android:textSize="16dp"/>
-            <ImageView
-                android:id="@+id/news3_scrap"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_marginTop="40dp"
-                android:src="@drawable/scrap"
-                android:layout_marginLeft="120dp"
-                android:layout_marginBottom="28dp"/>
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="40dp">
+                <ImageView
+                    android:id="@+id/news3_back"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/back"
+                    android:layout_gravity="left" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/publisher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_100"
+                    android:text="신문사"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/pretendardmedium"
+                    android:textSize="16dp"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/news3_scrap"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/bookmark_unchecked"
+                    android:gravity="right" />
+            </LinearLayout>
         </LinearLayout>
         <TextView
             android:id="@+id/title"
@@ -54,7 +60,8 @@
             android:text="기사 제목"
             android:fontFamily="@font/pretendardmedium"
             android:textSize="20dp"
-            android:textColor="@color/gray_100"/>
+            android:textColor="@color/gray_100"
+            android:maxLines="2"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,52 +73,58 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:textColor="@color/gray_300"
                 android:text="날짜"
                 android:fontFamily="@font/pretendardregular"
-                android:textSize="10dp" />
+                android:textSize="14dp"
+                android:maxLines="1"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/reporter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray_300"
                 android:text="기자 이름"
-                android:layout_marginLeft="230dp"
+                android:layout_gravity="right"
                 android:fontFamily="@font/pretendardregular"
-                android:textSize="10dp" />
+                android:textSize="14dp"
+                android:maxLines="1"/>
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="202dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="21dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="center"
             app:cardCornerRadius="12dp">
-
             <ImageView
                 android:id="@+id/newsImg"
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="202dp"
-                android:src="@drawable/test1"
-                android:scaleType="centerCrop"/>
-
+                android:scaleType="centerCrop"
+                android:src="@drawable/test1"/>
         </androidx.cardview.widget.CardView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_gravity="center">
             <FrameLayout
                 android:id="@+id/new3_summary"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/news3_radius1">
+                android:background="@drawable/news3_radius2">
                 <TextView
-                    android:id="@+id/summary"
+                    android:id="@+id/news3_summary_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="기사 요약"
@@ -134,258 +147,337 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardBackgroundColor="@color/black"
+                app:cardBackgroundColor="@color/gray_600"
                 android:visibility="gone">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/polygon_when"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/polygon"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:foregroundGravity="center"/>
-                    <TextView
-                        android:id="@+id/textView_when"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="언제"
-                        android:textColor="@color/gray_100"
-                        app:layout_constraintStart_toEndOf="@id/polygon_when"
-                        app:layout_constraintTop_toTopOf="@id/polygon_when"
-                        app:layout_constraintBottom_toBottomOf="@id/polygon_when"
-                        android:layout_marginStart="4dp"
-                        android:fontFamily="@font/pretendardmedium"
-                        android:textSize="12dp" />
-                    <ImageView
-                        android:id="@+id/polygon_who"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/polygon"
-                        app:layout_constraintStart_toStartOf="@id/textView_when"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:foregroundGravity="center"
-                        android:layout_marginLeft="164dp"/>
-                    <TextView
-                        android:id="@+id/textView_who"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="누가"
-                        android:textColor="@color/gray_100"
-                        app:layout_constraintStart_toEndOf="@id/polygon_who"
-                        app:layout_constraintTop_toTopOf="@id/polygon_who"
-                        app:layout_constraintBottom_toBottomOf="@id/polygon_who"
-                        android:layout_marginStart="4dp"
-                        android:fontFamily="@font/pretendardmedium"
-                        android:textSize="12dp" />
-                    <TextView
-                        android:id="@+id/when"
-                        android:layout_width="156dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/polygon_when"
-                        android:text="2023년 12월 31일"
-                        android:textColor="@color/gray_100"
-                        android:layout_marginTop="8.5dp"
-                        android:background="@drawable/news3_radius2"
-                        android:paddingBottom="12.5dp"
-                        android:paddingTop="12.5dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        android:fontFamily="@font/pretendardregular"
-                        android:textSize="12dp" />
-                    <TextView
-                        android:id="@+id/who"
-                        android:layout_width="156dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="@+id/polygon_who"
-                        app:layout_constraintTop_toBottomOf="@id/polygon_who"
-                        android:text="의료진"
-                        android:textColor="@color/gray_100"
-                        android:layout_marginTop="8.5dp"
-                        android:background="@drawable/news3_radius2"
-                        android:paddingBottom="12.5dp"
-                        android:paddingTop="12.5dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        android:fontFamily="@font/pretendardregular"
-                        android:textSize="12dp" />
-                    <ImageView
-                        android:id="@+id/polygon_where"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/polygon"
-                        app:layout_constraintStart_toStartOf="@id/when"
-                        app:layout_constraintTop_toBottomOf="@id/when"
-                        android:foregroundGravity="center"
-                        android:layout_marginTop="14dp"/>
-                    <TextView
-                        android:id="@+id/textView_where"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="어디서"
-                        android:textColor="@color/gray_100"
-                        app:layout_constraintStart_toEndOf="@id/polygon_what"
-                        app:layout_constraintTop_toBottomOf="@id/when"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/pretendardmedium"
-                        android:textSize="12dp" />
-                    <TextView
-                        android:id="@+id/where"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/polygon_what"
-                        android:text="서울 광진구보건소 선별진료소"
-                        android:textColor="@color/gray_100"
-                        android:layout_marginTop="8.5dp"
-                        android:background="@drawable/news3_radius2"
-                        android:paddingBottom="12.5dp"
-                        android:paddingTop="12.5dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        android:fontFamily="@font/pretendardregular"
-                        android:textSize="12dp" />
-                    <ImageView
-                        android:id="@+id/polygon_what"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/polygon"
-                        app:layout_constraintStart_toStartOf="@id/when"
-                        app:layout_constraintTop_toBottomOf="@id/when"
-                        android:foregroundGravity="center"
-                        android:layout_marginTop="14dp"/>
-                    <TextView
-                        android:id="@+id/textView_what"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="무엇을"
-                        android:textColor="@color/gray_100"
-                        app:layout_constraintStart_toEndOf="@id/polygon_what"
-                        app:layout_constraintTop_toBottomOf="@id/when"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/pretendardmedium"
-                        android:textSize="12dp" />
-                    <TextView
-                        android:id="@+id/what"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/polygon_what"
-                        android:text="코로나 검사 체취"
-                        android:textColor="@color/gray_100"
-                        android:layout_marginTop="8.5dp"
-                        android:background="@drawable/news3_radius2"
-                        android:paddingBottom="12.5dp"
-                        android:paddingTop="12.5dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        android:fontFamily="@font/pretendardregular"
-                        android:textSize="12dp" />
-                    <ImageView
-                        android:id="@+id/polygon_how"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/polygon"
-                        app:layout_constraintStart_toStartOf="@id/what"
-                        app:layout_constraintTop_toBottomOf="@id/what"
-                        android:foregroundGravity="center"
-                        android:layout_marginTop="14dp"/>
-                    <TextView
-                        android:id="@+id/textView_how"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="어떻게"
-                        android:textColor="@color/gray_100"
-                        app:layout_constraintStart_toEndOf="@id/polygon_how"
-                        app:layout_constraintTop_toBottomOf="@id/what"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/pretendardmedium"
-                        android:textSize="12dp" />
-                    <TextView
-                        android:id="@+id/how"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/polygon_how"
-                        android:text="전국 선별진료소 506곳이 문을 어쩌구 저쩌구"
-                        android:textColor="@color/gray_100"
-                        android:layout_marginTop="8.5dp"
-                        android:background="@drawable/news3_radius2"
-                        android:paddingBottom="12.5dp"
-                        android:paddingTop="12.5dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        android:fontFamily="@font/pretendardregular"
-                        android:textSize="12dp" />
-                    <ImageView
-                        android:id="@+id/polygon_why"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/polygon"
-                        app:layout_constraintStart_toStartOf="@id/how"
-                        app:layout_constraintTop_toBottomOf="@id/how"
-                        android:foregroundGravity="center"
-                        android:layout_marginTop="14dp"/>
-                    <TextView
-                        android:id="@+id/textView_why"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="왜"
-                        android:textColor="@color/gray_100"
-                        app:layout_constraintStart_toEndOf="@id/polygon_why"
-                        app:layout_constraintTop_toBottomOf="@id/how"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/pretendardmedium"
-                        android:textSize="12dp" />
-                    <TextView
-                        android:id="@+id/why"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/polygon_why"
-                        android:text="코로나19 선별진료소 운영이 2023년 12월 31일 종료되어 운영 종료 시간에 의료진이 퇴근 준비 어쩌구"
-                        android:textColor="@color/gray_100"
-                        android:layout_marginTop="8.5dp"
-                        android:background="@drawable/news3_radius2"
-                        android:paddingBottom="12.5dp"
-                        android:paddingTop="12.5dp"
-                        android:paddingLeft="12dp"
-                        android:paddingRight="12dp"
-                        android:fontFamily="@font/pretendardregular"
-                        android:textSize="12dp" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <TableLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+                    <TableRow>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/polygon_when"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/polygon"
+                                    android:layout_gravity="center">
+                                </ImageView>
+                                <TextView
+                                    android:id="@+id/text_when"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="언제"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:textColor="@color/gray_100"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp">
+                                </TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/cardnews_background"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="7dp">
+                                <TextView
+                                    android:id="@+id/when"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="2023년 12월 31일"
+                                    android:textSize="12dp"
+                                    android:textColor="@color/gray_100"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginRight="12dp">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/polygon_who"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/polygon"
+                                    android:layout_gravity="center">
+                                </ImageView>
+                                <TextView
+                                    android:id="@+id/text_who"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="누가"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:textColor="@color/gray_100"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp">
+                                </TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/cardnews_background"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/who"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="의료진"
+                                    android:textSize="12dp"
+                                    android:textColor="@color/gray_100"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginRight="12dp">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </TableRow>
+                    <TableRow
+                        android:layout_marginTop="16dp">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/polygon_where"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/polygon"
+                                    android:layout_gravity="center">
+                                </ImageView>
+                                <TextView
+                                    android:id="@+id/text_where"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="어디서"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:textColor="@color/gray_100"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp">
+                                </TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/cardnews_background"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/where"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="서울 광진구 보건소 선별진료소"
+                                    android:textSize="12dp"
+                                    android:textColor="@color/gray_100"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginRight="12dp">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </TableRow>
+                    <TableRow
+                        android:layout_marginTop="16dp">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/polygon_what"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/polygon"
+                                    android:layout_gravity="center">
+                                </ImageView>
+                                <TextView
+                                    android:id="@+id/text_what"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="무엇을"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:textColor="@color/gray_100"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp">
+                                </TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/cardnews_background"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/what"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="코로나 검체 채취"
+                                    android:textSize="12dp"
+                                    android:textColor="@color/gray_100"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginRight="12dp">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </TableRow>
+                    <TableRow
+                        android:layout_marginTop="16dp">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/polygon_how"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/polygon"
+                                    android:layout_gravity="center">
+                                </ImageView>
+                                <TextView
+                                    android:id="@+id/text_how"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="어떻게"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:textColor="@color/gray_100"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp">
+                                </TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/cardnews_background"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/how"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="전국 선별진료소 506곳이 문을 어쩌구 어쩌구"
+                                    android:textSize="12dp"
+                                    android:textColor="@color/gray_100"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginRight="12dp">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </TableRow>
+                    <TableRow
+                        android:layout_marginTop="16dp">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="1">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <ImageView
+                                    android:id="@+id/polygon_why"
+                                    android:layout_width="12dp"
+                                    android:layout_height="12dp"
+                                    android:src="@drawable/polygon"
+                                    android:layout_gravity="center">
+                                </ImageView>
+                                <TextView
+                                    android:id="@+id/text_why"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="왜"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:textColor="@color/gray_100"
+                                    android:layout_gravity="center"
+                                    android:layout_marginLeft="4dp">
+                                </TextView>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/cardnews_background"
+                                android:layout_marginTop="10dp">
+                                <TextView
+                                    android:id="@+id/why"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="코로나19 선별진료소 운영이 2023년 12월 31일 종료되어 운영 종료 시간에 의료진이 퇴근 준비 어쩌구"
+                                    android:textSize="12dp"
+                                    android:textColor="@color/gray_100"
+                                    android:fontFamily="@font/pretendardregular"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginRight="12dp">
+                                </TextView>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </TableRow>
+                </TableLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/gray_500"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/gray_100"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/pretendardregular"
-                android:textSize="12dp"
-                android:text="코로나19 선별진료소 운영이 2023년 12월31일 종료됐다. 2020년 1월20일 국내에서 코로나19 환자가 발생해 문을 연 이후 1441일 만이다. 지난달 31일 서울 광진구보건소 선별진료소를 찾았다.
-                \n\n운영 종료 시간이 되자 검체 채취를 하던 의료진이 익숙하게 물품을 정리하고 퇴근 준비를 했다. 보건소 직원이 진료소 앞을 지나가자 검체 채취실에 있던 직원이 검사 받으러 온 거야?라며 장난스럽게 미소를 지었다. 일상적인 퇴근 같았지만 불을 끄고 진료소를 나서는 의료진의 얼굴에는 시원섭섭함이 남은 듯했다. 불 꺼진 검체 채취실에는 사용하지 않은 의료폐기물 봉투만 남았다.
-                \n\n전국 보건소에 설치된 코로나19 선별진료소 506곳이 이날 문을 닫았다. 기침 소리에 움츠러들고, 마스크에 가려져 미소를 볼 수 없었던 시간과 진료소 앞의 긴 줄, 감염 예방을 위해 거리를 두었던 일상도 까마득하게 느껴졌다.
-                \n\n4년 가까운 시간 선별진료소를 지켰던 의료진을 향한 인사가 입 밖으로 가만히 터져나왔다.덕분입니다. 고맙습니다.
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@color/gray_500"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"/>
 
-                n\n코로나19 선별진료소 운영이 2023년 12월31일 종료됐다. 2020년 1월20일 국내에서 코로나19 환자가 발생해 문을 연 이후 1441일 만이다. 지난달 31일 서울 광진구보건소 선별진료소를 찾았다.
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="46dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/pretendardregular"
+            android:text="코로나19 선별진료소 운영이 2023년 12월31일 종료됐다. 2020년 1월20일 국내에서 코로나19 환자가 발생해 문을 연 이후 1441일 만이다. 지난달 31일 서울 광진구보건소 선별진료소를 찾았다.
                 \n\n운영 종료 시간이 되자 검체 채취를 하던 의료진이 익숙하게 물품을 정리하고 퇴근 준비를 했다. 보건소 직원이 진료소 앞을 지나가자 검체 채취실에 있던 직원이 검사 받으러 온 거야?라며 장난스럽게 미소를 지었다. 일상적인 퇴근 같았지만 불을 끄고 진료소를 나서는 의료진의 얼굴에는 시원섭섭함이 남은 듯했다. 불 꺼진 검체 채취실에는 사용하지 않은 의료폐기물 봉투만 남았다.
                 \n\n전국 보건소에 설치된 코로나19 선별진료소 506곳이 이날 문을 닫았다. 기침 소리에 움츠러들고, 마스크에 가려져 미소를 볼 수 없었던 시간과 진료소 앞의 긴 줄, 감염 예방을 위해 거리를 두었던 일상도 까마득하게 느껴졌다.
                 \n\n4년 가까운 시간 선별진료소를 지켰던 의료진을 향한 인사가 입 밖으로 가만히 터져나왔다.덕분입니다. 고맙습니다.
@@ -393,6 +485,13 @@
                 \n\n코로나19 선별진료소 운영이 2023년 12월31일 종료됐다. 2020년 1월20일 국내에서 코로나19 환자가 발생해 문을 연 이후 1441일 만이다. 지난달 31일 서울 광진구보건소 선별진료소를 찾았다.
                 \n\n운영 종료 시간이 되자 검체 채취를 하던 의료진이 익숙하게 물품을 정리하고 퇴근 준비를 했다. 보건소 직원이 진료소 앞을 지나가자 검체 채취실에 있던 직원이 검사 받으러 온 거야?라며 장난스럽게 미소를 지었다. 일상적인 퇴근 같았지만 불을 끄고 진료소를 나서는 의료진의 얼굴에는 시원섭섭함이 남은 듯했다. 불 꺼진 검체 채취실에는 사용하지 않은 의료폐기물 봉투만 남았다.
                 \n\n전국 보건소에 설치된 코로나19 선별진료소 506곳이 이날 문을 닫았다. 기침 소리에 움츠러들고, 마스크에 가려져 미소를 볼 수 없었던 시간과 진료소 앞의 긴 줄, 감염 예방을 위해 거리를 두었던 일상도 까마득하게 느껴졌다.
-                \n\n4년 가까운 시간 선별진료소를 지켰던 의료진을 향한 인사가 입 밖으로 가만히 터져나왔다.덕분입니다. 고맙습니다."/>
+                \n\n4년 가까운 시간 선별진료소를 지켰던 의료진을 향한 인사가 입 밖으로 가만히 터져나왔다.덕분입니다. 고맙습니다.
+
+                \n\n코로나19 선별진료소 운영이 2023년 12월31일 종료됐다. 2020년 1월20일 국내에서 코로나19 환자가 발생해 문을 연 이후 1441일 만이다. 지난달 31일 서울 광진구보건소 선별진료소를 찾았다.
+                \n\n운영 종료 시간이 되자 검체 채취를 하던 의료진이 익숙하게 물품을 정리하고 퇴근 준비를 했다. 보건소 직원이 진료소 앞을 지나가자 검체 채취실에 있던 직원이 검사 받으러 온 거야?라며 장난스럽게 미소를 지었다. 일상적인 퇴근 같았지만 불을 끄고 진료소를 나서는 의료진의 얼굴에는 시원섭섭함이 남은 듯했다. 불 꺼진 검체 채취실에는 사용하지 않은 의료폐기물 봉투만 남았다.
+                \n\n전국 보건소에 설치된 코로나19 선별진료소 506곳이 이날 문을 닫았다. 기침 소리에 움츠러들고, 마스크에 가려져 미소를 볼 수 없었던 시간과 진료소 앞의 긴 줄, 감염 예방을 위해 거리를 두었던 일상도 까마득하게 느껴졌다.
+                \n\n4년 가까운 시간 선별진료소를 지켰던 의료진을 향한 인사가 입 밖으로 가만히 터져나왔다.덕분입니다. 고맙습니다."
+            android:textColor="@color/gray_100"
+            android:textSize="12dp" />
     </LinearLayout>
 </ScrollView>
