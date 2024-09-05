@@ -1,5 +1,7 @@
 package com.example.newkey;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -11,10 +13,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +39,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PwFindActivity1 extends AppCompatActivity {
-    private EditText email1,email2,code;
+    private EditText email1,code;
+    private Spinner email2;
     private Button codeSend,codeCheck;
     private ImageView nextArrow, codeRightView, back;
     private TextView nextText;
-    private String email;
+    private String email, selectedEmail;
     private StringBuilder url;
     TextView codeRightText;
     private SharedPreferences preferences;
@@ -88,7 +94,29 @@ public class PwFindActivity1 extends AppCompatActivity {
         };
 
         email1.addTextChangedListener(emailTextWatcher);
-        email2.addTextChangedListener(emailTextWatcher);
+        // email2.addTextChangedListener(emailTextWatcher);
+
+        // Spinner에 들어갈 항목들
+        String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net", "sungshin.ac.kr"};
+
+        // ArrayAdapter를 사용하여 Spinner에 항목 연결
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        email2.setAdapter(adapter);
+
+        // Spinner의 항목이 선택되었을 때의 동작 설정
+        email2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // 선택된 항목의 내용 받아서 출력
+                selectedEmail = parent.getItemAtPosition(position).toString();
+                Log.d(TAG, "Selected item: " + selectedEmail);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // 아무 항목도 선택되지 않았을 때의 동작 (필요한 경우 구현)
+            }
+        });
 
         // 인증코드 전송 버튼
         codeSend.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +125,7 @@ public class PwFindActivity1 extends AppCompatActivity {
                 url = new StringBuilder();
                 url.append("http://43.201.113.167:8080/user/emails/verification-requests");
 
-                email=email1.getText().toString()+"@"+email2.getText().toString();
+                email=email1.getText().toString()+"@"+selectedEmail;
 
                 JSONObject jsonRequest = new JSONObject();
                 try {
@@ -227,17 +255,17 @@ public class PwFindActivity1 extends AppCompatActivity {
                                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                                     nextText.setTextColor(getResources().getColor(R.color.gray_600));
                                     nextArrow.setImageResource(R.drawable.next_black);
-                                    next.setClickable(true);
+                                    next.setEnabled(true);
                                 }
                             } else {
-                                next.setClickable(false);
+                                next.setEnabled(false);
                                 Log.d("test", "인증코드 맞지 않음");
                                 Toast.makeText(PwFindActivity1.this, "인증코드가 맞지 않습니다", Toast.LENGTH_SHORT).show();
 
                                 next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                                 nextText.setTextColor(getResources().getColor(R.color.gray_100));
                                 nextArrow.setImageResource(R.drawable.next);
-                                next.setClickable(false);
+                                next.setEnabled(false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -288,7 +316,7 @@ public class PwFindActivity1 extends AppCompatActivity {
     }
 
     private void validateEmail() {
-        String email = email1.getText().toString() + "@" + email2.getText().toString();
+        String email = email1.getText().toString() + "@" + selectedEmail;
         String emailRegex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
         Pattern pattern = Pattern.compile(emailRegex, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
@@ -296,11 +324,11 @@ public class PwFindActivity1 extends AppCompatActivity {
         if (matcher.matches()) { // 알맞은 이메일 형식인 경우
             codeSend.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
             codeSend.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_600));
-            codeSend.setClickable(true);
+            codeSend.setEnabled(true);
         } else { // 알맞지 않은 이메일 형식인 경우
             codeSend.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
             codeSend.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_300));
-            codeSend.setClickable(false);
+            codeSend.setEnabled(false);
         }
     }
 

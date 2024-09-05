@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 public class LogoActivity extends AppCompatActivity {
     Button login;
     TextView register;
@@ -20,7 +22,7 @@ public class LogoActivity extends AppCompatActivity {
     public static final String preference = "newkey";
     long userIdx = 0;
 
-
+    private LottieAnimationView animationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,18 @@ public class LogoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // 애니메이션
+        animationView = findViewById(R.id.animationView);
+
+        // res/raw 디렉터리에 있는 JSON 파일 로드
+        animationView.setAnimation(R.raw.newkey_loading);
+
+        // 스피트 조정
+        animationView.setSpeed(0.65f);
+
+        // 애니메이션 재생
+        animationView.playAnimation();
     }
 
     private boolean backPressedOnce = false;

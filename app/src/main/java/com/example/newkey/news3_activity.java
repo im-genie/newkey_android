@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -36,10 +42,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class news3_activity extends AppCompatActivity {
 
@@ -54,6 +64,7 @@ public class news3_activity extends AppCompatActivity {
     private SharedPreferences preferences;
     public static final String preference = "newkey";
     String fiveWOneHUrl="http://15.164.199.177:5000/5w1h";
+    private static final Executor executor = Executors.newFixedThreadPool(4);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +105,10 @@ public class news3_activity extends AppCompatActivity {
         String reporter = getIntent().getStringExtra("reporter");
 
         Title.setText(title);
-        Content.setText(content);
+        if (Content != null) {
+            Content.setText(Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT, new URLImageGetter(Content), null));
+        }
+        //Content.setText(content);
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
@@ -365,4 +379,90 @@ public class news3_activity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    private static class URLImageGetter implements Html.ImageGetter {
+        private final TextView textView;
+
+        public URLImageGetter(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        public Drawable getDrawable(String source) {
+            final URLDrawable urlDrawable = new URLDrawable();
+
+            // TextView가 레이아웃된 후 너비를 가져오기 위해 OnGlobalLayoutListener 사용
+            textView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    // 한번만 호출되도록 리스너 제거
+                    textView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    executor.execute(() -> {
+                        try {
+                            InputStream is = (InputStream) new URL(source).getContent();
+                            Drawable d = Drawable.createFromStream(is, "src");
+                            if (d != null) {
+                                // TextView의 너비 가져오기
+                                int viewWidth = textView.getWidth();
+                                int intrinsicWidth = d.getIntrinsicWidth();
+                                int intrinsicHeight = d.getIntrinsicHeight();
+
+                                // 이미지의 가로 세로 비율 유지하면서 TextView에 맞게 크기 조정
+                                float aspectRatio = (float) intrinsicHeight / intrinsicWidth;
+                                int width = viewWidth;
+                                int height = (int) (viewWidth * aspectRatio);
+
+                                // 이미지의 Bounds 설정
+                                d.setBounds(0, 0, width, height);
+
+                                // URLDrawable에 이미지 적용
+                                urlDrawable.setBounds(0, 0, width, height);
+                                urlDrawable.setDrawable(d);
+
+                                // 텍스트 뷰를 다시 그려서 이미지가 올바르게 표시되도록 함
+                                textView.post(() -> {
+                                    textView.invalidate();
+                                    textView.setText(textView.getText());
+                                    textView.requestLayout(); // 추가
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+            });
+
+            return urlDrawable;
+        }
+
+        private static class URLDrawable extends BitmapDrawable {
+            private Drawable drawable;
+
+            @Override
+            public void draw(Canvas canvas) {
+                if (drawable != null) {
+                    drawable.draw(canvas);
+                }
+            }
+
+            @Override
+            public int getIntrinsicWidth() {
+                return drawable != null ? drawable.getIntrinsicWidth() : 0;
+            }
+
+            @Override
+            public int getIntrinsicHeight() {
+                return drawable != null ? drawable.getIntrinsicHeight() : 0;
+            }
+
+            public void setDrawable(Drawable drawable) {
+                this.drawable = drawable;
+                if (drawable != null) {
+                    // 이미지의 Bounds 설정 (drawable이 null이 아닐 때만)
+                    setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                }
+            }
+        }
+    }
 }

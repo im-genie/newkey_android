@@ -132,6 +132,18 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment myFragment = new HomeFragment();
         fragmentTransaction.add(R.id.main_activity_framelayout1_linearlayout1, myFragment);
         fragmentTransaction.commit();
+
+        // 푸시 알림 클릭에 의해 시작된 인텐트 처리
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("notification")) {
+            String notification = intent.getStringExtra("notification");
+            if ("open_notification_activity".equals(notification)) {
+                Intent notificationIntent = new Intent(MainActivity.this, notification1.class);
+                startActivity(notificationIntent);
+            }
+        }
+
+
     }
 
     @Override
