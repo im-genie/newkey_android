@@ -40,63 +40,12 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
     public static final String preference = "newkey";
     Set<String> storedNewsIds = new HashSet<>();
 
-    public news1_hot_news_adapter(Context context, List<news1_item> newsItems) {
+    public news1_hot_news_adapter(Context context, List<news1_item> newsItems, Set<String> storedNewsIds) {
         this.newsItems = newsItems;
         this.queue = Volley.newRequestQueue(context);
         this.preferences = context.getSharedPreferences("newkey", Context.MODE_PRIVATE);
         this.email = preferences.getString("email", null);
-        fetchStoredNews();
-    }
-
-    // 저장 뉴스 불러오기
-    private void fetchStoredNews() {
-        String url="http://15.164.199.177:5000/storedNews";
-
-        final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                JSONArray jsonArray = new JSONArray();
-                try {
-                    jsonArray = new JSONArray(response);
-                } catch (JSONException e) {
-                    Log.d("JSONParseError", e.toString());
-                    e.printStackTrace();
-                }
-
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        storedNewsIds.add(jsonObject.getString("id"));
-                    } catch (JSONException e) {
-                        Log.d("res!!",response);
-                        e.printStackTrace();
-                    }
-                }
-
-                notifyDataSetChanged();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("storeViewError",error.toString());
-            }
-        }){
-            //@Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("user_id", email); // 로그인 아이디로 바꾸기
-                return params;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(
-                1000000,  // 기본 타임아웃 (기본값: 2500ms)
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-        ));
-
-        request.setShouldCache(false);
-        queue.add(request);
+        this.storedNewsIds = storedNewsIds;
     }
 
     @NonNull

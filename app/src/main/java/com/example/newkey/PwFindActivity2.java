@@ -60,7 +60,7 @@ public class PwFindActivity2 extends AppCompatActivity {
 
         nextText=findViewById(R.id.next_text);
         next=findViewById(R.id.next);
-        next.setClickable(false);
+        next.setEnabled(false);
         queue=Volley.newRequestQueue(this);
 
         // 비밀번호 변경 완료
@@ -101,7 +101,7 @@ public class PwFindActivity2 extends AppCompatActivity {
                                     }
                                 }, 2000); // 2초 정도 딜레이 준 후 페이지 이동
                             } else {
-                                next.setClickable(false);
+                                next.setEnabled(false);
                                 Log.d("asdf", "비밀번호 변경 실패");
                                 Toast.makeText(PwFindActivity2.this, "비밀번호 변경에 실패했습니다.", Toast.LENGTH_SHORT).show();
                             }
@@ -155,7 +155,7 @@ public class PwFindActivity2 extends AppCompatActivity {
                     if(!pwSameText.getText().equals("") && pwText.equals(pwCheck.getText().toString())) {
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_600));
-                        next.setClickable(true);
+                        next.setEnabled(true);
 
                         pwSameText.setTextColor(getResources().getColor(R.color.key_green_400));
                         pwSameText.setText("비밀번호가 일치합니다");
@@ -168,7 +168,7 @@ public class PwFindActivity2 extends AppCompatActivity {
 
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_100));
-                        next.setClickable(false);
+                        next.setEnabled(false);
                     }
                 }
                 // 비밀번호가 6자리 이상이 아니거나 적절한 형식이 아닌 경우
@@ -179,7 +179,7 @@ public class PwFindActivity2 extends AppCompatActivity {
 
                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                     nextText.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_100));
-                    next.setClickable(false);
+                    next.setEnabled(false);
                 }
             }
 
@@ -207,13 +207,13 @@ public class PwFindActivity2 extends AppCompatActivity {
                     if(pwText.length() >= 6 && pwText.matches("^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$")) {
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_600));
-                        next.setClickable(true);
+                        next.setEnabled(true);
                     }
                     else{
                         pwRightText.setText("영어, 숫자 조합 6자리 이상이어야 합니다");
                         next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                         nextText.setTextColor(getResources().getColor(R.color.gray_100));
-                        next.setClickable(false);
+                        next.setEnabled(false);
                     }
                 } else {
                     pwSameText.setTextColor(getResources().getColor(R.color.key_red_100));
@@ -222,7 +222,7 @@ public class PwFindActivity2 extends AppCompatActivity {
 
                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                     nextText.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_100));
-                    next.setClickable(false);
+                    next.setEnabled(false);
                 }
             }
 
