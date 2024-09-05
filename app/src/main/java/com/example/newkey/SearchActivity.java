@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 
@@ -95,7 +98,11 @@ public class SearchActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                // MainActivity로 이동하는 Intent 생성
+                Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // 현재 Activity 종료
             }
         });
     }
@@ -194,9 +201,30 @@ public class SearchActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+
+    private boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (doubleBackToExitPressedOnce) {
+            // 3초 내에 두 번째로 눌렀을 때 MainActivity로 이동
+            Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+        } else {
+            // 첫 번째로 눌렀을 때: 토스트 메시지를 보여주고, 플래그 설정
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "한 번 더 누를 시 홈으로 이동합니다.", Toast.LENGTH_SHORT).show();
+
+            // 3초 후에 플래그를 초기화하여 다시 false로 설정
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 3000); // 3초 후에 초기화
+        }
     }
 
 }

@@ -643,10 +643,10 @@
                 </View>
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="100dp">
-        </View>
+            android:layout_height="100dp"></View>
     </LinearLayout>
 
 </ScrollView>
