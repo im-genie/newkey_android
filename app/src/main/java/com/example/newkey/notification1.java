@@ -182,7 +182,7 @@ public class notification1 extends AppCompatActivity {
         // 알림 설정
         setDailyAlarms(this);
 
-        // 알림 클릭 시 앱 실항 권한 허용 목적
+        // 알림 클릭 시 앱 실행 권한 허용 목적
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13 이상에서만 실행
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_NOTIFICATION_PERMISSION);
@@ -258,8 +258,8 @@ public class notification1 extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
 
-        setAlarm(context, alarmManager, intent, 0, 19, 34); //첫번째 알림 시간 설정
-        setAlarm(context, alarmManager, intent, 1, 19, 37); //두번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 0, 8, 0); //첫번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 1, 20, 0); //두번째 알림 시간 설정
     }
 
     public static void setAlarm(Context context, AlarmManager alarmManager, Intent intent, int requestCode, int hour, int minute) {
