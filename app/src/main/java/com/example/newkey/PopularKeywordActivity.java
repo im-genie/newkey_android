@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PopularKeywordActivity extends AppCompatActivity {
-    ImageButton back;
+    ImageView back;
     TextView popularKeyword;
     RequestQueue queue;
     private List<news1_item> newsList;
