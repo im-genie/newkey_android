@@ -129,6 +129,17 @@ public class MypageActivity extends Activity {
                 button_person.setImageResource(R.drawable.person_green);
             }
         });
+        // News 버튼 클릭
+        button_feed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MypageActivity.this, news1_activity.class);
+                startActivity(intent);
+                button_home.setImageResource(R.drawable.home);
+                button_feed.setImageResource(R.drawable.feed_green);
+                button_person.setImageResource(R.drawable.person);
+            }
+        });
 
         //이 부분에 추가
         request.setRetryPolicy(new DefaultRetryPolicy(
