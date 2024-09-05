@@ -43,6 +43,7 @@
         android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +52,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:orientation="vertical">
@@ -61,7 +62,6 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/pretendardmedium"
                 android:text="관심사를 설정하고\n추천 뉴스를 받아보세요"
@@ -108,11 +108,12 @@
                 android:id="@+id/small_topics_politics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:visibility="gone">
 
                 <Button
                     android:id="@+id/politics_1"
-                    android:layout_width="93dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -125,7 +126,7 @@
 
                 <Button
                     android:id="@+id/politics_2"
-                    android:layout_width="93dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -134,13 +135,12 @@
                     android:text="국회/정당"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-
                     app:layout_constraintStart_toEndOf="@+id/politics_1"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/politics_3"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -154,21 +154,20 @@
 
                 <Button
                     android:id="@+id/politics_4"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="행정"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/politics_3"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="@+id/politics_1"
+                    app:layout_constraintTop_toBottomOf="@+id/politics_1" />
 
                 <Button
                     android:id="@+id/politics_5"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -176,12 +175,12 @@
                     android:text="국방/외교"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="@+id/politics_1"
-                    app:layout_constraintTop_toBottomOf="@+id/politics_1" />
+                    app:layout_constraintStart_toStartOf="@+id/politics_2"
+                    app:layout_constraintTop_toBottomOf="@+id/politics_2" />
 
                 <Button
                     android:id="@+id/politics_6"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -191,7 +190,7 @@
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/politics_5"
-                    app:layout_constraintTop_toBottomOf="@+id/politics_1" />
+                    app:layout_constraintTop_toBottomOf="@+id/politics_3" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -236,7 +235,7 @@
 
                 <Button
                     android:id="@+id/economy_1"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -249,7 +248,7 @@
 
                 <Button
                     android:id="@+id/economy_2"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -263,7 +262,7 @@
 
                 <Button
                     android:id="@+id/economy_3"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -277,70 +276,70 @@
 
                 <Button
                     android:id="@+id/economy_4"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="중기/벤쳐"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/economy_3"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/economy_1" />
 
                 <Button
                     android:id="@+id/economy_5"
-                    android:layout_width="74dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="부동산"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/economy_1" />
+                    app:layout_constraintStart_toEndOf="@+id/economy_4"
+                    app:layout_constraintTop_toBottomOf="@+id/economy_2" />
 
                 <Button
                     android:id="@+id/economy_6"
-                    android:layout_width="106dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="글로벌 경제"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/economy_5"
-                    app:layout_constraintTop_toBottomOf="@+id/economy_1" />
+                    app:layout_constraintTop_toBottomOf="@+id/economy_3" />
 
                 <Button
                     android:id="@+id/economy_7"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="생활 경제"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/economy_6"
-                    app:layout_constraintTop_toBottomOf="@+id/economy_1" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/economy_5" />
 
                 <Button
                     android:id="@+id/economy_8"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="경제 일반"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/economy_7"
                     app:layout_constraintTop_toBottomOf="@+id/economy_5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -387,7 +386,7 @@
 
                 <Button
                     android:id="@+id/society_1"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -400,7 +399,7 @@
 
                 <Button
                     android:id="@+id/society_2"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -414,7 +413,7 @@
 
                 <Button
                     android:id="@+id/society_3"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -428,99 +427,98 @@
 
                 <Button
                     android:id="@+id/society_4"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="언론"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/society_3"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/society_1"  />
 
                 <Button
                     android:id="@+id/society_5"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="환경"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/society_1" />
+                    app:layout_constraintStart_toEndOf="@+id/society_4"
+                    app:layout_constraintTop_toBottomOf="@+id/society_2" />
 
                 <Button
                     android:id="@+id/society_6"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="인권/복지"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/society_5"
-                    app:layout_constraintTop_toBottomOf="@+id/society_1" />
+                    app:layout_constraintTop_toBottomOf="@+id/society_3" />
 
                 <Button
                     android:id="@+id/society_7"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="식품/의료"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/society_6"
-                    app:layout_constraintTop_toBottomOf="@+id/society_1" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/society_4" />
 
                 <Button
                     android:id="@+id/society_8"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="지역 뉴스"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/society_7"
                     app:layout_constraintTop_toBottomOf="@+id/society_5" />
 
                 <Button
                     android:id="@+id/society_9"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="인물"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/society_8"
-                    app:layout_constraintTop_toBottomOf="@+id/society_5" />
+                    app:layout_constraintTop_toBottomOf="@+id/society_6" />
 
                 <Button
                     android:id="@+id/society_10"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="사회 일반"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/society_9"
-                    app:layout_constraintTop_toBottomOf="@+id/society_5" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/society_7" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -566,7 +564,7 @@
 
                 <Button
                     android:id="@+id/life_1"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -579,7 +577,7 @@
 
                 <Button
                     android:id="@+id/life_2"
-                    android:layout_width="76dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -593,7 +591,7 @@
 
                 <Button
                     android:id="@+id/life_3"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -607,34 +605,34 @@
 
                 <Button
                     android:id="@+id/life_4"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="여행/레저"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/life_3"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/life_1" />
 
                 <Button
                     android:id="@+id/life_5"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="음식/맛집"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/life_1" />
+                    app:layout_constraintStart_toEndOf="@+id/life_4"
+                    app:layout_constraintTop_toBottomOf="@+id/life_2" />
 
                 <Button
                     android:id="@+id/life_6"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -644,76 +642,75 @@
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/life_5"
-                    app:layout_constraintTop_toBottomOf="@+id/life_1" />
+                    app:layout_constraintTop_toBottomOf="@+id/life_3" />
 
                 <Button
                     android:id="@+id/life_7"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="공연/전시"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/life_6"
-                    app:layout_constraintTop_toBottomOf="@+id/life_1" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/life_4" />
 
                 <Button
                     android:id="@+id/life_8"
-                    android:layout_width="48dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="책"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/life_7"
                     app:layout_constraintTop_toBottomOf="@+id/life_5" />
 
                 <Button
                     android:id="@+id/life_9"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="종교"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/life_8"
-                    app:layout_constraintTop_toBottomOf="@+id/life_5" />
+                    app:layout_constraintTop_toBottomOf="@+id/life_6" />
 
                 <Button
                     android:id="@+id/life_10"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="날씨"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/life_9"
-                    app:layout_constraintTop_toBottomOf="@+id/life_5" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/life_7" />
 
                 <Button
                     android:id="@+id/life_11"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="생활문화 일반"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
                     app:layout_constraintStart_toEndOf="@+id/life_10"
-                    app:layout_constraintTop_toBottomOf="@+id/life_5" />
+                    app:layout_constraintTop_toBottomOf="@+id/life_8" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -759,7 +756,7 @@
 
                 <Button
                     android:id="@+id/it_1"
-                    android:layout_width="76dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -772,7 +769,7 @@
 
                 <Button
                     android:id="@+id/it_2"
-                    android:layout_width="112dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -786,7 +783,7 @@
 
                 <Button
                     android:id="@+id/it_3"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -800,7 +797,7 @@
 
                 <Button
                     android:id="@+id/it_4"
-                    android:layout_width="84dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -813,24 +810,24 @@
 
                 <Button
                     android:id="@+id/it_5"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="보안/해킹"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-
                     app:layout_constraintStart_toEndOf="@+id/it_4"
                     app:layout_constraintTop_toBottomOf="@+id/it_1" />
 
                 <Button
                     android:id="@+id/it_6"
-                    android:layout_width="76dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="컴퓨터"
@@ -841,29 +838,29 @@
 
                 <Button
                     android:id="@+id/it_7"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="게임/리뷰"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toEndOf="@+id/it_6"
-                    app:layout_constraintTop_toBottomOf="@+id/it_1" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/it_5" />
 
                 <Button
                     android:id="@+id/it_8"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="과학 일반"
                     android:textColor="@color/gray_100"
                     android:textSize="16dp"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/it_7"
                     app:layout_constraintTop_toBottomOf="@+id/it_5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -910,7 +907,7 @@
 
                 <Button
                     android:id="@+id/global_1"
-                    android:layout_width="112dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -923,7 +920,7 @@
 
                 <Button
                     android:id="@+id/global_2"
-                    android:layout_width="112dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -937,7 +934,7 @@
 
                 <Button
                     android:id="@+id/global_3"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -951,7 +948,7 @@
 
                 <Button
                     android:id="@+id/global_4"
-                    android:layout_width="120dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -964,9 +961,10 @@
 
                 <Button
                     android:id="@+id/global_5"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="8dp"
                     android:background="@drawable/radius_100"
                     android:fontFamily="@font/pretendardmedium"
                     android:text="세계 일반"
@@ -1019,7 +1017,7 @@
 
                 <Button
                     android:id="@+id/opinion_1"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -1032,7 +1030,7 @@
 
                 <Button
                     android:id="@+id/opinion_2"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1046,7 +1044,7 @@
 
                 <Button
                     android:id="@+id/opinion_3"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1103,7 +1101,7 @@
 
                 <Button
                     android:id="@+id/entertain_1"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -1116,7 +1114,7 @@
 
                 <Button
                     android:id="@+id/entertain_2"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1172,7 +1170,7 @@
 
                 <Button
                     android:id="@+id/sports_1"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/radius_100"
@@ -1185,7 +1183,7 @@
 
                 <Button
                     android:id="@+id/sports_2"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1199,7 +1197,7 @@
 
                 <Button
                     android:id="@+id/sports_3"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1213,7 +1211,7 @@
 
                 <Button
                     android:id="@+id/sports_4"
-                    android:layout_width="92dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1227,7 +1225,7 @@
 
                 <Button
                     android:id="@+id/sports_5"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/radius_100"
@@ -1240,7 +1238,7 @@
 
                 <Button
                     android:id="@+id/sports_6"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1253,7 +1251,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/sports_1" />
                 <Button
                     android:id="@+id/sports_7"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1266,7 +1264,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/sports_1" />
                 <Button
                     android:id="@+id/sports_8"
-                    android:layout_width="60dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="39dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
@@ -1280,8 +1278,11 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
         </LinearLayout>
+
     </ScrollView>
 
     <FrameLayout
@@ -1293,6 +1294,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp">
 
