@@ -1,11 +1,13 @@
 package com.example.newkey;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.widget.SearchView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +37,28 @@ public class search1 extends AppCompatActivity {
 
         // 검색 기능 구현 코드
         search = findViewById(R.id.view_search);
+
+        // SearchView 내부의 TextView 찾아서 텍스트 색상 변경
+        int searchTextViewId = search.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        TextView searchTextView = search.findViewById(searchTextViewId);
+        searchTextView.setTextColor(Color.WHITE);
+
+        // 텍스트 색상 강제로 흰색으로 고정
+        if (searchTextView != null) {
+            searchTextView.setTextColor(Color.WHITE);  // 텍스트 색상을 흰색으로 설정
+            searchTextView.setHintTextColor(Color.GRAY);  // 힌트 텍스트 색상도 설정 가능
+
+            // 포커스가 변경될 때마다 색상 다시 설정
+            searchTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        searchTextView.setTextColor(Color.WHITE);  // 항상 흰색 유지
+                    }
+                }
+            });
+        }
+
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -45,7 +69,10 @@ public class search1 extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Text가 변할 때 이벤트 처리를 원한다면 이 곳에 구현
+                // Text가 변할 때마다 텍스트 색상을 다시 흰색으로 고정
+                if (searchTextView != null) {
+                    searchTextView.setTextColor(Color.WHITE);  // 항상 흰색 유지
+                }
                 return false;
             }
         });

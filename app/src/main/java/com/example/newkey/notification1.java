@@ -176,6 +176,12 @@ public class notification1 extends AppCompatActivity {
         // 알림 설정
         setDailyAlarms(this);
 
+        // 알림 클릭 시 앱 실항 권한 허용 목적
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13 이상에서만 실행
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_NOTIFICATION_PERMISSION);
+            }
+        }
     }
 
     private void hideFragment() {
@@ -210,19 +216,32 @@ public class notification1 extends AppCompatActivity {
     private void sendNotification(String title, String content) {
         createNotificationChannel();
 
+        // 앱을 실행시키기 위한 Intent 생성
+        Intent intent = new Intent(this, notification1.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP); // 플래그 조정
+
+        // 고유한 requestCode 생성
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
+        // 알림 빌더 구성
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.noti_icon_2) // 작은 아이콘 설정
                 .setContentTitle(title)
                 .setContentText(content)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent) // 알림을 눌렀을 때 실행될 Intent
+                .setAutoCancel(true); // 알림을 누르면 자동으로 제거되도록 설정
 
+        // 알림 ID를 고유하게 생성
+        int notificationId = (int) System.currentTimeMillis();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, builder.build());
+        if (notificationManager != null) {
+            notificationManager.notify(notificationId, builder.build());
+        }
 
         // 디버깅 로그 추가
-        Log.d("Notification", "Notification sent");
+        Log.d("Notification", "Notification sent with ID: " + notificationId);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -233,8 +252,8 @@ public class notification1 extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
 
-        setAlarm(context, alarmManager, intent, 0, 8, 0); //첫번째 알림 시간 설정
-        setAlarm(context, alarmManager, intent, 1, 20, 0); //두번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 0, 19, 34); //첫번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 1, 19, 37); //두번째 알림 시간 설정
     }
 
     public static void setAlarm(Context context, AlarmManager alarmManager, Intent intent, int requestCode, int hour, int minute) {

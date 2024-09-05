@@ -7,6 +7,7 @@
 
     <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
         <item name="android:textColorHint">#E8EAED</item> <!-- 힌트 텍스트 색상 설정 -->
+        <item name="android:editTextColor">@android:color/white</item>
         <item name="android:imeOptions">actionSearch</item>
     </style>
 
