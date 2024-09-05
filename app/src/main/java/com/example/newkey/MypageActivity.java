@@ -67,6 +67,7 @@ public class MypageActivity extends Activity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url.toString(), jsonRequest, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -201,7 +202,28 @@ public class MypageActivity extends Activity {
                 showLogoutDialog();
             }
         });
+
+        // 검색 클릭이벤트
+        ImageView main_activity_linearlayout1_imageview2 = findViewById(R.id.main_activity_linearlayout1_imageview2);
+        main_activity_linearlayout1_imageview2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MypageActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 알림 클릭이벤트
+        ImageView main_activity_linearlayout1_imageview3 = findViewById(R.id.main_activity_linearlayout1_imageview3);
+        main_activity_linearlayout1_imageview3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MypageActivity.this, notification1.class);
+                startActivity(intent);
+            }
+        });
     }
+
 
         private void showLogoutDialog() {
             // 팝업 다이얼로그를 띄우는 메서드
