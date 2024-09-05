@@ -81,7 +81,10 @@
         <activity android:name=".news2_opinion" />
         <activity android:name=".news2_sports" />
         <activity android:name=".news3_activity" />
-        <activity android:name=".notification1" />
+        <activity
+            android:name=".notification1"
+            android:launchMode="singleTop">
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
