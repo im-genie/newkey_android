@@ -73,7 +73,7 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
         next.setEnabled(false);
 
         // Spinner에 들어갈 항목들
-        String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net"};
+        String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net", "sungshin.ac.kr"};
 
         // ArrayAdapter를 사용하여 Spinner에 항목 연결
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);

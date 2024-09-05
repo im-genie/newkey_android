@@ -92,6 +92,8 @@ public class news3_activity extends AppCompatActivity {
         Img=findViewById(R.id.newsImg);
         queue=Volley.newRequestQueue(getApplicationContext());
 
+        Content.setLineSpacing(0,1.66f);
+
         String id = getIntent().getStringExtra("id");
         String title = getIntent().getStringExtra("title");
         String content = getIntent().getStringExtra("content");
@@ -356,11 +358,17 @@ public class news3_activity extends AppCompatActivity {
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_up);
+
+                    TextView news3SummaryText = findViewById(R.id.news3_summary_text);
+                    news3SummaryText.setTextColor(getResources().getColor(R.color.white));
                 } else {
                     summaryCardView.setVisibility(View.VISIBLE);
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_down);
+
+                    TextView news3SummaryText = findViewById(R.id.news3_summary_text);
+                    news3SummaryText.setTextColor(getResources().getColor(R.color.black));
                 }
             }
         });

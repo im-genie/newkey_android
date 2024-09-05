@@ -59,16 +59,16 @@ public class ProfileActivity extends AppCompatActivity {
         newkey = findViewById(R.id.profile_newkey);
 
 
-        final int yellowSelectedResId = R.drawable.koko; // 선택된 상태 이미지
+        final int yellowSelectedResId = R.drawable.yellow_check; // 선택된 상태 이미지
         final int yellowDefaultResId = R.drawable.profile_yellow; // 기본 이미지
 
-        final int greenSelectedResId = R.drawable.koko;
+        final int greenSelectedResId = R.drawable.green_check;
         final int greenDefaultResId = R.drawable.profile_green;
 
-        final int blueSelectedResId = R.drawable.koko;
+        final int blueSelectedResId = R.drawable.blue_check;
         final int blueDefaultResId = R.drawable.profile_blue;
 
-        final int newkeySelectedResId = R.drawable.koko;
+        final int newkeySelectedResId = R.drawable.newkey_check;
         final int newkeyDefaultResId = R.drawable.profile_newkey;
 
 

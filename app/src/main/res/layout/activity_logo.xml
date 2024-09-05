@@ -69,7 +69,7 @@
                 android:id="@+id/register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="21dp"
                 android:background="@android:color/transparent"
                 android:text="회원가입"
                 android:textColor="@color/gray_100"
@@ -77,17 +77,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/login" />
-
-            <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="93.69dp"
-                android:layout_height="41.6dp"
+            
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationView"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginTop="36dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/mini_logo" />
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true">
+            </com.airbnb.lottie.LottieAnimationView>
 
             <ImageView
                 android:id="@+id/imageView9"
@@ -102,7 +104,7 @@
 
             <ImageView
                 android:id="@+id/imageView10"
-                android:layout_width="117dp"
+                android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
@@ -125,7 +127,7 @@
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+                app:layout_constraintTop_toBottomOf="@+id/animationView" />
 
             <ImageView
                 android:id="@+id/imageView13"
