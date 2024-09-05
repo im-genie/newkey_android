@@ -10,39 +10,41 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="66dp"
-            android:layout_height="57dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/button_back" />
-
-        <TextView
-            android:id="@+id/popularKeyword"
+        android:layout_height="80dp">
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="키워드"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/key_green_400"
-            android:textSize="20dp" />
-
-
-        <TextView
-            android:id="@+id/news"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="인기 뉴스"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/white"
-            android:textSize="20dp" />
-
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/button_back"
+                android:layout_gravity="center_vertical">
+            </ImageView>
+            <TextView
+                android:id="@+id/popularKeyword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="키워드"
+                android:fontFamily="@font/pretendardmedium"
+                android:textSize="20dp"
+                android:textColor="@color/key_green_400"
+                android:layout_marginLeft="16dp"
+                android:layout_gravity="center_vertical">
+            </TextView>
+            <TextView
+                android:id="@+id/news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 인기 뉴스"
+                android:fontFamily="@font/pretendardmedium"
+                android:textSize="20dp"
+                android:textColor="@color/gray_100"
+                android:layout_gravity="center_vertical">
+            </TextView>
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
