@@ -15,6 +15,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -380,24 +381,50 @@ public class news3_activity extends AppCompatActivity {
         @Override
         public Drawable getDrawable(String source) {
             final URLDrawable urlDrawable = new URLDrawable();
-            executor.execute(() -> {
-                try {
-                    InputStream is = (InputStream) new URL(source).getContent();
-                    Drawable d = Drawable.createFromStream(is, "src");
-                    if (d != null) {
-                        int width = d.getIntrinsicWidth();
-                        int height = d.getIntrinsicHeight();
-                        d.setBounds(0, 0, width, height);
-                    }
-                    urlDrawable.setDrawable(d);
-                    textView.post(() -> {
-                        textView.invalidate();
-                        textView.setText(textView.getText());
+
+            // TextView가 레이아웃된 후 너비를 가져오기 위해 OnGlobalLayoutListener 사용
+            textView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    // 한번만 호출되도록 리스너 제거
+                    textView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                    executor.execute(() -> {
+                        try {
+                            InputStream is = (InputStream) new URL(source).getContent();
+                            Drawable d = Drawable.createFromStream(is, "src");
+                            if (d != null) {
+                                // TextView의 너비 가져오기
+                                int viewWidth = textView.getWidth();
+                                int intrinsicWidth = d.getIntrinsicWidth();
+                                int intrinsicHeight = d.getIntrinsicHeight();
+
+                                // 이미지의 가로 세로 비율 유지하면서 TextView에 맞게 크기 조정
+                                float aspectRatio = (float) intrinsicHeight / intrinsicWidth;
+                                int width = viewWidth;
+                                int height = (int) (viewWidth * aspectRatio);
+
+                                // 이미지의 Bounds 설정
+                                d.setBounds(0, 0, width, height);
+
+                                // URLDrawable에 이미지 적용
+                                urlDrawable.setBounds(0, 0, width, height);
+                                urlDrawable.setDrawable(d);
+
+                                // 텍스트 뷰를 다시 그려서 이미지가 올바르게 표시되도록 함
+                                textView.post(() -> {
+                                    textView.invalidate();
+                                    textView.setText(textView.getText());
+                                    textView.requestLayout(); // 추가
+                                });
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     });
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             });
+
             return urlDrawable;
         }
 
@@ -411,9 +438,22 @@ public class news3_activity extends AppCompatActivity {
                 }
             }
 
+            @Override
+            public int getIntrinsicWidth() {
+                return drawable != null ? drawable.getIntrinsicWidth() : 0;
+            }
+
+            @Override
+            public int getIntrinsicHeight() {
+                return drawable != null ? drawable.getIntrinsicHeight() : 0;
+            }
+
             public void setDrawable(Drawable drawable) {
                 this.drawable = drawable;
-                setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                if (drawable != null) {
+                    // 이미지의 Bounds 설정 (drawable이 null이 아닐 때만)
+                    setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+                }
             }
         }
     }
