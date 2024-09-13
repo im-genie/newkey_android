@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -42,6 +43,8 @@ public class Cardnews4Fragment extends Fragment {
     String keyword;
     news1_item newsData;
 
+    LinearLayout button_content;
+
     // 키워드 전달받는 생성자
     public Cardnews4Fragment(String kw) {
         this.keyword = kw;
@@ -58,6 +61,7 @@ public class Cardnews4Fragment extends Fragment {
         publisherText=view.findViewById(R.id.publisher);
         imageView=view.findViewById(R.id.imageView);
         mediaCircleImg=view.findViewById(R.id.mediaCircleImg);
+        button_content=view.findViewById(R.id.button_content);
 
         when=view.findViewById(R.id.when);
         where=view.findViewById(R.id.where);
@@ -131,7 +135,7 @@ public class Cardnews4Fragment extends Fragment {
         queue.add(request);
 
         //기사 전문
-        content.setOnClickListener(new View.OnClickListener() {
+        button_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), news3_activity.class);
