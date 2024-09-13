@@ -335,10 +335,10 @@ public class HomeFragment extends Fragment {
             top_1.getHitRect(delegateArea);
 
             // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
-            delegateArea.top -= 20;
-            delegateArea.bottom += 20;
-            delegateArea.left -= 20;
-            delegateArea.right += 20;
+            delegateArea.top -= 50;
+            delegateArea.bottom += 50;
+            delegateArea.left -= 50;
+            delegateArea.right += 50;
 
             TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_1);
             parent_1.setTouchDelegate(expandedArea);
@@ -349,10 +349,10 @@ public class HomeFragment extends Fragment {
             top_2.getHitRect(delegateArea);
 
             // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
-            delegateArea.top -= 20;
-            delegateArea.bottom += 20;
-            delegateArea.left -= 20;
-            delegateArea.right += 20;
+            delegateArea.top -= 40;
+            delegateArea.bottom += 40;
+            delegateArea.left -= 40;
+            delegateArea.right += 40;
 
             TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_2);
             parent_2.setTouchDelegate(expandedArea);
@@ -363,10 +363,10 @@ public class HomeFragment extends Fragment {
             top_3.getHitRect(delegateArea);
 
             // 여기서 값을 조정하여 클릭 범위를 확장할 수 있습니다.
-            delegateArea.top -= 20;
-            delegateArea.bottom += 20;
-            delegateArea.left -= 20;
-            delegateArea.right += 20;
+            delegateArea.top -= 30;
+            delegateArea.bottom += 30;
+            delegateArea.left -= 30;
+            delegateArea.right += 30;
 
             TouchDelegate expandedArea = new TouchDelegate(delegateArea, top_3);
             parent_3.setTouchDelegate(expandedArea);
