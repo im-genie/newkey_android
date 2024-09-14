@@ -319,6 +319,8 @@ public class ChooseTopicsActivity extends AppCompatActivity {
             Button button = findViewById(buttonId);
             buttonStates.put(buttonId, false);
 
+            button.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.gray_500));
+
             button.setOnClickListener(v -> {
                 boolean isActive = buttonStates.get(buttonId);
                 buttonStates.put(buttonId, !isActive);
