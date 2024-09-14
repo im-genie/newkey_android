@@ -79,7 +79,10 @@ public class RecommendationBigsizeAdapter extends RecyclerView.Adapter<Recommend
             new ImageLoadTask(holder.imageView).loadImage(newsItem.getImg());
         }
 
-        new ImageLoadTask(holder.circleImageView).loadImage(newsItem.getMediaImg());
+        if(newsItem.getMediaImg().equals("null")) {
+            holder.circleImageView.setImageResource(R.drawable.newkey);
+        }
+        else new ImageLoadTask(holder.circleImageView).loadImage(newsItem.getMediaImg());
 
         // 저장 뉴스 목록에 해당 뉴스 id 있으면 북마크 표시
         if (storedNewsIds.contains(newsItem.getId())) {
