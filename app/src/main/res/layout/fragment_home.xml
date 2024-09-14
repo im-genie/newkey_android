@@ -154,7 +154,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recommendation_recyclerview"
                 android:layout_width="match_parent"
-                android:layout_height="163dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginTop="12dp">
@@ -238,7 +238,9 @@
                     android:textSize="16dp"
                     android:gravity="center"
                     android:layout_marginBottom="1dp"
-                    android:maxLines="2">
+                    android:maxLines="2"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="30dp">
                 </TextView>
                 <TextView
                     android:id="@+id/top_5"
@@ -252,7 +254,8 @@
                     android:gravity="center"
                     android:layout_marginTop="-50dp"
                     android:layout_marginLeft="-72dp"
-                    android:maxLines="2">
+                    android:maxLines="2"
+                    android:padding="3dp">
                 </TextView>
                 <TextView
                     android:id="@+id/top_2"
@@ -266,7 +269,8 @@
                     android:gravity="center"
                     android:layout_marginTop="32dp"
                     android:layout_marginLeft="-85dp"
-                    android:maxLines="2">
+                    android:maxLines="2"
+                    android:paddingVertical="16dp">
                 </TextView>
                 <TextView
                     android:id="@+id/top_4"
@@ -280,7 +284,8 @@
                     android:gravity="center"
                     android:layout_marginTop="45dp"
                     android:layout_marginLeft="82dp"
-                    android:maxLines="2">
+                    android:maxLines="2"
+                    android:paddingVertical="10dp">
                 </TextView>
                 <TextView
                     android:id="@+id/top_3"
@@ -294,7 +299,8 @@
                     android:gravity="center"
                     android:layout_marginTop="-30dp"
                     android:layout_marginLeft="88dp"
-                    android:maxLines="2">
+                    android:maxLines="2"
+                    android:paddingVertical="16dp">
                 </TextView>
             </FrameLayout>
         </LinearLayout>
@@ -380,7 +386,7 @@
                         android:id="@+id/top2_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="하네다공항 항공기 충돌"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -407,7 +413,7 @@
                         android:id="@+id/top2_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -434,7 +440,7 @@
                         android:id="@+id/top2_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -461,7 +467,7 @@
                         android:id="@+id/top2_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -488,7 +494,7 @@
                         android:id="@+id/top2_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -516,7 +522,7 @@
                         android:id="@+id/top2_6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -544,7 +550,7 @@
                         android:id="@+id/top2_7"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -572,7 +578,7 @@
                         android:id="@+id/top2_8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -600,7 +606,7 @@
                         android:id="@+id/top2_9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -628,7 +634,7 @@
                         android:id="@+id/top2_10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="어쩌구 저쩌구 안녕하세요"
+                        android:text=""
                         android:textColor="@color/gray_100"
                         android:fontFamily="@font/pretendardregular"
                         android:textSize="14dp"
@@ -643,10 +649,10 @@
                 </View>
             </LinearLayout>
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="100dp">
-        </View>
+            android:layout_height="100dp"></View>
     </LinearLayout>
 
 </ScrollView>
