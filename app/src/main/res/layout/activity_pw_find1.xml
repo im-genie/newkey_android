@@ -115,9 +115,9 @@
                     android:gravity="center"
                     android:layout_weight="1"
                     android:spinnerMode="dropdown"
-                    android:textColor="@color/gray_100"
                     android:textColorHint="@color/gray_300"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@color/gray_300"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -202,7 +202,6 @@
                 android:id="@+id/codeRightText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:text="인증번호가 일치하지 않습니다."
                 android:textColor="@color/key_red_100"

@@ -195,12 +195,13 @@ public class notification1 extends AppCompatActivity {
         findViewById(R.id.fr_alrim).setVisibility(View.GONE);
     }
 
-    // fr_alrim 프래그먼트를 표시하는 메서드
+    // fr_alrim 프래그먼트를 표시하는 메서드(현재 미사용)
+    /*
     private void showFragment() {
         // 프래그먼트가 추가될 부분을 표시합니다.
         findViewById(R.id.fr_alrim).setVisibility(View.VISIBLE);
-
     }
+     */
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -219,6 +220,7 @@ public class notification1 extends AppCompatActivity {
         }
     }
 
+    /*
     private void sendNotification(String title, String content) {
         createNotificationChannel();
 
@@ -248,6 +250,7 @@ public class notification1 extends AppCompatActivity {
         // 디버깅 로그 추가
         Log.d("Notification", "Notification sent with ID: " + notificationId);
     }
+     */
 
     @Override
     public void onBackPressed() {
@@ -279,4 +282,5 @@ public class notification1 extends AppCompatActivity {
 
         Log.d("Alarm", "Alarm set for " + hour + ":" + minute);
     }
+
 }
