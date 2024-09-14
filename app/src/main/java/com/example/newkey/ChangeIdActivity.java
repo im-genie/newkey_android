@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -15,6 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.TextView;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -29,6 +33,7 @@ import org.json.JSONObject;
 
 public class ChangeIdActivity extends Activity {
     private EditText editUserId;
+    private TextView textViewCount;
     RequestQueue queue;
     String email;
     private SharedPreferences preferences;
@@ -43,12 +48,48 @@ public class ChangeIdActivity extends Activity {
         editUserId = findViewById(R.id.editUserId);
         LinearLayout backFromProfile = findViewById(R.id.backFromProfile);
         Button completeButton = findViewById(R.id.completeButton);
+        textViewCount = findViewById(R.id.textView6);
 
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
 
         String url="http://43.201.113.167:8080/user/nameSave";
         queue=Volley.newRequestQueue(getApplicationContext());
+
+        // 글자 수 카운트와 제한 설정
+        editUserId.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // No action needed before text changes
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // 글자 수 카운트
+                if (charSequence.length() > 10) {
+                    editUserId.setText(charSequence.subSequence(0, 10));  // 10자를 초과하면 자름
+                    editUserId.setSelection(10);  // 커서를 맨 뒤로 이동
+                    Toast.makeText(ChangeIdActivity.this, "최대 10자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
+                }
+                // 글자 수가 10자를 넘지 않도록 제한하여 카운트 표시
+                int length = Math.min(charSequence.length(), 10);
+                textViewCount.setText(length + "/10");
+
+                // 글자 수가 1 이상일 때 버튼 활성화
+                if (length >= 1) {
+                    completeButton.setEnabled(true);
+                    completeButton.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
+                } else {
+                    completeButton.setEnabled(false);
+                    completeButton.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // No action needed after text changes
+            }
+        });
 
         // 이미지 버튼 클릭 이벤트 처리: 화면을 닫고 이전 화면으로 돌아감
         backFromProfile.setOnClickListener(new View.OnClickListener() {

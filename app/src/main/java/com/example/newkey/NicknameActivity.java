@@ -65,8 +65,11 @@ public class NicknameActivity extends AppCompatActivity {
                     nickname.setSelection(10);
                     Toast.makeText(NicknameActivity.this, "최대 10자까지 입력 가능합니다.", Toast.LENGTH_SHORT).show();
                 }
-                textViewCount.setText(charSequence.length()+"/10");
-                if (charSequence.length() >= 1) {
+                int length = Math.min(charSequence.length(), 10);
+                textViewCount.setText(length + "/10");
+
+                // 글자 수가 1 이상일 때 버튼 활성화
+                if (length >= 1) {
                     next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                     next.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_600));
                     next.setEnabled(true);
@@ -76,7 +79,6 @@ public class NicknameActivity extends AppCompatActivity {
                     next.setEnabled(false);
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
                 // No action needed after text changes
