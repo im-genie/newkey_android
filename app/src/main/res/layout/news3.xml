@@ -468,6 +468,13 @@
             android:layout_marginTop="16dp"/>
 
         <TextView
+            android:id="@+id/test_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
