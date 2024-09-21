@@ -283,4 +283,23 @@ public class notification1 extends AppCompatActivity {
         Log.d("Alarm", "Alarm set for " + hour + ":" + minute);
     }
 
+    public static void cancelAlarms(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, NotificationReceiver.class);
+
+        // 첫 번째 알람 해제
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent1);  // 첫 번째 알람 해제
+        }
+
+        // 두 번째 알람 해제
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent2);  // 두 번째 알람 해제
+        }
+
+        Log.d("Alarm", "All alarms canceled");
+    }
+
 }
