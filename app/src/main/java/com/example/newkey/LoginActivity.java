@@ -11,12 +11,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -59,10 +61,35 @@ public class LoginActivity extends AppCompatActivity {
         login.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
 
         // Spinner에 들어갈 항목들
-        String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net"};
+        String[] items = {"naver.com", "gmail.com", "hanmail.net", "daum.net", "sungshin.ac.kr"};
 
         // ArrayAdapter를 사용하여 Spinner에 항목 연결
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                // 기본 레이아웃을 사용하여 뷰 생성
+                View view = super.getView(position, convertView, parent);
+
+                // 텍스트 색상 설정 (gray_100으로 변경)
+                TextView text = (TextView) view;
+                text.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_100));
+
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                // 기본 드롭다운 레이아웃을 사용하여 뷰 생성
+                View view = super.getDropDownView(position, convertView, parent);
+
+                // 드롭다운 항목의 텍스트 색상 설정 (gray_100으로 변경)
+                TextView text = (TextView) view;
+                text.setTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black)); // **드롭다운 텍스트는 검정색**
+
+                return view;
+            }
+        };
         email2.setAdapter(adapter);
 
         // Spinner의 항목이 선택되었을 때의 동작 설정

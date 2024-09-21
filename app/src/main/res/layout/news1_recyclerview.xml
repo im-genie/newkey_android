@@ -13,7 +13,7 @@
             android:id="@+id/news1_item_image"
             android:layout_width="72dp"
             android:layout_height="56dp"
-            android:src="@drawable/test1"
+            android:src="@drawable/newkey"
             android:scaleType="centerCrop"
             android:layout_alignParentStart="true" />
     </androidx.cardview.widget.CardView>

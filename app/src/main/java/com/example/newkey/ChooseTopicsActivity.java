@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
     HashMap<Integer, Boolean> buttonStates;
     ImageView back;
     List<Topic> topics = new ArrayList<>();
-    Button complete;
+    LinearLayout complete;
     HashMap<Integer, Integer> catDict;
     private ArrayList<Integer> catList;
     RequestQueue joinQueue, catQueue;
@@ -317,6 +318,8 @@ public class ChooseTopicsActivity extends AppCompatActivity {
         for (int buttonId : buttonIds) {
             Button button = findViewById(buttonId);
             buttonStates.put(buttonId, false);
+
+            button.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.gray_500));
 
             button.setOnClickListener(v -> {
                 boolean isActive = buttonStates.get(buttonId);

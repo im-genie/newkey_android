@@ -108,7 +108,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="202dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test1"/>
+                android:src="@drawable/newkey_black"/>
         </androidx.cardview.widget.CardView>
         <LinearLayout
             android:layout_width="match_parent"
@@ -468,6 +468,13 @@
             android:layout_marginTop="16dp"/>
 
         <TextView
+            android:id="@+id/test_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -492,6 +499,6 @@
                 \n\n전국 보건소에 설치된 코로나19 선별진료소 506곳이 이날 문을 닫았다. 기침 소리에 움츠러들고, 마스크에 가려져 미소를 볼 수 없었던 시간과 진료소 앞의 긴 줄, 감염 예방을 위해 거리를 두었던 일상도 까마득하게 느껴졌다.
                 \n\n4년 가까운 시간 선별진료소를 지켰던 의료진을 향한 인사가 입 밖으로 가만히 터져나왔다.덕분입니다. 고맙습니다."
             android:textColor="@color/gray_100"
-            android:textSize="12dp" />
+            android:textSize="14dp" />
     </LinearLayout>
 </ScrollView>

@@ -182,7 +182,7 @@ public class notification1 extends AppCompatActivity {
         // 알림 설정
         setDailyAlarms(this);
 
-        // 알림 클릭 시 앱 실항 권한 허용 목적
+        // 알림 클릭 시 앱 실행 권한 허용 목적
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13 이상에서만 실행
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, REQUEST_NOTIFICATION_PERMISSION);
@@ -195,12 +195,13 @@ public class notification1 extends AppCompatActivity {
         findViewById(R.id.fr_alrim).setVisibility(View.GONE);
     }
 
-    // fr_alrim 프래그먼트를 표시하는 메서드
+    // fr_alrim 프래그먼트를 표시하는 메서드(현재 미사용)
+    /*
     private void showFragment() {
         // 프래그먼트가 추가될 부분을 표시합니다.
         findViewById(R.id.fr_alrim).setVisibility(View.VISIBLE);
-
     }
+     */
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -219,6 +220,7 @@ public class notification1 extends AppCompatActivity {
         }
     }
 
+    /*
     private void sendNotification(String title, String content) {
         createNotificationChannel();
 
@@ -248,6 +250,7 @@ public class notification1 extends AppCompatActivity {
         // 디버깅 로그 추가
         Log.d("Notification", "Notification sent with ID: " + notificationId);
     }
+     */
 
     @Override
     public void onBackPressed() {
@@ -258,8 +261,8 @@ public class notification1 extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, NotificationReceiver.class);
 
-        setAlarm(context, alarmManager, intent, 0, 19, 34); //첫번째 알림 시간 설정
-        setAlarm(context, alarmManager, intent, 1, 19, 37); //두번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 0, 8, 0); //첫번째 알림 시간 설정
+        setAlarm(context, alarmManager, intent, 1, 20, 0); //두번째 알림 시간 설정
     }
 
     public static void setAlarm(Context context, AlarmManager alarmManager, Intent intent, int requestCode, int hour, int minute) {
@@ -279,4 +282,24 @@ public class notification1 extends AppCompatActivity {
 
         Log.d("Alarm", "Alarm set for " + hour + ":" + minute);
     }
+
+    public static void cancelAlarms(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, NotificationReceiver.class);
+
+        // 첫 번째 알람 해제
+        PendingIntent pendingIntent1 = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent1);  // 첫 번째 알람 해제
+        }
+
+        // 두 번째 알람 해제
+        PendingIntent pendingIntent2 = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        if (alarmManager != null) {
+            alarmManager.cancel(pendingIntent2);  // 두 번째 알람 해제
+        }
+
+        Log.d("Alarm", "All alarms canceled");
+    }
+
 }

@@ -12,6 +12,9 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,8 @@ import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import android.transition.TransitionManager;
@@ -44,6 +49,7 @@ import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -92,6 +98,8 @@ public class news3_activity extends AppCompatActivity {
         Img=findViewById(R.id.newsImg);
         queue=Volley.newRequestQueue(getApplicationContext());
 
+        Content.setLineSpacing(0,1.66f);
+
         String id = getIntent().getStringExtra("id");
         String title = getIntent().getStringExtra("title");
         String content = getIntent().getStringExtra("content");
@@ -117,6 +125,7 @@ public class news3_activity extends AppCompatActivity {
 
         preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
+
 
         bookMark.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -356,11 +365,17 @@ public class news3_activity extends AppCompatActivity {
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_up);
+
+                    TextView news3SummaryText = findViewById(R.id.news3_summary_text);
+                    news3SummaryText.setTextColor(getResources().getColor(R.color.white));
                 } else {
                     summaryCardView.setVisibility(View.VISIBLE);
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_down);
+
+                    TextView news3SummaryText = findViewById(R.id.news3_summary_text);
+                    news3SummaryText.setTextColor(getResources().getColor(R.color.black));
                 }
             }
         });
@@ -373,6 +388,7 @@ public class news3_activity extends AppCompatActivity {
 
     private static class URLImageGetter implements Html.ImageGetter {
         private final TextView textView;
+        private int originalHeight;  // 원본 이미지의 height 저장
 
         public URLImageGetter(TextView textView) {
             this.textView = textView;
@@ -382,46 +398,43 @@ public class news3_activity extends AppCompatActivity {
         public Drawable getDrawable(String source) {
             final URLDrawable urlDrawable = new URLDrawable();
 
-            // TextView가 레이아웃된 후 너비를 가져오기 위해 OnGlobalLayoutListener 사용
-            textView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    // 한번만 호출되도록 리스너 제거
-                    textView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            // 기본 크기의 플레이스홀더 설정
+            urlDrawable.setBounds(0, 0, textView.getWidth(), textView.getWidth()/6);
 
-                    executor.execute(() -> {
-                        try {
-                            InputStream is = (InputStream) new URL(source).getContent();
-                            Drawable d = Drawable.createFromStream(is, "src");
-                            if (d != null) {
-                                // TextView의 너비 가져오기
-                                int viewWidth = textView.getWidth();
-                                int intrinsicWidth = d.getIntrinsicWidth();
-                                int intrinsicHeight = d.getIntrinsicHeight();
+            // 비동기로 이미지 로딩
+            executor.execute(() -> {
+                try {
+                    // URL에서 이미지 데이터를 가져옴
+                    InputStream is = (InputStream) new URL(source).getContent();
+                    Drawable drawable = Drawable.createFromStream(is, "src");
 
-                                // 이미지의 가로 세로 비율 유지하면서 TextView에 맞게 크기 조정
-                                float aspectRatio = (float) intrinsicHeight / intrinsicWidth;
-                                int width = viewWidth;
-                                int height = (int) (viewWidth * aspectRatio);
+                    if (drawable != null) {
+                        // 이미지 크기 계산
+                        int viewWidth = textView.getWidth();
+                        int intrinsicWidth = drawable.getIntrinsicWidth();
+                        int intrinsicHeight = drawable.getIntrinsicHeight();
 
-                                // 이미지의 Bounds 설정
-                                d.setBounds(0, 0, width, height);
+                        // 원본 이미지의 높이를 저장
+                        originalHeight = intrinsicHeight;
 
-                                // URLDrawable에 이미지 적용
-                                urlDrawable.setBounds(0, 0, width, height);
-                                urlDrawable.setDrawable(d);
+                        float aspectRatio = (float) intrinsicHeight / intrinsicWidth;
+                        int width = viewWidth;
+                        int height = (int) (viewWidth * aspectRatio);
 
-                                // 텍스트 뷰를 다시 그려서 이미지가 올바르게 표시되도록 함
-                                textView.post(() -> {
-                                    textView.invalidate();
-                                    textView.setText(textView.getText());
-                                    textView.requestLayout(); // 추가
-                                });
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
+                        drawable.setBounds(0, 0, width, height);
+
+                        // UI 스레드에서 Drawable 업데이트 및 invalidate
+                        textView.post(() -> {
+                            urlDrawable.setDrawable(drawable);
+                            urlDrawable.setBounds(0, 0, width, height);
+
+                            // TextView를 invalidate하여 이미지가 업데이트되도록 함
+                            textView.invalidate();
+                            textView.setText(textView.getText());
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 

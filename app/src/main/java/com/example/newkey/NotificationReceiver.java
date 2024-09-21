@@ -2,10 +2,13 @@ package com.example.newkey;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import androidx.core.app.NotificationCompat;
+
+import android.content.SharedPreferences;
 import android.util.Log;
 
 public class NotificationReceiver extends BroadcastReceiver {
@@ -13,13 +16,32 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        // SharedPreferences에서 알림 설정 확인
+        SharedPreferences preferences = context.getSharedPreferences("newkey", Context.MODE_PRIVATE);
+        boolean isAlrimEnabled = preferences.getBoolean("alrim", true);  // 기본값 true
+
+        // 알림이 꺼져 있으면 알림을 보내지 않음
+        if (!isAlrimEnabled) {
+            Log.d("NotificationReceiver", "알림이 비활성화되어 알림을 보내지 않음");
+            return;
+        }
+
         createNotificationChannel(context);
 
+        // 알림 클릭 시 실행될 Intent 생성
+        Intent notificationIntent = new Intent(context, notification1.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // 새 Task를 생성하거나 기존 Task를 클리어
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.noti_icon) // 작은 아이콘 설정
+                .setSmallIcon(R.drawable.noti_icon_2) // 작은 아이콘 설정
                 .setContentTitle("Newkey 뉴키")
                 .setContentText("HOT 뉴스를 확인해보세요!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent) // 알림 클릭 시 실행될 Intent
+                .setAutoCancel(true); // 알림을 클릭하면 자동으로 제거되도록 설정
 
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);

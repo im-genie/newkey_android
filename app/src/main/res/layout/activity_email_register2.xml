@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="인증코드가 일치하지 않습니다."
-            android:textColor="@color/gray_300"
+            android:textColor="@color/key_red_100"
             android:textSize="14dp"
             android:fontFamily="@font/pretendardregular"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />

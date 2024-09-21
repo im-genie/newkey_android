@@ -115,9 +115,9 @@
                     android:gravity="center"
                     android:layout_weight="1"
                     android:spinnerMode="dropdown"
-                    android:textColor="@color/gray_100"
                     android:textColorHint="@color/gray_300"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textColor="@color/gray_300"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -202,7 +202,6 @@
                 android:id="@+id/codeRightText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:text="인증번호가 일치하지 않습니다."
                 android:textColor="@color/key_red_100"
@@ -241,7 +240,7 @@
             android:id="@+id/notice2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="- 인증코드 전송은 최대 1분 소요될 수 있습니다.\n
+            android:text=" - 인증코드 전송은 최대 1분 소요될 수 있습니다.\n
 - 입력하신 이메일 주소가 올바른지 확인해 주세요.\n
 - 메일이 오지 않는다면 인증코드 전송 버튼을 다시 눌러주세요.\n
 - 인증코드는 10분 간 유효합니다."

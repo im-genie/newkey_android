@@ -76,6 +76,10 @@ public class PwFindActivity1 extends AppCompatActivity {
 
         codeCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
 
+        codeSend.setEnabled(false);
+        codeSend.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+        codeSend.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_300));
+
         TextWatcher emailTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

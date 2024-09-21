@@ -57,5 +57,4 @@ dependencies {
     implementation("com.android.volley:volley:1.2.1")
 
     implementation("com.airbnb.android:lottie:6.0.0")
-
 }
