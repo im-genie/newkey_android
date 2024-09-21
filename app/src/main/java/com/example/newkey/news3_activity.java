@@ -126,6 +126,7 @@ public class news3_activity extends AppCompatActivity {
         preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
 
+
         bookMark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -387,6 +388,7 @@ public class news3_activity extends AppCompatActivity {
 
     private static class URLImageGetter implements Html.ImageGetter {
         private final TextView textView;
+        private int originalHeight;  // 원본 이미지의 height 저장
 
         public URLImageGetter(TextView textView) {
             this.textView = textView;
@@ -394,70 +396,50 @@ public class news3_activity extends AppCompatActivity {
 
         @Override
         public Drawable getDrawable(String source) {
-            // URL에서 이미지를 불러와 적용할 URLDrawable 객체 생성
             final URLDrawable urlDrawable = new URLDrawable();
 
-            // TextView의 레이아웃이 완료된 후 크기를 가져오기 위해 OnGlobalLayoutListener 사용
-            textView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    // 리스너가 계속 호출되는 것을 방지하기 위해 한 번 호출되면 제거
-                    textView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            // 기본 크기의 플레이스홀더 설정
+            urlDrawable.setBounds(0, 0, textView.getWidth(), textView.getWidth()/6);
 
-                    // 별도의 스레드에서 이미지 다운로드와 처리를 수행
-                    executor.execute(() -> {
-                        try {
-                            // URL에서 이미지 데이터를 가져와 InputStream으로 변환
-                            InputStream is = (InputStream) new URL(source).getContent();
+            // 비동기로 이미지 로딩
+            executor.execute(() -> {
+                try {
+                    // URL에서 이미지 데이터를 가져옴
+                    InputStream is = (InputStream) new URL(source).getContent();
+                    Drawable drawable = Drawable.createFromStream(is, "src");
 
-                            // InputStream을 통해 Drawable 객체 생성 (이미지를 로드)
-                            Drawable d = Drawable.createFromStream(is, "src");
+                    if (drawable != null) {
+                        // 이미지 크기 계산
+                        int viewWidth = textView.getWidth();
+                        int intrinsicWidth = drawable.getIntrinsicWidth();
+                        int intrinsicHeight = drawable.getIntrinsicHeight();
 
-                            // 이미지가 정상적으로 로드된 경우
-                            if (d != null) {
-                                // TextView의 너비를 가져옴 (이미지를 TextView 너비에 맞게 조정하기 위해)
-                                int viewWidth = textView.getWidth();
+                        // 원본 이미지의 높이를 저장
+                        originalHeight = intrinsicHeight;
 
-                                // 이미지의 원래 가로, 세로 크기 가져오기
-                                int intrinsicWidth = d.getIntrinsicWidth();
-                                int intrinsicHeight = d.getIntrinsicHeight();
+                        float aspectRatio = (float) intrinsicHeight / intrinsicWidth;
+                        int width = viewWidth;
+                        int height = (int) (viewWidth * aspectRatio);
 
-                                // 이미지의 가로 세로 비율을 계산하여 TextView의 너비에 맞게 높이를 조정
-                                float aspectRatio = (float) intrinsicHeight / intrinsicWidth;
-                                int width = viewWidth;
-                                int height = (int) (viewWidth * aspectRatio);
+                        drawable.setBounds(0, 0, width, height);
 
-                                // 조정된 크기로 이미지의 그릴 영역(Bounds)을 설정
-                                d.setBounds(0, 0, width, height);
+                        // UI 스레드에서 Drawable 업데이트 및 invalidate
+                        textView.post(() -> {
+                            urlDrawable.setDrawable(drawable);
+                            urlDrawable.setBounds(0, 0, width, height);
 
-                                // URLDrawable에 이미지 설정 및 그릴 영역 지정
-                                urlDrawable.setBounds(0, 0, width, height);
-                                urlDrawable.setDrawable(d);
-
-                                // UI 스레드에서 TextView를 다시 그려서 이미지가 적용되도록 함
-                                textView.post(() -> {
-                                    // TextView의 화면을 다시 그려 이미지가 반영되게 함
-                                    textView.invalidate();
-
-                                    // TextView의 텍스트를 갱신하여 새로운 이미지가 포함된 텍스트를 표시
-                                    textView.setText(textView.getText());
-
-                                    // TextView의 레이아웃을 다시 계산하여 이미지 크기 조정 반영
-                                    textView.requestLayout();
-                                });
-                            }
-                        } catch (Exception e) {
-                            // 이미지 로드 중 오류 발생 시 예외 처리
-                            e.printStackTrace();
-                        }
-                    });
+                            // TextView를 invalidate하여 이미지가 업데이트되도록 함
+                            textView.invalidate();
+                            textView.setText(textView.getText());
+                        });
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
 
-            // URLDrawable 객체를 반환
             return urlDrawable;
         }
-
 
         private static class URLDrawable extends BitmapDrawable {
             private Drawable drawable;
