@@ -109,13 +109,15 @@ public class Cardnews5Fragment extends Fragment {
                     String reporter = jsonObject.getString("reporter");
                     String mediaImg = jsonObject.getString("media_img");
 
-                    // 날짜 파싱 및 현재 시간과 차이 계산
-                    Date articleDate = sdf.parse(dateStr); // 서버에서 받은 날짜 문자열을 Date 객체로 변환
-                    long diffInMillis = currentDate.getTime() - articleDate.getTime(); // 시간 차이 계산
-                    String timeAgo = getTimeAgo(diffInMillis); // 차이를 "몇 시간 전" 형식으로 변환
-
-                    // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                    newsData = new news1_item(id,title,content,press,timeAgo,img,summary,key,reporter,mediaImg);
+                    if (!dateStr.isEmpty() && !dateStr.equals("null")) {
+                        Date articleDate = sdf.parse(dateStr); // 서버에서 받은 날짜 문자열을 Date 객체로 변환
+                        long diffInMillis = currentDate.getTime() - articleDate.getTime(); // 시간 차이 계산
+                        String timeAgo = getTimeAgo(diffInMillis); // 차이를 "몇 시간 전" 형식으로 변환
+                        newsData = new news1_item(id, title, content, press, timeAgo, img, summary, key, reporter, mediaImg);
+                    } else {
+                        // 날짜가 없을 경우 기본값으로 처리 (예: "방금"으로 설정)
+                        newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
+                    }
 
                     titleText.setText(newsData.getTitle());
                     dateText.setText(newsData.getDate());
