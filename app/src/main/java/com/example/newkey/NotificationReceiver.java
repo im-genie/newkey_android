@@ -7,6 +7,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import androidx.core.app.NotificationCompat;
+
+import android.content.SharedPreferences;
 import android.util.Log;
 
 public class NotificationReceiver extends BroadcastReceiver {
@@ -14,6 +16,16 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        // SharedPreferences에서 알림 설정 확인
+        SharedPreferences preferences = context.getSharedPreferences("newkey", Context.MODE_PRIVATE);
+        boolean isAlrimEnabled = preferences.getBoolean("alrim", true);  // 기본값 true
+
+        // 알림이 꺼져 있으면 알림을 보내지 않음
+        if (!isAlrimEnabled) {
+            Log.d("NotificationReceiver", "알림이 비활성화되어 알림을 보내지 않음");
+            return;
+        }
 
         createNotificationChannel(context);
 
