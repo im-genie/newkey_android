@@ -58,9 +58,13 @@ public class AlrimSetting extends AppCompatActivity {
                 if (isChecked) {
                     switch1.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_300)));
                     editor.putBoolean("alrim",true);
+                    // 알림 설정
+                    notification1.setDailyAlarms(getApplicationContext());  // 알림 설정 호출
                 } else {
                     switch1.setThumbTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_600)));
                     editor.putBoolean("alrim",false);
+                    // 알림 해제
+                    notification1.cancelAlarms(getApplicationContext());  // 알림 해제 호출
                 }
                 editor.apply();
             }
