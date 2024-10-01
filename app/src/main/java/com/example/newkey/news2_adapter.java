@@ -72,10 +72,14 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
                     .into(holder.newsImage);
         }
 
-        Glide.with(holder.itemView.getContext())
-                .load(newsItem.getMediaImg())
-                .into(holder.newsCircleImage);
-
+        if(newsItem.getMediaImg().equals("null")) {
+            holder.newsCircleImage.setImageResource(R.drawable.newkey);
+        }
+        else {
+            Glide.with(holder.itemView.getContext())
+                    .load(newsItem.getMediaImg())
+                    .into(holder.newsCircleImage);
+        }
 
         // 저장 뉴스 목록에 해당 뉴스 id 있으면 북마크 표시
         if (storedNewsIds.contains(newsItem.getId())) {

@@ -29,10 +29,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -78,8 +84,6 @@ public class Cardnews1Fragment extends Fragment {
         queue = Volley.newRequestQueue(view.getContext());
         String url = "http://15.164.199.177:5000/hot5";
 
-
-
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -93,32 +97,49 @@ public class Cardnews1Fragment extends Fragment {
                 }
 
                 try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+                    sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+
+                    Date currentDate = new Date();
+
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
 
                     String id = jsonObject.getString("id");
                     String title = jsonObject.getString("title");
                     String content = jsonObject.getString("origin_content");
                     String press = jsonObject.getString("media");
-                    String date = jsonObject.getString("date");
+                    String dateStr = jsonObject.getString("date");
                     String img = jsonObject.getString("img");
                     String summary = jsonObject.getString("summary");
                     String key = jsonObject.getString("key");
                     String reporter = jsonObject.getString("reporter");
                     String mediaImg = jsonObject.getString("media_img");
 
-                    // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                    newsData = new news1_item(id,title,content,press,date,img,summary,key,reporter,mediaImg);
+                    if (!dateStr.isEmpty() && !dateStr.equals("null")) {
+                        Date articleDate = sdf.parse(dateStr); // 서버에서 받은 날짜 문자열을 Date 객체로 변환
+                        long diffInMillis = currentDate.getTime() - articleDate.getTime(); // 시간 차이 계산
+                        String timeAgo = getTimeAgo(diffInMillis); // 차이를 "몇 시간 전" 형식으로 변환
+                        newsData = new news1_item(id, title, content, press, timeAgo, img, summary, key, reporter, mediaImg);
+                    } else {
+                        // 날짜가 없을 경우 기본값으로 처리 (예: "방금"으로 설정)
+                        newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
+                    }
 
                     titleText.setText(newsData.getTitle());
                     dateText.setText(newsData.getDate());
                     reporterText.setText(newsData.getReporter()+" 기자");
                     publisherText.setText(newsData.getPublisher());
 
-                    Glide.with(view.getContext()).load(mediaImg).into(mediaCircleImg);
+                    if(mediaImg.equals("null")) {
+                        mediaCircleImg.setImageResource(R.drawable.newkey);
+                    }
+                    else Glide.with(view.getContext()).load(mediaImg).into(mediaCircleImg);
 
                 } catch (JSONException e) {
                     //e.printStackTrace();
                     Log.d("해당 기사 없음",e.toString());
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }, new Response.ErrorListener() {
@@ -163,5 +184,23 @@ public class Cardnews1Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    private String getTimeAgo(long diffInMillis) {
+        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(diffInMillis);
+        if (diffInMinutes < 60) {
+            return diffInMinutes + "분 전";
+        } else {
+            long diffInHours = TimeUnit.MILLISECONDS.toHours(diffInMillis);
+            if (diffInHours < 24) {
+                return diffInHours + "시간 전";
+            } else {
+                // 하루 이상 차이 나면 원래 날짜 반환
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd. a hh:mm", Locale.KOREA);
+                sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+                Date originalDate = new Date(System.currentTimeMillis() - diffInMillis);
+                return sdf.format(originalDate);
+            }
+        }
     }
 }
