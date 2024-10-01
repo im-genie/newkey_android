@@ -122,28 +122,39 @@
             android:textSize="14dp"
             android:layout_marginTop="10dp"/>
 
-        <EditText
-            android:id="@+id/pw"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:textColor="@color/gray_100"
-            android:textColorHint="@color/gray_300"
-            android:backgroundTint="@color/gray_400"
-            android:paddingStart="16dp"
-            android:hint="영어, 숫자 조합 6자리 이상"
-            android:textSize="14dp"
-            android:inputType="textPassword"
-            android:background="@drawable/rounded_corner_15"
-            android:layout_marginTop="10dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <EditText
+                android:id="@+id/pw"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:textColor="@color/gray_100"
+                android:textColorHint="@color/gray_300"
+                android:backgroundTint="@color/gray_400"
+                android:paddingStart="16dp"
+                android:hint="영어, 숫자 조합 6자리 이상"
+                android:textSize="18dp"
+                android:inputType="textPassword"
+                android:background="@drawable/rounded_corner_15"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
 
         <Button
             android:id="@+id/pwFind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
             android:text="비밀번호 찾기"
             android:textSize="12dp"
             android:textColor="@color/gray_300"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:gravity="start"
+            android:padding="0dp"/>
+
     </LinearLayout>
 
     <Button
@@ -157,4 +168,5 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="52dp"/>
+
 </LinearLayout>
