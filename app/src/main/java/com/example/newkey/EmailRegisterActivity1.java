@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -78,7 +79,6 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
 
         // ArrayAdapter를 사용하여 Spinner에 항목 연결
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items) {
-
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 // 기본 레이아웃을 사용하여 뷰 생성
@@ -90,19 +90,27 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
 
                 return view;
             }
-
             @Override
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 // 기본 드롭다운 레이아웃을 사용하여 뷰 생성
                 View view = super.getDropDownView(position, convertView, parent);
 
-                // 드롭다운 항목의 텍스트 색상 설정 (gray_100으로 변경)
+                // 현재 모드 감지 (다크모드인지 화이트모드인지)
+                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+                // 드롭다운 항목의 텍스트 색상 설정 (다크모드일 경우 흰색, 라이트모드일 경우 검정색)
                 TextView text = (TextView) view;
-                text.setTextColor(ContextCompat.getColor(getApplicationContext(), android.R.color.black)); // **드롭다운 텍스트는 검정색**
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    text.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_100));
+                } else {
+                    text.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.gray_600));
+                }
 
                 return view;
             }
         };
+
+        // Spinner에 어댑터 설정
         email2.setAdapter(adapter);
 
         // Spinner의 항목이 선택되었을 때의 동작 설정

@@ -76,7 +76,7 @@
                 android:paddingStart="16dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_corner_15"
-                android:textSize="20dp" />
+                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/whelk"

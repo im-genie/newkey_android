@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/news_photo1"/>
+        android:src="@drawable/newkey_black"/>
 
     <View
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp"
-        android:text="'물가 잡아먹은 과일값부터 잡는다...' 수입 과일 역대 최대 면세"
+        android:text="제목"
         android:textSize="16dp"
         android:layout_gravity="bottom"
         android:textColor="@color/gray_100"
@@ -64,7 +64,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:src="@drawable/news_press_img" />
+                android:src="@drawable/profile_newkey" />
 
             <TextView
                 android:id="@+id/news_press_big"
@@ -73,7 +73,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
                 android:fontFamily="@font/pretendardregular"
-                android:text="한국일보"
+                android:text="뉴키일보"
                 android:textColor="@color/gray_100"
                 android:textSize="12dp"></TextView>
         </LinearLayout>
@@ -86,7 +86,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="20.5dp"
             android:fontFamily="@font/pretendardregular"
-            android:text="2시간 전"
+            android:text="0시간 전"
             android:textColor="@color/gray_100"
             android:textSize="10dp">
         </TextView>
