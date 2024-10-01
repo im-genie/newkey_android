@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,8 +31,13 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class news1_politics extends Fragment {
+
     private List<news1_item> itemList;
-    RequestQueue queue;
+    private RequestQueue queue;
+    private news1_adapter adapter;
+    private int currentPage = 1;  // 현재 페이지
+    private final int pageSize = 20;  // 한 페이지에 불러올 기사 수
+    private boolean isLoading = false;  // 로딩 상태를 추적하여 중복 로드 방지
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,20 +45,48 @@ public class news1_politics extends Fragment {
 
         itemList = new ArrayList<>();
         queue = Volley.newRequestQueue(view.getContext());
-        String url = "http://15.164.199.177:5000/politic";
 
-        final JsonArrayRequest request=new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+        // RecyclerView 설정
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView recyclerView = view.findViewById(R.id.news1_politics_recyclerview);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new news1_adapter(itemList);
+        recyclerView.setAdapter(adapter);
+
+        // 첫 페이지 로드
+        loadNews(currentPage);
+
+        // 스크롤 리스너: 끝에 도달하면 다음 페이지 로드
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (!recyclerView.canScrollVertically(1) && !isLoading) {
+                    // 스크롤이 끝에 도달했을 때 다음 페이지 요청
+                    currentPage++;
+                    loadNews(currentPage);
+                }
+            }
+        });
+
+        return view;
+    }
+
+    // 뉴스 데이터를 페이지 단위로 로드하는 메서드
+    private void loadNews(int page) {
+        isLoading = true;  // 로딩 중 플래그 설정
+        String url = "http://15.164.199.177:5000/politic?page=" + page + "&size=" + pageSize;
+
+        final JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("success!!", "success!! " + response.toString());
-                //s3에서 기사 받아와 배열에 저장
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
                     sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 
                     Date currentDate = new Date();
 
-                    // 예시: 응답으로부터 필요한 데이터를 파싱하여 처리
+                    // 응답으로부터 데이터를 파싱하여 itemList에 추가
                     for (int i = 0; i < response.length(); i++) {
                         JSONObject jsonObject = response.getJSONObject(i);
                         String id = jsonObject.getString("id");
@@ -61,8 +95,8 @@ public class news1_politics extends Fragment {
                         String press = jsonObject.getString("media");
                         String dateStr = jsonObject.getString("date");
                         String img = jsonObject.getString("img");
-                        String summary=jsonObject.getString("summary");
-                        String key=jsonObject.getString("key");
+                        String summary = jsonObject.getString("summary");
+                        String key = jsonObject.getString("key");
                         String reporter = jsonObject.getString("reporter");
                         String mediaImg = jsonObject.getString("media_img");
 
@@ -73,40 +107,37 @@ public class news1_politics extends Fragment {
                             news1_item newsData = new news1_item(id, title, content, press, timeAgo, img, summary, key, reporter, mediaImg);
                             itemList.add(newsData);
                         } else {
-                            // 날짜가 없을 경우 기본값으로 처리 (예: "방금"으로 설정)
+                            // 날짜가 없을 경우 기본값으로 처리 (예: "방금")
                             news1_item newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
                             itemList.add(newsData);
                         }
-
-                        // 이후에 newsList를 사용하여 원하는 처리를 진행
-                        //Adapter
-                        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
-                        RecyclerView recyclerView=view.findViewById(R.id.news1_politics_recyclerview);
-                        recyclerView.setLayoutManager(layoutManager);
-                        news1_adapter adapter=new news1_adapter(itemList);
-                        recyclerView.setAdapter(adapter);
                     }
+
+                    adapter.notifyDataSetChanged();  // 어댑터에 데이터가 갱신되었음을 알림
+                    isLoading = false;  // 로딩 완료
                 } catch (Exception e) {
+                    Log.d("myTest", e.toString());
                     e.printStackTrace();
+                    isLoading = false;  // 에러 발생 시 로딩 상태 해제
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("fail!!",error.toString());
+                Log.d("fail!!", error.toString());
+                isLoading = false;  // 에러 발생 시 로딩 상태 해제
             }
         });
 
+        // 요청 재시도 및 타임아웃 설정
         request.setRetryPolicy(new DefaultRetryPolicy(
-                1000000,  // 기본 타임아웃 (기본값: 2500ms)
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                1000000,  // 기본 타임아웃
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,  // 기본 재시도 횟수
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
 
         request.setShouldCache(false);
         queue.add(request);
-
-        return view;
     }
 
     // 시간 차이를 "몇 분 전", "몇 시간 전", "며칠 전"으로 변환하는 메서드
@@ -128,3 +159,4 @@ public class news1_politics extends Fragment {
         }
     }
 }
+
