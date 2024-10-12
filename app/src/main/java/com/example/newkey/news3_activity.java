@@ -269,6 +269,8 @@ public class news3_activity extends AppCompatActivity {
                 summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                 summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                 news3SummaryArrow.setImageResource(R.drawable.news3_down);
+                TextView news3SummaryText = findViewById(R.id.news3_summary_text);
+                news3SummaryText.setTextColor(getResources().getColor(R.color.black));
                 Toast.makeText(getApplicationContext(), "해당 기사를 요약했어요", Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {

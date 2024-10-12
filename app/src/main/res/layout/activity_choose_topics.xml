@@ -1084,6 +1084,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="39dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
                         android:background="@drawable/radius_100"
                         android:fontFamily="@font/pretendardmedium"
                         android:text="세계 일반"
@@ -1412,7 +1413,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="50dp"/>
+                    android:layout_marginBottom="70dp"/>
             </LinearLayout>
         </ScrollView>
 
