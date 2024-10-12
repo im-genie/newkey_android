@@ -62,7 +62,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
 
         // Initially disable the codeCheck button
         codeCheck.setEnabled(false);
-        codeCheck.setBackgroundColor(Color.GRAY); // Set initial color to gray
+//        codeCheck.setBackgroundColor(Color.GRAY); // Set initial color to gray
 
         // Add TextWatcher to EditText to monitor text changes
         code.addTextChangedListener(new TextWatcher() {

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".NicknameActivity"
     android:background="@color/gray_600"
-    android:backgroundTint="@color/gray_600"
 >
 
     <LinearLayout
@@ -54,6 +53,40 @@
 
 
 
+    <LinearLayout
+        android:id="@+id/next"
+        android:layout_width="87dp"
+        android:layout_height="40dp"
+        android:background="@drawable/radius_100"
+        android:backgroundTint="@color/gray_400"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/next_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:fontFamily="@font/pretendardregular"
+            android:text="다음"
+            android:textColor="@color/gray_100"
+            android:textSize="14dp" />
+
+        <ImageView
+            android:id="@+id/next_arrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            app:srcCompat="@drawable/button_next" />
+
+    </LinearLayout>
+
     <EditText
         android:id="@+id/nickname"
         android:layout_width="fill_parent"
@@ -65,11 +98,14 @@
         android:backgroundTint="@color/gray_400"
         android:ems="10"
         android:fontFamily="@font/pretendardregular"
-        android:paddingStart="12dp"
-        android:textColor="@color/gray_100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nicknameTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/nicknameTitle"
+        android:hint="별명을 입력해주세요"
+        android:paddingStart="16dp"
+        android:textColor="@color/gray_100"
+        android:textColorHint="@color/gray_300"
+        android:textSize="14dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -88,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="17dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginRight="9dp"
         android:layout_marginBottom="17dp"
         android:text="0/10"
         android:fontFamily="@font/pretendardregular"
@@ -98,49 +134,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/nickname"
         app:layout_constraintEnd_toEndOf="@+id/nickname"
         app:layout_constraintTop_toTopOf="@+id/nickname" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <LinearLayout
-            android:id="@+id/next"
-            android:layout_width="73dp"
-            android:layout_height="44dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/radius_100"
-            android:backgroundTint="@color/gray_400"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-
-            <TextView
-                android:id="@+id/next_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:fontFamily="@font/pretendardregular"
-                android:text="다음"
-                android:textColor="@color/gray_100"
-                android:textSize="14dp" />
-
-            <ImageView
-                android:id="@+id/next_arrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:srcCompat="@drawable/button_next" />
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

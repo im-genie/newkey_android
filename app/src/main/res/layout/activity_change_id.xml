@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".NicknameActivity"
     android:background="@color/gray_600"
-    android:backgroundTint="@color/gray_600"
     >
 
     <LinearLayout
