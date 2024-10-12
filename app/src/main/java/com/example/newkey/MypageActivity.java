@@ -157,6 +157,7 @@ public class MypageActivity extends Activity {
         ConstraintLayout chooseTopics = findViewById(R.id.btn_topic);
         TextView changePassword = findViewById(R.id.changePassword);
         TextView logout = findViewById(R.id.logout);
+        TextView deleteId = findViewById(R.id.deleteId);
 
         changeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -275,6 +276,50 @@ public class MypageActivity extends Activity {
 
             dialog.show();
         };
+
+    private void showDeleteAccountDialog() {
+        // 회원탈퇴 팝업 다이얼로그를 띄우는 메서드
+        AlertDialog.Builder builder = new AlertDialog.Builder(MypageActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.delete_account_dialog, null); // delete_account_dialog 레이아웃 사용
+        builder.setView(dialogView);
+
+        Button btnConfirmDelete = dialogView.findViewById(R.id.btn_confirm_delete);
+        Button btnCancelDelete = dialogView.findViewById(R.id.btn_cancel_delete);
+
+        AlertDialog dialog = builder.create();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+
+        btnConfirmDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 회원탈퇴 처리
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear(); // 모든 사용자 데이터 삭제
+                editor.apply();
+
+                Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
+                startActivity(intent);
+                dialog.dismiss(); // 다이얼로그 닫기
+
+                Toast.makeText(MypageActivity.this, "회원탈퇴가 완료되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnCancelDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss(); // 다이얼로그 닫기
+            }
+        });
+
+        dialog.show();
+    }
+
+
     @Override
     public void onBackPressed() {
         // 뒤로가기 버튼을 눌렀을 때 MainActivity를 시작하도록 설정

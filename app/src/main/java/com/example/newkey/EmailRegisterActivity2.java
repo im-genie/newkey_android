@@ -127,13 +127,10 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                                     codeRightText.setTextColor(getResources().getColor(R.color.key_green_400));
                                     codeRightText.setText("인증이 완료되었습니다");
 
-                                    next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                                     nextText.setTextColor(getResources().getColor(R.color.gray_600));
                                     nextArrow.setImageResource(R.drawable.next_black);
                                     next.setEnabled(true);
-                                }
-                                else{
-                                    next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
+                                } else {
                                     nextText.setTextColor(getResources().getColor(R.color.gray_100));
                                     nextArrow.setImageResource(R.drawable.next);
                                     next.setEnabled(false);
@@ -141,7 +138,6 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                                     Toast.makeText(EmailRegisterActivity2.this, "인증코드가 올바르지 않습니다", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
                                 nextText.setTextColor(getResources().getColor(R.color.gray_100));
                                 nextArrow.setImageResource(R.drawable.next);
                                 next.setEnabled(false);
