@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/completeButton"
-        android:layout_width="91dp"
+        android:layout_width="73dp"
         android:layout_height="40dp"
         android:layout_marginBottom="40dp"
         android:background="@drawable/radius_100"
@@ -27,7 +27,8 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:layout_marginLeft="16dp"
+            android:layout_gravity="center_vertical"
             android:fontFamily="@font/pretendardmedium"
             android:text="다음"
             android:textColor="@color/gray_600"
@@ -37,6 +38,8 @@
             android:id="@+id/imageView13"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:layout_marginRight="8dp"
+            android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/button_next_black" />
 
 
@@ -62,13 +65,17 @@
             android:id="@+id/imageView12"
             android:layout_width="16dp"
             android:layout_height="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="6dp"
+            android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/refresh" />
 
         <TextView
             android:id="@+id/reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
+            android:layout_marginRight="16dp"
+            android:layout_gravity="center_vertical"
             android:fontFamily="@font/pretendardmedium"
             android:text="재설정"
             android:textColor="@color/gray_600"
@@ -1084,6 +1091,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="39dp"
                         android:layout_marginTop="8dp"
+                        android:layout_marginStart="8dp"
                         android:background="@drawable/radius_100"
                         android:fontFamily="@font/pretendardmedium"
                         android:text="세계 일반"
@@ -1412,7 +1420,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="50dp"/>
+                    android:layout_marginBottom="70dp"/>
             </LinearLayout>
         </ScrollView>
 
