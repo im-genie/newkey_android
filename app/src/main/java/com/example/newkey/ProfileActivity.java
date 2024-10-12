@@ -34,10 +34,10 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    ImageView yellow,green,blue,newkey;
+    ImageView yellow, green, blue, newkey;
     Button complete;
-    String selected="";
-    String url="http://43.201.113.167:8080/user/profileSave";
+    String selected = "";
+    String url = "http://43.201.113.167:8080/user/profileSave";
     SharedPreferences preferences;
     public static final String preference = "newkey";
     RequestQueue queue;
@@ -48,16 +48,15 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        email=preferences.getString("email", null);
+        preferences = getSharedPreferences(preference, Context.MODE_PRIVATE);
+        email = preferences.getString("email", null);
 
-        queue=Volley.newRequestQueue(getApplicationContext());
+        queue = Volley.newRequestQueue(getApplicationContext());
 
         yellow = findViewById(R.id.profile_yellow);
         green = findViewById(R.id.profile_green);
         blue = findViewById(R.id.profile_blue);
         newkey = findViewById(R.id.profile_newkey);
-
 
         final int yellowSelectedResId = R.drawable.yellow_check; // 선택된 상태 이미지
         final int yellowDefaultResId = R.drawable.profile_yellow; // 기본 이미지
@@ -71,7 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
         final int newkeySelectedResId = R.drawable.newkey_check;
         final int newkeyDefaultResId = R.drawable.profile_newkey;
 
-
+        // XML에서 정의된 둥근 배경과 크기 유지하면서 이미지 변경
         yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        //프로필 저장
+        // 프로필 저장
         complete = findViewById(R.id.completeButton);
         complete.setOnClickListener(new View.OnClickListener() {
             @Override
