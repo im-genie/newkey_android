@@ -70,12 +70,10 @@ public class HomeFragment extends Fragment {
     Set<String> storedNewsIds = new HashSet<>();
     String email;
     private View view;
-    ImageView recommendation_loading_image;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        recommendation_loading_image = view.findViewById(R.id.recommendation_loading_image);
 
         // 안내 내용 - 맞춤 설정 버튼
         LinearLayout layout_goto_mypage = view.findViewById(R.id.layout_goto_mypage);
@@ -663,15 +661,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
 
-                // 추천 뉴스가 하나 이상 있으면 ImageView를 invisible로 설정
-                if (!recommendList.isEmpty()) {
-                    recommendation_loading_image.setVisibility(View.INVISIBLE);
-                } else {
-                    // 추천 뉴스가 없으면 ImageView를 visible로 유지
-                    recommendation_loading_image.setVisibility(View.VISIBLE);
-                }
-
-
                 // 이후에 newsList를 사용하여 원하는 처리를 진행
                 //Adapter
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -737,7 +726,6 @@ public class HomeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                recommendation_loading_image.setVisibility(View.VISIBLE);
                 Log.d("storeViewError",error.toString());
             }
         }){

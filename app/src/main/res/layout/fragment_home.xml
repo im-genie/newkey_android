@@ -151,22 +151,13 @@
                     </ImageView>
                 </LinearLayout>
             </FrameLayout>
-
-            <ImageView
-                android:id="@+id/recommendation_loading_image"
-                android:layout_width="match_parent"
-                android:layout_height="164dp"
-                android:src="@drawable/recommendation_loading"
-                android:visibility="visible">
-            </ImageView>
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recommendation_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="12dp">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
@@ -176,7 +167,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/home_custom_section"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="12dp"
             android:orientation="vertical">
             <FrameLayout
