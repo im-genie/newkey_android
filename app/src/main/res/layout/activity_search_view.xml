@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search1"
+    android:id="@+id/search_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
-    tools:context=".SearchActivity">
+    android:background="@color/gray_600"
+    tools:context=".SearchViewActivity">
 
     <ImageButton
         android:id="@+id/button_back"
@@ -49,7 +49,7 @@
         android:background="@drawable/search_round"
         android:focusable="true"
         android:fontFamily="@font/pretendardmedium"
-        android:textSize="17dp"
+        android:textSize="10dp"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
