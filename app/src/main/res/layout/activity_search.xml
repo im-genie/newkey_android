@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/search1"
+    android:id="@+id/search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/gray_600"
     tools:context=".SearchActivity">
 
     <ImageButton
@@ -25,7 +24,7 @@
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/search_text"
+        android:id="@+id/검색"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/button_back"
@@ -49,7 +48,7 @@
         android:background="@drawable/search_round"
         android:focusable="true"
         android:fontFamily="@font/pretendardmedium"
-        android:textSize="17dp"
+        android:textSize="10dp"
         android:textColor="#FFFFFF"
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,9 +76,9 @@
     <Button
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
-        android:layout_height="14dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="0dp"
+        android:layout_marginTop="0dp"
         android:background="@android:color/transparent"
         android:fontFamily="@font/pretendardmedium"
         android:includeFontPadding="false"
@@ -87,8 +86,10 @@
         android:textColor="@color/gray_300"
         android:textSize="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_search" />
+        app:layout_constraintTop_toBottomOf="@id/view_search"
+        android:visibility="visible" />
 
+    <!-- TODO -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
