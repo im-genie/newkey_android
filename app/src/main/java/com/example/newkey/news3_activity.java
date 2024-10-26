@@ -253,7 +253,7 @@ public class news3_activity extends AppCompatActivity {
         summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
         Toast.makeText(getApplicationContext(), "요약이 준비되지 않았어요", Toast.LENGTH_SHORT).show();
 
-        final StringRequest fiveWOneHRequest=new StringRequest(Request.Method.POST, fiveWOneHUrl, new Response.Listener<String>() {
+        final StringRequest fiveWOneHRequest = new StringRequest(Request.Method.POST, fiveWOneHUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("res",response);
