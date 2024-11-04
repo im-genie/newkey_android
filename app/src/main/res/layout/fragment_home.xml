@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/home_custom_section"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="12dp"
             android:orientation="vertical">
             <FrameLayout
