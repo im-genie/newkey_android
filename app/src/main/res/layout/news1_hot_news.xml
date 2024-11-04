@@ -10,7 +10,7 @@
         android:id="@+id/news1_hot_item"
         android:layout_width="220dp"
         android:layout_height="132dp"
-        android:src="@drawable/test1"
+        android:src="@drawable/newkey_black"
         android:scaleType="centerCrop" />
     <View
         android:layout_width="match_parent"
