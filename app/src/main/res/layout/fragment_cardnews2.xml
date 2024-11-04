@@ -7,11 +7,11 @@
     tools:context=".Cardnews2Fragment"
     android:background="@color/gray_600"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/news_press_img"/>
+                    android:src="@drawable/profile_newkey"/>
 
                 <TextView
                     android:id="@+id/publisher"
@@ -44,7 +44,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="12dp"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="한국일보"
+                    android:text="뉴키일보"
                     android:textColor="@color/gray_100"
                     android:textSize="12dp">
                 </TextView>
@@ -69,7 +69,8 @@
                     android:fontFamily="@font/pretendardregular"
                     android:text="기사 전문"
                     android:textColor="@color/gray_600"
-                    android:textSize="12dp"></TextView>
+                    android:textSize="12dp">
+                </TextView>
                 <ImageView
                     android:id="@+id/content"
                     android:layout_width="16dp"
@@ -89,7 +90,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="68dp"
-                android:text="1441일 만에 불 꺼진 채취실...“덕분입니다. 고맙습니다."
+                android:text="로딩 중"
                 android:fontFamily="@font/pretendardregular"
                 android:textSize="20dp"
                 android:textColor="@color/gray_100"
@@ -100,7 +101,7 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2023년 12월 31일"
+                android:text="날짜"
                 android:fontFamily="@font/pretendardregular"
                 android:textColor="@color/gray_300"
                 android:textSize="10dp"
@@ -116,7 +117,7 @@
                 android:layout_marginTop="135dp"
                 android:layout_marginRight="16dp"
                 android:fontFamily="@font/pretendardregular"
-                android:text="조태형 기자"
+                android:text="기자"
                 android:textColor="@color/gray_300"
                 android:textSize="10dp">
 
@@ -165,7 +166,7 @@
                                 android:id="@+id/when"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="2023년 12월 31일"
+                                android:text=""
                                 android:textSize="12dp"
                                 android:textColor="@color/gray_100"
                                 android:fontFamily="@font/pretendardregular"
@@ -211,7 +212,7 @@
                                 android:id="@+id/who"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="의료진"
+                                android:text=""
                                 android:textSize="12dp"
                                 android:textColor="@color/gray_100"
                                 android:fontFamily="@font/pretendardregular"
@@ -255,13 +256,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/where"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="서울 광진구 보건소 선별진료소"
+                                android:text=""
                                 android:textSize="12dp"
                                 android:textColor="@color/gray_100"
                                 android:fontFamily="@font/pretendardregular"
@@ -305,13 +305,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/what"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="코로나 검체 채취"
+                                android:text=""
                                 android:textSize="12dp"
                                 android:textColor="@color/gray_100"
                                 android:fontFamily="@font/pretendardregular"
@@ -355,13 +354,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/how"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="전국 선별진료소 506곳이 문을 어쩌구 어쩌구"
+                                android:text=""
                                 android:textSize="12dp"
                                 android:textColor="@color/gray_100"
                                 android:fontFamily="@font/pretendardregular"
@@ -406,13 +404,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/why"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="코로나19 선별진료소 운영이 2023년 12월 31일 종료되어 운영 종료 시간에 의료진이 퇴근 준비 어쩌구"
+                                android:text=""
                                 android:textSize="12dp"
                                 android:textColor="@color/gray_100"
                                 android:fontFamily="@font/pretendardregular"
@@ -427,10 +424,9 @@
             </TableLayout>
 
         </androidx.cardview.widget.CardView>
-
         <View
             android:layout_width="match_parent"
-            android:layout_height="100dp"></View>
+            android:layout_height="100dp">
+        </View>
     </LinearLayout>
-
 </ScrollView>
