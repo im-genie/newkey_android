@@ -109,6 +109,7 @@ public class news3_activity extends AppCompatActivity {
         String imgUrl = getIntent().getStringExtra("img");
         String mediaImgUrl = getIntent().getStringExtra("media_img");
         String reporter = getIntent().getStringExtra("reporter");
+        String key = getIntent().getStringExtra("key");
 
         Title.setText(title);
         if (Content != null) {
@@ -258,18 +259,28 @@ public class news3_activity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d("res",response);
 
-                who.setText(response);
-                where.setText(response);
-                what.setText(response);
-                why.setText(response);
-                when.setText(response);
-                how.setText(response);
+                try {
+                    // JSON 형식의 response를 파싱
+                    JSONObject jsonResponse = new JSONObject(response);
 
-                summaryCardView.setVisibility(View.VISIBLE);
-                summaryButton.setBackgroundResource(R.drawable.news3_radius2);
-                summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
-                news3SummaryArrow.setImageResource(R.drawable.news3_down);
-                Toast.makeText(getApplicationContext(), "해당 기사를 요약했어요", Toast.LENGTH_SHORT).show();
+                    // 각 5W1H 요소에 맞는 데이터를 가져와 TextView에 설정
+                    who.setText(jsonResponse.getString("누가"));
+                    when.setText(jsonResponse.getString("언제"));
+                    where.setText(jsonResponse.getString("어디서"));
+                    how.setText(jsonResponse.getString("어떻게"));
+                    why.setText(jsonResponse.getString("왜"));
+                    what.setText(key);
+
+                    summaryCardView.setVisibility(View.VISIBLE);
+                    summaryButton.setBackgroundResource(R.drawable.news3_radius2);
+                    summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
+                    news3SummaryArrow.setImageResource(R.drawable.news3_down);
+                    Toast.makeText(getApplicationContext(), "해당 기사를 요약했어요", Toast.LENGTH_SHORT).show();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "응답 파싱 중 오류 발생", Toast.LENGTH_SHORT).show();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -283,8 +294,8 @@ public class news3_activity extends AppCompatActivity {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("id", id); // 로그인 아이디로 바꾸기
-                params.put("summary", "summary");
-                params.put("key", "key");
+                params.put("summary", summary);
+                params.put("key", key);
 
                 return params;
             }
