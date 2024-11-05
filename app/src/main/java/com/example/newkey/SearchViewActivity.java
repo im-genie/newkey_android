@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -61,6 +63,11 @@ public class SearchViewActivity extends AppCompatActivity {
         email = preferences.getString("email", null);
 
         search = findViewById(R.id.view_search);
+
+        // SearchView 내부의 EditText를 찾아서 hint text size 변경
+        EditText searchEditText = search.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14); // hint text size를 설정
+
         search.setQuery(query, false);
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

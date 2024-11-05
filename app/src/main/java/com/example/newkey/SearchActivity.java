@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -78,6 +80,11 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         search=findViewById(R.id.view_search);
+
+        // SearchView 내부의 EditText를 찾아서 hint text size 변경
+        EditText searchEditText = search.findViewById(androidx.appcompat.R.id.search_src_text);
+        searchEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14); // hint text size를 설정
+
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -225,6 +232,9 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }, 3000); // 3초 후에 초기화
         }
+
+        // 부모 클래스의 기본 동작을 호출하여 뒤로 가기 버튼의 기본 동작을 유지
+        super.onBackPressed();
     }
 
 }

@@ -31,7 +31,12 @@ public class search1 extends AppCompatActivity {
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                // 뒤로 가기 시 백스택이 있으면 백스택에서 pop
+                if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                    getSupportFragmentManager().popBackStack();
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -108,7 +113,7 @@ public class search1 extends AppCompatActivity {
             return;
         }
 
-        // TODO: 검색어를 받아서, 실제로 데이터를 검색하고, 검색 결과를 화면에 표시하는 로직을 추가해야 함.
+        // 검색어를 저장하고 최근 검색어 목록 업데이트
 
         // NewsListFragment를 표시하기 위한 코드
         fragmentManager = getSupportFragmentManager();
@@ -120,11 +125,8 @@ public class search1 extends AppCompatActivity {
         bundle.putString("searchText", searchText);
         newsListFragment.setArguments(bundle);
 
-        // 현재 newslist_fragment가 화면에 표시되어 있다면 제거합니다.
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_recentsearch);
-        if (currentFragment instanceof newslist_fragment) {
-            transaction.remove(currentFragment);
-        }
+        // 백스택에 추가하지 않고 프래그먼트를 교체하여 중첩 방지
+        transaction.replace(R.id.fragment_recentsearch, newsListFragment);
 
         // recyclerView_SearchNews를 표시하기 위해 해당 View를 화면에 표시합니다.
         RecyclerView recyclerViewSearchNews = findViewById(R.id.recyclerView_SearchNews);
@@ -150,8 +152,11 @@ public class search1 extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        // 백스택이 비어 있지 않으면 백스택에서 pop
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();  // 백스택이 비어있을 경우 기본 뒤로가기
+        }
     }
-
-
 }

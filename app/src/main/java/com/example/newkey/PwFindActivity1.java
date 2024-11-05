@@ -76,7 +76,7 @@ public class PwFindActivity1 extends AppCompatActivity {
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue=Volley.newRequestQueue(this);
 
-        codeCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
+        codeCheck.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
 
         codeSend.setEnabled(false);
         codeSend.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.gray_400));
