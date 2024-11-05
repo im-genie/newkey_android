@@ -70,12 +70,10 @@ public class HomeFragment extends Fragment {
     Set<String> storedNewsIds = new HashSet<>();
     String email;
     private View view;
-    ImageView recommendation_loading_image;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        recommendation_loading_image = view.findViewById(R.id.recommendation_loading_image);
 
         // 안내 내용 - 맞춤 설정 버튼
         LinearLayout layout_goto_mypage = view.findViewById(R.id.layout_goto_mypage);
@@ -611,8 +609,13 @@ public class HomeFragment extends Fragment {
 
     // 추천 뉴스 불러오기
     private void recommend() {
+        // 로딩 시작 시, loading_layout을 보이게 하고 recommendation_recyclerview를 숨김
+        LinearLayout loadingLayout = view.findViewById(R.id.loading_layout);
+        RecyclerView recyclerView = view.findViewById(R.id.recommendation_recyclerview);
+        loadingLayout.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+
         String recommendUrl = "http://15.164.199.177:5000/recommend";
-        //추천뉴스
         final StringRequest recommendRequest = new StringRequest(Request.Method.POST, recommendUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -630,80 +633,78 @@ public class HomeFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    try {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String id = jsonObject.getString("id");
-                        String title = jsonObject.getString("title");
-                        String content = jsonObject.getString("origin_content");
-                        String press = jsonObject.getString("media");
-                        String dateStr = jsonObject.getString("date");
-                        String img = jsonObject.getString("img");
-                        String summary = jsonObject.getString("summary");
-                        String key = jsonObject.getString("key");
-                        String reporter = jsonObject.getString("reporter");
-                        String mediaImg = jsonObject.getString("media_img");
+                if (jsonArray != null && jsonArray.length() > 0) {
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        try {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            String id = jsonObject.getString("id");
+                            String title = jsonObject.getString("title");
+                            String content = jsonObject.getString("origin_content");
+                            String press = jsonObject.getString("media");
+                            String dateStr = jsonObject.getString("date");
+                            String img = jsonObject.getString("img");
+                            String summary = jsonObject.getString("summary");
+                            String key = jsonObject.getString("key");
+                            String reporter = jsonObject.getString("reporter");
+                            String mediaImg = jsonObject.getString("media_img");
 
-                        if (!dateStr.isEmpty() && !dateStr.equals("null")) {
-                            Date articleDate = sdf.parse(dateStr); // 서버에서 받은 날짜 문자열을 Date 객체로 변환
-                            long diffInMillis = currentDate.getTime() - articleDate.getTime(); // 시간 차이 계산
-                            String timeAgo = getTimeAgo(diffInMillis); // 차이를 "몇 시간 전" 형식으로 변환
-                            news1_item newsData = new news1_item(id, title, content, press, timeAgo, img, summary, key, reporter, mediaImg);
-                            recommendList.add(newsData);
-                        } else {
-                            // 날짜가 없을 경우 기본값으로 처리 (예: "방금"으로 설정)
-                            news1_item newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
-                            recommendList.add(newsData);
+                            if (!dateStr.isEmpty() && !dateStr.equals("null")) {
+                                Date articleDate = sdf.parse(dateStr);
+                                long diffInMillis = currentDate.getTime() - articleDate.getTime();
+                                String timeAgo = getTimeAgo(diffInMillis);
+                                news1_item newsData = new news1_item(id, title, content, press, timeAgo, img, summary, key, reporter, mediaImg);
+                                recommendList.add(newsData);
+                            } else {
+                                news1_item newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
+                                recommendList.add(newsData);
+                            }
+
+                        } catch (JSONException | ParseException e) {
+                            e.printStackTrace();
                         }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
                     }
-                }
 
-                // 추천 뉴스가 하나 이상 있으면 ImageView를 invisible로 설정
-                if (!recommendList.isEmpty()) {
-                    recommendation_loading_image.setVisibility(View.INVISIBLE);
+                    // 뉴스가 로드되면 loading_layout을 숨기고 recyclerView를 보이게 설정
+                    loadingLayout.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+
+                    // Adapter 설정
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+                    recyclerView.setLayoutManager(layoutManager);
+                    Log.d("2. 북마크한 뉴스 id", storedNewsIds.toString());
+                    RecommendationAdapter adapter = new RecommendationAdapter(getContext(), recommendList, storedNewsIds);
+                    recyclerView.setAdapter(adapter);
                 } else {
-                    // 추천 뉴스가 없으면 ImageView를 visible로 유지
-                    recommendation_loading_image.setVisibility(View.VISIBLE);
+                    // 뉴스가 없을 경우 loading_layout을 숨기지 않고 유지할 수도 있음
+                    loadingLayout.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
                 }
-
-
-                // 이후에 newsList를 사용하여 원하는 처리를 진행
-                //Adapter
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-                RecyclerView recyclerView = view.findViewById(R.id.recommendation_recyclerview);
-                recyclerView.setLayoutManager(layoutManager);
-                Log.d("2. 북마크한 뉴스 id", storedNewsIds.toString());
-                RecommendationAdapter adapter = new RecommendationAdapter(getContext(), recommendList, storedNewsIds);
-                recyclerView.setAdapter(adapter);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("추천 오류", error.toString());
+                // 오류 발생 시에도 로딩 화면을 숨기고 recyclerView를 숨김
+                loadingLayout.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
             }
         }) {
-            //@Nullable
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", email); // 로그인 아이디로 바꾸기
+                params.put("user_id", email);
                 return params;
             }
         };
 
         recommendRequest.setRetryPolicy(new DefaultRetryPolicy(
-                1000000, // 기본 타임아웃 시간을 조정
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 재시도 횟수
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT // 백오프 멀티플라이어
+                1000000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
         ));
 
-        recommendRequest.setShouldCache(false); // 캐시 사용 여부
-        recommendQueue.add(recommendRequest); // 올바른 변수명으로 수정
+        recommendRequest.setShouldCache(false);
+        recommendQueue.add(recommendRequest);
     }
 
     // 저장 뉴스 불러오기
@@ -737,7 +738,6 @@ public class HomeFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                recommendation_loading_image.setVisibility(View.VISIBLE);
                 Log.d("storeViewError",error.toString());
             }
         }){

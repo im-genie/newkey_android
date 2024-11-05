@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="41분 전"
+                        android:text="분 전"
                         android:textColor="@color/gray_300"/>
                 </LinearLayout>
 

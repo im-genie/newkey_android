@@ -22,7 +22,7 @@
         android:id="@+id/news1_item_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0분 전"
+        android:text="분 전"
         android:textColor="@color/gray_300"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/news1_item_cardview"

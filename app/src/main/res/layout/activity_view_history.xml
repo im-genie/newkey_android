@@ -46,8 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:backgroundTint="@color/gray_500"
-            android:layout_margin="20dp"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/gray_500"/>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

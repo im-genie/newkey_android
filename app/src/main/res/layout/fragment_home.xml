@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment"
     android:background="@color/gray_600"
     android:orientation="vertical"
@@ -151,22 +152,42 @@
                     </ImageView>
                 </LinearLayout>
             </FrameLayout>
-
-            <ImageView
-                android:id="@+id/recommendation_loading_image"
+            <LinearLayout
+                android:id="@+id/loading_layout"
                 android:layout_width="match_parent"
-                android:layout_height="164dp"
-                android:src="@drawable/recommendation_loading"
-                android:visibility="visible">
-            </ImageView>
+                android:layout_height="163dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="16dp">
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/recommendation_loading"
+                    android:duration="300">
+
+                </com.airbnb.lottie.LottieAnimationView>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="추천 뉴스를 불러오고 있어요"
+                    android:textColor="@color/gray_200"
+                    android:fontFamily="@font/pretendardmedium"
+                    android:layout_marginTop="20dp">
+
+                </TextView>
+            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recommendation_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginBottom="16dp">
+                android:visibility="gone">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
