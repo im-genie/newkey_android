@@ -34,7 +34,7 @@ import java.util.Map;
 public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHolder> {
 
     private List<news1_item> newsItems;
-    RequestQueue queue;
+    //RequestQueue queue;
     String email;
     private SharedPreferences preferences;
     public static final String preference = "newkey";
@@ -46,7 +46,7 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news1_recyclerview, parent, false);
-        queue=Volley.newRequestQueue(view.getContext());
+        //queue=Volley.newRequestQueue(view.getContext());
         preferences=view.getContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
 
@@ -119,7 +119,8 @@ public class news1_adapter extends RecyclerView.Adapter<news1_adapter.NewsViewHo
                 ));
 
                 request.setShouldCache(false);
-                queue.add(request);
+                //queue.add(request);
+                MySingleton.getInstance(v.getContext()).addToRequestQueue(request);
             }
         });
     }
