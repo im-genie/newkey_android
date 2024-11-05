@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -292,7 +293,7 @@ public class ChooseTopicsActivity extends AppCompatActivity {
         for (Object[] res : topicResources) {
             topics.add(new Topic(
                     (ConstraintLayout) findViewById((Integer)res[0]),
-                    (ConstraintLayout) findViewById((Integer)res[1]),
+                    (TableLayout) findViewById((Integer)res[1]),
                     (TextView) findViewById((Integer)res[2]),
                     (ImageView) findViewById((Integer)res[3]),
                     (List<Integer>) res[4]
@@ -352,16 +353,16 @@ public class ChooseTopicsActivity extends AppCompatActivity {
 
     class Topic {
         ConstraintLayout btnLayout;
-        ConstraintLayout smallTopicsLayout;
+        TableLayout smallTopicsLayout;
         TextView textView;
         ImageView imageView;
         List<Integer> childButtonIds;
 
         boolean isActive = false;
 
-        public Topic(ConstraintLayout btnLayout, ConstraintLayout smallTopicsLayout, TextView textView, ImageView imageView, List<Integer> childButtonIds) {
+        public Topic(ConstraintLayout btnLayout, TableLayout smallTopicsLayout, TextView textView, ImageView imageView, List<Integer> childButtonIds) {
             this.btnLayout = btnLayout;
-            this.smallTopicsLayout = smallTopicsLayout;
+            this.smallTopicsLayout = smallTopicsLayout;  // Correct type here
             this.textView = textView;
             this.imageView = imageView;
             this.childButtonIds = childButtonIds;
