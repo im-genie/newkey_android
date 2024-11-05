@@ -80,11 +80,6 @@ public class news1_politics extends Fragment {
                     currentPage++;
                     loadNews(currentPage);
                 }
-                /*
-                else if (currentPage >= 5) {
-                    Toast.makeText(getContext(), "더 이상 불러올 뉴스가 없습니다.", Toast.LENGTH_SHORT).show();
-                }
-                 */
                 // 3초마다 호출 (재귀적으로 호출)
                 handler.postDelayed(this, 3000);  // 3초 딜레이
             }
