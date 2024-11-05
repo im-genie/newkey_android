@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -40,7 +41,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Cardnews2Fragment extends Fragment {
 
-    RequestQueue queue;
+    RequestQueue hotQueue, fwohQueue;
     ImageView imageView,content;
     CircleImageView mediaCircleImg;
     TextView when,where,who,how,what,why;
@@ -76,9 +77,10 @@ public class Cardnews2Fragment extends Fragment {
         what=view.findViewById(R.id.what);
         why=view.findViewById(R.id.why);
 
-        queue = Volley.newRequestQueue(view.getContext());
-        String url = "http://15.164.199.177:5000/hot5";
+        hotQueue = Volley.newRequestQueue(view.getContext());
+        fwohQueue = Volley.newRequestQueue(view.getContext());
 
+        String url = "http://15.164.199.177:5000/hot5";
         final StringRequest request=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -87,6 +89,7 @@ public class Cardnews2Fragment extends Fragment {
                 try {
                     jsonArray = new JSONArray(response);
                 } catch (JSONException e) {
+                    Log.d("error!!",e.toString());
                     e.printStackTrace();
                 }
 
@@ -129,8 +132,11 @@ public class Cardnews2Fragment extends Fragment {
                     }
                     else Glide.with(view.getContext()).load(mediaImg).into(mediaCircleImg);
 
+                    fwoh(); // 육하원칙
+
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
+                    Log.d("해당 기사 없음",e.toString());
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
@@ -138,7 +144,7 @@ public class Cardnews2Fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                System.out.println(error);
+                Log.d("카드 뉴스 에러",error.toString());
             }
         }){
             //@Nullable
@@ -156,14 +162,13 @@ public class Cardnews2Fragment extends Fragment {
         ));
 
         request.setShouldCache(false);
-        queue.add(request);
+        hotQueue.add(request);
 
         //기사 전문
         button_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), news3_activity.class);
-                Log.d("newsId",newsData.getId());
                 intent.putExtra("id", newsData.getId());
                 intent.putExtra("title", newsData.getTitle());
                 intent.putExtra("content", newsData.getContent());
@@ -178,6 +183,57 @@ public class Cardnews2Fragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void fwoh() {
+        final StringRequest fiveWOneHRequest = new StringRequest(Request.Method.POST, fiveWOneHUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("res",response);
+
+                try {
+                    // JSON 형식의 response를 파싱
+                    JSONObject jsonResponse = new JSONObject(response);
+
+                    // 각 5W1H 요소에 맞는 데이터를 가져와 TextView에 설정
+                    who.setText(jsonResponse.getString("누가"));
+                    when.setText(jsonResponse.getString("언제"));
+                    where.setText(jsonResponse.getString("어디서"));
+                    how.setText(jsonResponse.getString("어떻게"));
+                    why.setText(jsonResponse.getString("왜"));
+                    what.setText(newsData.getKey());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getContext(), "응답 파싱 중 오류 발생", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("육하원칙 오류",error.toString());
+            }
+        }){
+            //@Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                params.put("id", newsData.getId()); // 로그인 아이디로 바꾸기
+                params.put("summary", newsData.getSummary());
+                params.put("key", newsData.getKey());
+
+                return params;
+            }
+        };
+        fiveWOneHRequest.setRetryPolicy(new DefaultRetryPolicy(
+                1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        fiveWOneHRequest.setShouldCache(false);
+        fwohQueue.add(fiveWOneHRequest);
     }
 
     private String getTimeAgo(long diffInMillis) {
