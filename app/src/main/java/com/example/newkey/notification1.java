@@ -195,63 +195,6 @@ public class notification1 extends AppCompatActivity {
         findViewById(R.id.fr_alrim).setVisibility(View.GONE);
     }
 
-    // fr_alrim 프래그먼트를 표시하는 메서드(현재 미사용)
-    /*
-    private void showFragment() {
-        // 프래그먼트가 추가될 부분을 표시합니다.
-        findViewById(R.id.fr_alrim).setVisibility(View.VISIBLE);
-    }
-     */
-
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "NewKeyChannel";
-            String description = "Channel for NewKey notifications";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
-
-            Log.d("Notification", "Notification channel created");
-        }
-    }
-
-    /*
-    private void sendNotification(String title, String content) {
-        createNotificationChannel();
-
-        // 앱을 실행시키기 위한 Intent 생성
-        Intent intent = new Intent(this, notification1.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP); // 플래그 조정
-
-        // 고유한 requestCode 생성
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-        // 알림 빌더 구성
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.noti_icon_2) // 작은 아이콘 설정
-                .setContentTitle(title)
-                .setContentText(content)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent) // 알림을 눌렀을 때 실행될 Intent
-                .setAutoCancel(true); // 알림을 누르면 자동으로 제거되도록 설정
-
-        // 알림 ID를 고유하게 생성
-        int notificationId = (int) System.currentTimeMillis();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.notify(notificationId, builder.build());
-        }
-
-        // 디버깅 로그 추가
-        Log.d("Notification", "Notification sent with ID: " + notificationId);
-    }
-     */
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
