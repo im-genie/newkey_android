@@ -17,7 +17,7 @@ import com.airbnb.lottie.LottieAnimationView;
 
 public class LogoActivity extends AppCompatActivity {
     Button login;
-    TextView register;
+    Button register;
     SharedPreferences preferences;
     public static final String preference = "newkey";
     long userIdx = 0;

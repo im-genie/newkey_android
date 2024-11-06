@@ -49,12 +49,13 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:layout_constraintVertical_bias="0.034">
 
+
             <Button
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="21.4dp"
+                android:layout_marginTop="21dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/radius_6"
                 android:backgroundTint="@color/key_green_400"
@@ -62,22 +63,27 @@
                 android:text="이메일 로그인"
                 android:textSize="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/register" />
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/radius_6"
+                android:backgroundTint="@color/gray_200"
+                android:fontFamily="@font/pretendardmedium"
+                android:text="회원가입"
+                android:textSize="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView13" />
 
-            <TextView
-                android:id="@+id/register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="21dp"
-                android:background="@android:color/transparent"
-                android:text="회원가입"
-                android:textColor="@color/gray_100"
-                android:textSize="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login" />
-            
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationView"
                 android:layout_width="wrap_content"
@@ -90,30 +96,6 @@
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true">
             </com.airbnb.lottie.LottieAnimationView>
-
-            <ImageView
-                android:id="@+id/imageView9"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/register"
-                app:layout_constraintTop_toBottomOf="@+id/login"
-                app:srcCompat="@drawable/line4" />
-
-            <ImageView
-                android:id="@+id/imageView10"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="12dp"
-                app:layout_constraintEnd_toStartOf="@+id/register"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login"
-                app:srcCompat="@drawable/line4" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -137,7 +119,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
-                app:srcCompat="@drawable/logo1" />
+                app:srcCompat="@drawable/logo4" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
