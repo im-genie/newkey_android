@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +70,8 @@
                     android:fontFamily="@font/pretendardregular"
                     android:text="기사 전문"
                     android:textColor="@color/gray_600"
-                    android:textSize="12dp"></TextView>
+                    android:textSize="12dp">
+                </TextView>
                 <ImageView
                     android:id="@+id/content"
                     android:layout_width="16dp"
@@ -89,7 +91,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="68dp"
-                android:text="제목"
+                android:text="로딩 중"
                 android:fontFamily="@font/pretendardregular"
                 android:textSize="20dp"
                 android:textColor="@color/gray_100"
@@ -255,8 +257,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/where"
                                 android:layout_width="wrap_content"
@@ -305,8 +306,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/what"
                                 android:layout_width="wrap_content"
@@ -355,8 +355,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/how"
                                 android:layout_width="wrap_content"
@@ -406,8 +405,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/cardnews_background"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="7dp">
+                            android:layout_marginTop="10dp">
                             <TextView
                                 android:id="@+id/why"
                                 android:layout_width="wrap_content"
@@ -430,8 +428,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="100dp">
-
         </View>
     </LinearLayout>
-
 </ScrollView>

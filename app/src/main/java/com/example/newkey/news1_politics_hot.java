@@ -113,6 +113,7 @@ public class news1_politics_hot extends Fragment {
                         recyclerView.setAdapter(adapter);
                     }
                 } catch (Exception e) {
+                    Log.d("test!!",e.toString());
                     e.printStackTrace();
                 }
             }
