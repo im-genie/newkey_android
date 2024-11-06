@@ -119,7 +119,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10"
-                app:srcCompat="@drawable/logo1" />
+                app:srcCompat="@drawable/logo4" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
