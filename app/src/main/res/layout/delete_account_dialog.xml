@@ -8,18 +8,14 @@
     android:background="@drawable/radius_16"
     android:backgroundTint="@color/gray_400">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:elevation="10dp">
-        <ImageView
-            android:id="@+id/imageView_delete"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            app:srcCompat="@drawable/logout" />
-    </FrameLayout>
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:elevation="10dp"
+        app:srcCompat="@drawable/logout"/>
     <TextView
         android:id="@+id/textView_delete"
         android:layout_width="wrap_content"
