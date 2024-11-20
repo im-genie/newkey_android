@@ -201,7 +201,7 @@ public class Cardnews2Fragment extends Fragment {
                     where.setText(jsonResponse.getString("어디서"));
                     how.setText(jsonResponse.getString("어떻게"));
                     why.setText(jsonResponse.getString("왜"));
-                    what.setText(newsData.getKey());
+                    what.setText(jsonResponse.getString("무엇을"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

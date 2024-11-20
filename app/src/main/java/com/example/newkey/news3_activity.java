@@ -269,7 +269,7 @@ public class news3_activity extends AppCompatActivity {
                     where.setText(jsonResponse.getString("어디서"));
                     how.setText(jsonResponse.getString("어떻게"));
                     why.setText(jsonResponse.getString("왜"));
-                    what.setText(key);
+                    what.setText(jsonResponse.getString("무엇을"));
 
                     summaryCardView.setVisibility(View.VISIBLE);
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
