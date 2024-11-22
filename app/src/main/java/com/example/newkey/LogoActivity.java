@@ -35,7 +35,7 @@ public class LogoActivity extends AppCompatActivity {
         userIdx=preferences.getLong("userIdx", 0);
 
         login.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
-
+        register.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(),R.color.gray_200));
         // 로그인 상태인 경우, 메인 액티비티로 이동
         if (userIdx != 0) {
             startActivity(new Intent(this, MainActivity.class));
