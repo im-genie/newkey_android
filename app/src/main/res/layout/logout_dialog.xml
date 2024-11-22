@@ -4,7 +4,7 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_gravity="center"
+    android:gravity="center"
     android:background="@drawable/radius_16"
     android:backgroundTint="@color/gray_400">
 
@@ -14,8 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginTop="16dp"
-        android:elevation="10dp"
-        app:srcCompat="@drawable/logout"/>
+        android:layout_gravity="center_horizontal"
+        android:elevation="20dp"
+        android:src="@drawable/logout"/>
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
