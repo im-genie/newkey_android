@@ -93,7 +93,6 @@
     </LinearLayout>
 
 
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -259,42 +258,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/changePassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:textSize="12dp"
-        android:text="비밀번호 변경"
-        android:textColor="@color/gray_300"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <TextView
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="184dp"
-        android:text="로그아웃"
-        android:textColor="@color/gray_300"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <TextView
-        android:id="@+id/deleteId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="뉴키 회원 탈퇴"
-        android:textColor="@color/gray_300"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
     <ImageView
         android:id="@+id/changeProfile"
         android:layout_width="30dp"
@@ -359,6 +322,47 @@
             android:background="@drawable/icon_circle_background"
             android:padding="10dp"
             android:src="@drawable/person_green"></ImageView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:id="@+id/changePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:text="비밀번호 변경"
+            android:textColor="@color/gray_300"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="로그아웃"
+            android:textColor="@color/gray_300"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/deleteId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:text="뉴키 회원 탈퇴"
+            android:textColor="@color/gray_300"
+            android:textSize="12dp" />
     </LinearLayout>
 
 
