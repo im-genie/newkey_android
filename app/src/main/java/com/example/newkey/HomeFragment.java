@@ -647,15 +647,16 @@ public class HomeFragment extends Fragment {
                             String key = jsonObject.getString("key");
                             String reporter = jsonObject.getString("reporter");
                             String mediaImg = jsonObject.getString("media_img");
+                            String url = jsonObject.getString("url");
 
                             if (!dateStr.isEmpty() && !dateStr.equals("null")) {
                                 Date articleDate = sdf.parse(dateStr);
                                 long diffInMillis = currentDate.getTime() - articleDate.getTime();
                                 String timeAgo = getTimeAgo(diffInMillis);
-                                news1_item newsData = new news1_item(id, title, content, press, timeAgo, img, summary, key, reporter, mediaImg);
+                                news1_item newsData = new news1_item(id, title, content, url, press, timeAgo, img, summary, key, reporter, mediaImg);
                                 recommendList.add(newsData);
                             } else {
-                                news1_item newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
+                                news1_item newsData = new news1_item(id, title, content, url, press, "", img, summary, key, reporter, mediaImg);
                                 recommendList.add(newsData);
                             }
 

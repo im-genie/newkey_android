@@ -104,6 +104,7 @@ public class news2_adapter extends RecyclerView.Adapter<news2_adapter.NewsViewHo
                 intent.putExtra("key", newsItem.getKey());
                 intent.putExtra("reporter", newsItem.getReporter());
                 intent.putExtra("media_img", newsItem.getMediaImg());
+                intent.putExtra("url", newsItem.getUrl());
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
