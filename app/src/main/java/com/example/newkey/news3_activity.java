@@ -113,7 +113,12 @@ public class news3_activity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
 
         Title.setText(title);
-        Content.setText(url); // 기사 url 받아옴
+
+        if (Content != null) {
+            Content.setText(Html.fromHtml(url+ "<br><br>" +content, Html.FROM_HTML_MODE_COMPACT, new URLImageGetter(Content), null));
+        }
+
+        //Content.setText(url); // 기사 url 받아옴
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
@@ -395,7 +400,6 @@ public class news3_activity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    /*
     private static class URLImageGetter implements Html.ImageGetter {
         private final TextView textView;
         private int originalHeight;  // 원본 이미지의 height 저장
@@ -480,5 +484,4 @@ public class news3_activity extends AppCompatActivity {
             }
         }
     }
-    */
 }
