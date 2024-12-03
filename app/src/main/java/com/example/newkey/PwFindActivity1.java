@@ -161,7 +161,7 @@ public class PwFindActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 url = new StringBuilder();
-                url.append("http://43.201.113.167:8080/user/emails/verification-requests");
+                url.append("http://15.165.181.204:8080/user/emails/verification-requests");
 
                 email=email1.getText().toString()+"@"+selectedEmail;
 
@@ -261,7 +261,7 @@ public class PwFindActivity1 extends AppCompatActivity {
                 JSONObject jsonRequest = new JSONObject();
 
                 try {
-                    url.append("http://43.201.113.167:8080/user/emails/verifications");
+                    url.append("http://15.165.181.204:8080/user/emails/verifications");
 
                     String correctCode = preferences.getString("correctCode", "");
                     jsonRequest.put("correctCode", correctCode);

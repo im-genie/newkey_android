@@ -94,15 +94,20 @@ public class ChooseTopicsActivity extends AppCompatActivity {
                 StringBuilder url = new StringBuilder();
                 JSONObject jsonRequest = new JSONObject();
 
-                preferences=getSharedPreferences("newkey", MODE_PRIVATE);
-                String pw=preferences.getString("pw", null);
-                String nickname=preferences.getString("nickname", null);
+                preferences = getSharedPreferences("newkey", MODE_PRIVATE);
+                String pw = preferences.getString("pw", null);
+                String nickname = preferences.getString("nickname", null);
+
+                Intent intent = getIntent();
+                boolean isForJoin = intent.getBooleanExtra("join", true);
+                Log.d("테스트", String.valueOf(isForJoin));
 
                 try {
-                    url.append("http://43.201.113.167:8080/user/join"); //43.201.113.167
+                    url.append("http://15.165.181.204:8080/user/join"); //43.201.113.167
                     jsonRequest.put("email", email);
                     jsonRequest.put("password", pw);
                     jsonRequest.put("name", nickname);
+                    jsonRequest.put("isForJoin", isForJoin);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -111,19 +116,12 @@ public class ChooseTopicsActivity extends AppCompatActivity {
                 JsonObjectRequest joinRequest = new JsonObjectRequest(Request.Method.POST, url.toString(), jsonRequest, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("test", "NicknameActivity : 응답 - " + response.toString());
+                        Log.d("회원가입 test", response.toString());
 
-                        try {
-                            // 서버 응답에서 필요한 정보 추출
-                            boolean isSuccess = response.getBoolean("isSuccess");
-
-                            if (isSuccess) {
-                                func1(); // 회원가입 하는 경우
-                            } else {
-                                func2(); // 회원가입 아닌 카테고리 변경인 경우
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        if (isForJoin) {
+                            func1(); // 회원가입 하는 경우
+                        } else {
+                            func2(); // 회원가입 아닌 카테고리 변경인 경우
                         }
                     }
                 }, new Response.ErrorListener() {
