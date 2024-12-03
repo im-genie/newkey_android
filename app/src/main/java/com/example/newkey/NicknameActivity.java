@@ -101,6 +101,7 @@ public class NicknameActivity extends AppCompatActivity {
                     editor.commit();
 
                     Intent intent = new Intent(getApplicationContext(), ChooseTopicsActivity.class);
+                    intent.putExtra("join",true);
                     startActivity(intent);
                 }
             }

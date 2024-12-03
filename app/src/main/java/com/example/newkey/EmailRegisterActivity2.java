@@ -99,7 +99,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
                 JSONObject jsonRequest = new JSONObject();
 
                 try {
-                    url.append("http://43.201.113.167:8080/user/emails/verifications"); //43.201.113.167
+                    url.append("http://15.165.181.204:8080/user/emails/verifications"); //43.201.113.167
 
                     String correctCode = preferences.getString("correctCode", "");
                     jsonRequest.put("correctCode", correctCode);
@@ -129,6 +129,7 @@ public class EmailRegisterActivity2 extends AppCompatActivity {
 
                                     nextText.setTextColor(getResources().getColor(R.color.gray_600));
                                     nextArrow.setImageResource(R.drawable.next_black);
+                                    next.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.key_green_400));
                                     next.setEnabled(true);
                                 } else {
                                     nextText.setTextColor(getResources().getColor(R.color.gray_100));

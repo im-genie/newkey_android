@@ -159,7 +159,7 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
                 email=email1.getText().toString()+"@"+selectedEmail;
 
                 try {
-                    url.append("http://43.201.113.167:8080/user/check-email").append("?email=").append(email); //43.201.113.167
+                    url.append("http://15.165.181.204:8080/user/check-email").append("?email=").append(email); //43.201.113.167
                     Log.d("test", "EmailRegisterActivity1 : 입력한 이메일 - " + email);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -239,7 +239,7 @@ public class EmailRegisterActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 url = new StringBuilder();
-                url.append("http://43.201.113.167:8080/user/emails/verification-requests");
+                url.append("http://15.165.181.204:8080/user/emails/verification-requests");
 
                 JSONObject jsonRequest = new JSONObject();
                 try {

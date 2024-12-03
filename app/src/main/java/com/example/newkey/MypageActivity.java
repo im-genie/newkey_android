@@ -17,18 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.Window;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -58,7 +62,7 @@ public class MypageActivity extends Activity {
         email=preferences.getString("email","");
 
         url = new StringBuilder();
-        url.append("http://43.201.113.167:8080/user/info").append("?email=").append(email);
+        url.append("http://15.165.181.204:8080/user/info").append("?email=").append(email);
 
         //사용자 프로필,이름 가져오기
         JSONObject jsonRequest = new JSONObject();
@@ -195,7 +199,7 @@ public class MypageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MypageActivity.this, ChooseTopicsActivity.class);
-                intent.putExtra("join","0");
+                intent.putExtra("join",false);
                 startActivity(intent);
             }
         });
@@ -212,6 +216,13 @@ public class MypageActivity extends Activity {
             @Override
             public void onClick(View v) {
                 showLogoutDialog();
+            }
+        });
+
+        deleteId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteAccountDialog();
             }
         });
 
@@ -236,46 +247,45 @@ public class MypageActivity extends Activity {
         });
     }
 
+    private void showLogoutDialog() {
+        // 팝업 다이얼로그를 띄우는 메서드
+        AlertDialog.Builder builder = new AlertDialog.Builder(MypageActivity.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.logout_dialog, null);
+        builder.setView(dialogView);
 
-        private void showLogoutDialog() {
-            // 팝업 다이얼로그를 띄우는 메서드
-            AlertDialog.Builder builder = new AlertDialog.Builder(MypageActivity.this);
-            LayoutInflater inflater = getLayoutInflater();
-            View dialogView = inflater.inflate(R.layout.logout_dialog, null);
-            builder.setView(dialogView);
+        Button btnConfirm = dialogView.findViewById(R.id.btn_confirm);
+        Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
 
-            Button btnConfirm = dialogView.findViewById(R.id.btn_confirm);
-            Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
+        AlertDialog dialog = builder.create();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));}
 
-            AlertDialog dialog = builder.create();
-            Window window = dialog.getWindow();
-            if (window != null) {
-                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));}
+        btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 로그아웃 처리
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.remove("userIdx");
+                editor.remove("email");
+                editor.apply();
 
-            btnConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 로그아웃 처리
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.remove("userIdx");
-                    editor.remove("email");
-                    editor.apply();
+                Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
+                startActivity(intent);
+                dialog.dismiss(); // 다이얼로그 닫기
+            }
+        });
 
-                    Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
-                    startActivity(intent);
-                    dialog.dismiss(); // 다이얼로그 닫기
-                }
-            });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss(); // 다이얼로그 닫기
+            }
+        });
 
-            btnCancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss(); // 다이얼로그 닫기
-                }
-            });
-
-            dialog.show();
-        };
+        dialog.show();
+    };
 
     private void showDeleteAccountDialog() {
         // 회원탈퇴 팝업 다이얼로그를 띄우는 메서드
@@ -296,10 +306,83 @@ public class MypageActivity extends Activity {
         btnConfirmDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 회원탈퇴 처리
+                // 클라이언트 측 회원탈퇴 처리
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.clear(); // 모든 사용자 데이터 삭제
+                editor.remove("userIdx");
+                editor.remove("email");
                 editor.apply();
+
+                // 스프링 서버 측 회원탈퇴 처리
+                url = new StringBuilder();
+                url.append("http://15.165.181.204:8080/user/delete");
+
+                JSONObject jsonRequest = new JSONObject();
+                try {
+                    jsonRequest.put("email", email);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JsonObjectRequest deleteRequest1=new JsonObjectRequest(Request.Method.POST, url.toString(), jsonRequest, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("test", "이메일 전송 응답 - " + response.toString());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("test", "에러뜸!!" + error.toString());
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            try {
+                                String errorResponse = new String(error.networkResponse.data, "utf-8");
+                                JSONObject jsonObject = new JSONObject(errorResponse);
+                                String errorMessage = jsonObject.getString("errorMessage");
+                                // Handle BaseException
+                                Log.d("test", "BaseException: " + errorMessage);
+                            } catch (UnsupportedEncodingException | JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                });
+
+                deleteRequest1.setShouldCache(false); //이전 결과가 있어도 새로 요청하여 응답을 보여준다.
+                deleteRequest1.setRetryPolicy(new DefaultRetryPolicy(100000000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                queue.add(deleteRequest1);
+
+                /*
+                // redis 서버 측 회원탈퇴 처리
+                String url = "http://15.164.199.177:5000/delete";
+                final StringRequest deleteRequest2=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("userDelete",response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("userDeleteError",error.toString());
+                    }
+                }){
+                    //@Nullable
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<>();
+                        params.put("user_id", email);
+                        return params;
+                    }
+                };
+                deleteRequest2.setRetryPolicy(new DefaultRetryPolicy(
+                        1000000,  // 기본 타임아웃 (기본값: 2500ms)
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+                ));
+
+                deleteRequest2.setShouldCache(false);
+                queue.add(deleteRequest2);
+                 */
 
                 Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
                 startActivity(intent);
@@ -318,7 +401,6 @@ public class MypageActivity extends Activity {
 
         dialog.show();
     }
-
 
     @Override
     public void onBackPressed() {
