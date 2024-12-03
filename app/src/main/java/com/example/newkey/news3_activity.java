@@ -114,11 +114,13 @@ public class news3_activity extends AppCompatActivity {
 
         Title.setText(title);
 
+        /*
         if (Content != null) {
             Content.setText(Html.fromHtml(url+ "<br><br>" +content, Html.FROM_HTML_MODE_COMPACT, new URLImageGetter(Content), null));
         }
+         */
 
-        //Content.setText(url); // 기사 url 받아옴
+        Content.setText(url); // 기사 url 받아옴
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
