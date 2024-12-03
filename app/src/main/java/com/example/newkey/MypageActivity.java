@@ -352,7 +352,6 @@ public class MypageActivity extends Activity {
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 queue.add(deleteRequest1);
 
-                /*
                 // redis 서버 측 회원탈퇴 처리
                 String url = "http://15.164.199.177:5000/delete";
                 final StringRequest deleteRequest2=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -382,7 +381,6 @@ public class MypageActivity extends Activity {
 
                 deleteRequest2.setShouldCache(false);
                 queue.add(deleteRequest2);
-                 */
 
                 Intent intent = new Intent(MypageActivity.this, LogoActivity.class);
                 startActivity(intent);
