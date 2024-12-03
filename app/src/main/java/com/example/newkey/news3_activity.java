@@ -113,12 +113,7 @@ public class news3_activity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
 
         Title.setText(title);
-
-        if (Content != null) {
-            Content.setText(Html.fromHtml(url+ "<br><br>" +content, Html.FROM_HTML_MODE_COMPACT, new URLImageGetter(Content), null));
-        }
-
-        //Content.setText(url); // 기사 url 받아옴
+        Content.setText(url); // 기사 url 받아옴
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
@@ -398,90 +393,5 @@ public class news3_activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    private static class URLImageGetter implements Html.ImageGetter {
-        private final TextView textView;
-        private int originalHeight;  // 원본 이미지의 height 저장
-
-        public URLImageGetter(TextView textView) {
-            this.textView = textView;
-        }
-
-        @Override
-        public Drawable getDrawable(String source) {
-            final URLDrawable urlDrawable = new URLDrawable();
-
-            // 기본 크기의 플레이스홀더 설정
-            urlDrawable.setBounds(0, 0, textView.getWidth(), textView.getWidth()/6);
-
-            // 비동기로 이미지 로딩
-            executor.execute(() -> {
-                try {
-                    // URL에서 이미지 데이터를 가져옴
-                    InputStream is = (InputStream) new URL(source).getContent();
-                    Drawable drawable = Drawable.createFromStream(is, "src");
-
-                    if (drawable != null) {
-                        // 이미지 크기 계산
-                        int viewWidth = textView.getWidth();
-                        int intrinsicWidth = drawable.getIntrinsicWidth();
-                        int intrinsicHeight = drawable.getIntrinsicHeight();
-
-                        // 원본 이미지의 높이를 저장
-                        originalHeight = intrinsicHeight;
-
-                        float aspectRatio = (float) intrinsicHeight / intrinsicWidth;
-                        int width = viewWidth;
-                        int height = (int) (viewWidth * aspectRatio);
-
-                        drawable.setBounds(0, 0, width, height);
-
-                        // UI 스레드에서 Drawable 업데이트 및 invalidate
-                        textView.post(() -> {
-                            urlDrawable.setDrawable(drawable);
-                            urlDrawable.setBounds(0, 0, width, height);
-
-                            // TextView를 invalidate하여 이미지가 업데이트되도록 함
-                            textView.invalidate();
-                            textView.setText(textView.getText());
-                        });
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
-            return urlDrawable;
-        }
-
-        private static class URLDrawable extends BitmapDrawable {
-            private Drawable drawable;
-
-            @Override
-            public void draw(Canvas canvas) {
-                if (drawable != null) {
-                    drawable.draw(canvas);
-                }
-            }
-
-            @Override
-            public int getIntrinsicWidth() {
-                return drawable != null ? drawable.getIntrinsicWidth() : 0;
-            }
-
-            @Override
-            public int getIntrinsicHeight() {
-                return drawable != null ? drawable.getIntrinsicHeight() : 0;
-            }
-
-            public void setDrawable(Drawable drawable) {
-                this.drawable = drawable;
-                if (drawable != null) {
-                    // 이미지의 Bounds 설정 (drawable이 null이 아닐 때만)
-                    setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-                }
-            }
-        }
     }
 }
