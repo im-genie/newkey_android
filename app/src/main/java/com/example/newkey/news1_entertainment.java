@@ -89,7 +89,7 @@ public class news1_entertainment extends Fragment {
     // 뉴스 데이터를 페이지 단위로 로드하는 메서드
     private void loadNews(int page) {
         isLoading = true;  // 로딩 중 플래그 설정
-        String url = "http://15.164.199.177:5000/politic?page=" + page + "&size=" + pageSize;
+        String url = "http://15.164.199.177:5000/entertainment?page=" + page + "&size=" + pageSize;
 
         final JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override

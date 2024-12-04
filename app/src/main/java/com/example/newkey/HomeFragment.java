@@ -91,7 +91,7 @@ public class HomeFragment extends Fragment {
         name = view.findViewById(R.id.name);
 
         StringBuilder nameUrl = new StringBuilder();
-        nameUrl.append("http://43.201.113.167:8080/user/info").append("?email=").append(email);
+        nameUrl.append("http://15.165.181.204:8080/user/info").append("?email=").append(email);
         nameQueue = Volley.newRequestQueue(view.getContext());
 
         //사용자 프로필,이름 가져오기
