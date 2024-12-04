@@ -134,7 +134,7 @@ public class notification1 extends AppCompatActivity {
                             String reporter = jsonObject.getString("reporter");
                             String mediaImg = jsonObject.getString("media_img");
                             String typeString = jsonObject.getString("type");
-
+                            String url = jsonObject.getString("url");
 
                             // 첫 번째 인덱스의 문자 추출 ('1')
                             char firstChar = typeString.charAt(0);
@@ -143,7 +143,7 @@ public class notification1 extends AppCompatActivity {
                             int type = Integer.parseInt(String.valueOf(firstChar));
 
                             // NewsData 클래스를 사용하여 데이터를 저장하고 리스트에 추가
-                            AlrimItem alrimData = new AlrimItem(id,title,content,press,date,img,summary,key,reporter,mediaImg,type);
+                            AlrimItem alrimData = new AlrimItem(id,title,content,url,press,date,img,summary,key,reporter,mediaImg,type);
                             alrimItems.add(alrimData);
                         }
 

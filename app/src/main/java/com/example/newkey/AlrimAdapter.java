@@ -70,6 +70,7 @@ public class AlrimAdapter extends RecyclerView.Adapter<AlrimAdapter.AlrimViewHol
                 intent.putExtra("key", alrimItem.getKey());
                 intent.putExtra("reporter", alrimItem.getReporter());
                 intent.putExtra("media_img", alrimItem.getMediaImg());
+                intent.putExtra("url", alrimItem.getUrl());
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장
