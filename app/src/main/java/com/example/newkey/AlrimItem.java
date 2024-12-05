@@ -12,12 +12,14 @@ public class AlrimItem {
     private String key;
     private String reporter;
     private String mediaImg;
+    private String url;
     private int type; // 0: alrim_list, 1: alrim_list_todayhot
 
-    public AlrimItem(String id, String title, String content, String publisher, String date, String img, String summary, String key, String reporter, String mediaImg, int type) {
+    public AlrimItem(String id, String title, String content, String url, String publisher, String date, String img, String summary, String key, String reporter, String mediaImg, int type) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.url = url;
         this.publisher = publisher;
         this.date = date;
         this.img = img;
@@ -50,6 +52,14 @@ public class AlrimItem {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getPublisher() {

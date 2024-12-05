@@ -104,7 +104,31 @@ public class news2_politics extends AppCompatActivity {
                         String key = jsonObject.getString("key");
                         String reporter = jsonObject.getString("reporter");
                         String mediaImg = jsonObject.getString("media_img");
+                        String url = jsonObject.getString("url");
 
+                        Date articleDate;
+                        if (!dateStr.isEmpty() && !dateStr.equals("null")) {
+                            try {
+                                // 밀리초 타임스탬프로 변환
+                                long timestamp = Long.parseLong(dateStr);
+                                articleDate = new Date(timestamp);
+                            } catch (NumberFormatException e) {
+                                // 만약 밀리초가 아니고 일반 날짜 문자열이라면 SimpleDateFormat으로 파싱
+                                articleDate = sdf.parse(dateStr);
+                            }
+
+                            // 시간 차이 계산
+                            long diffInMillis = currentDate.getTime() - articleDate.getTime();
+
+                            String timeAgo = getTimeAgo(diffInMillis); // 차이를 "몇 시간 전" 형식으로 변환
+                            news1_item newsData = new news1_item(id, title, content, url, press, timeAgo, img, summary, key, reporter, mediaImg);
+                            itemList.add(newsData);
+                        } else {
+                            // 날짜가 없을 경우 기본값으로 처리 (예: "방금")
+                            news1_item newsData = new news1_item(id, title, content, url, press, "", img, summary, key, reporter, mediaImg);
+                            itemList.add(newsData);
+                        }
+                        /*
                         if (!dateStr.isEmpty() && !dateStr.equals("null")) {
                             Date articleDate = sdf.parse(dateStr); // 서버에서 받은 날짜 문자열을 Date 객체로 변환
                             long diffInMillis = currentDate.getTime() - articleDate.getTime(); // 시간 차이 계산
@@ -116,6 +140,7 @@ public class news2_politics extends AppCompatActivity {
                             news1_item newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
                             itemList.add(newsData);
                         }
+                         */
 
                         // 이후에 newsList를 사용하여 원하는 처리를 진행
                         //Adapter

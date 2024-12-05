@@ -7,6 +7,7 @@ public class news1_item {
     private String id;
     private String title;
     private String content;
+    private String url;
     private String publisher;
     private String date;
     private String img;
@@ -16,10 +17,11 @@ public class news1_item {
     private String mediaImg;
 
 
-    public news1_item(String id, String title, String content, String publisher, String date, String img, String summary, String key, String reporter, String mediaImg) {
+    public news1_item(String id, String title, String content, String url, String publisher, String date, String img, String summary, String key, String reporter, String mediaImg) {
         this.id = id;
         this.title = title;
         this.content = content;
+        this.url = url;
         this.publisher = publisher;
         this.date = date;
         this.img = img;
@@ -52,6 +54,10 @@ public class news1_item {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getUrl() { return url; }
+
+    public void setUrl(String url) { this.url = url; }
 
     public String getPublisher() {
         return publisher;

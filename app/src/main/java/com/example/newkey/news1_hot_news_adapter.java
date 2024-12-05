@@ -90,6 +90,7 @@ public class news1_hot_news_adapter extends RecyclerView.Adapter<news1_hot_news_
                 intent.putExtra("img", newsItem.getImg());
                 intent.putExtra("summary", newsItem.getSummary());
                 intent.putExtra("key", newsItem.getKey());
+                intent.putExtra("url", newsItem.getUrl());
                 v.getContext().startActivity(intent);
 
                 //클릭 시 사용자 정보 저장

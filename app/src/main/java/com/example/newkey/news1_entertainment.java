@@ -89,7 +89,7 @@ public class news1_entertainment extends Fragment {
     // 뉴스 데이터를 페이지 단위로 로드하는 메서드
     private void loadNews(int page) {
         isLoading = true;  // 로딩 중 플래그 설정
-        String url = "http://15.164.199.177:5000/politic?page=" + page + "&size=" + pageSize;
+        String url = "http://15.164.199.177:5000/entertainment?page=" + page + "&size=" + pageSize;
 
         final JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -114,6 +114,7 @@ public class news1_entertainment extends Fragment {
                         String key = jsonObject.getString("key");
                         String reporter = jsonObject.getString("reporter");
                         String mediaImg = jsonObject.getString("media_img");
+                        String url = jsonObject.getString("url");
 
                         Date articleDate;
                         if (!dateStr.isEmpty() && !dateStr.equals("null")) {
@@ -129,11 +130,11 @@ public class news1_entertainment extends Fragment {
                             // 시간 차이 계산
                             long diffInMillis = currentDate.getTime() - articleDate.getTime();
                             String timeAgo = getTimeAgo(diffInMillis); // 차이를 "몇 시간 전" 형식으로 변환
-                            news1_item newsData = new news1_item(id, title, content, press, timeAgo, img, summary, key, reporter, mediaImg);
+                            news1_item newsData = new news1_item(id, title, content, url, press, timeAgo, img, summary, key, reporter, mediaImg);
                             itemList.add(newsData);
                         } else {
                             // 날짜가 없을 경우 기본값으로 처리 (예: "방금")
-                            news1_item newsData = new news1_item(id, title, content, press, "", img, summary, key, reporter, mediaImg);
+                            news1_item newsData = new news1_item(id, title, content, url, press, "", img, summary, key, reporter, mediaImg);
                             itemList.add(newsData);
                         }
                     }

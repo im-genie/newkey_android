@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        String url="http://43.201.113.167:8080/user/login";
+        String url="http://15.165.181.204:8080/user/login";
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

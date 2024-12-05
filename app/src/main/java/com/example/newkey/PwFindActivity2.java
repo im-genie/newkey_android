@@ -70,7 +70,7 @@ public class PwFindActivity2 extends AppCompatActivity {
                 url = new StringBuilder();
                 JSONObject jsonRequest = new JSONObject();
                 try {
-                    url.append("http://43.201.113.167:8080/user/password");
+                    url.append("http://15.165.181.204:8080/user/password");
                     preferences = getSharedPreferences("newkey", MODE_PRIVATE);
                     String email = preferences.getString("email", "");
                     Log.d("changeEmail",email);
