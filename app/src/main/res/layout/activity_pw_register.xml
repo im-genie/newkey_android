@@ -120,7 +120,7 @@
                     android:id="@+id/pwCheckText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="168dp"
+                    android:layout_marginTop="68dp"
                     android:text="비밀번호 확인"
                     android:textColor="@color/gray_100"
                     android:textSize="14dp"
