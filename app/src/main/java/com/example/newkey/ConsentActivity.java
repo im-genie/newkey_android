@@ -57,9 +57,11 @@ public class ConsentActivity extends AppCompatActivity {
         // 이미지 뷰 체크박스들을 리스트에 추가
         imageViewCheckedList.add(findViewById(R.id.conditionBoxChecked));
         imageViewCheckedList.add(findViewById(R.id.conditionBoxChecked2));
+        imageViewCheckedList.add(findViewById(R.id.conditionBoxChecked3));
 
         imageViewUncheckedList.add(findViewById(R.id.conditionBoxUnchecked));
         imageViewUncheckedList.add(findViewById(R.id.conditionBoxUnchecked2));
+        imageViewUncheckedList.add(findViewById(R.id.conditionBoxUnchecked3));
 
         // 체크 상태를 추적하는 배열 초기화
         isChecked = new boolean[imageViewUncheckedList.size()];
