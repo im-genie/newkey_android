@@ -6,14 +6,18 @@ import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -27,6 +31,8 @@ public class PwRegisterActivity extends AppCompatActivity {
     public static final String preference = "newkey";
     RequestQueue queue;
     LinearLayout next;
+
+    private ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,43 @@ public class PwRegisterActivity extends AppCompatActivity {
         nextArrow=findViewById(R.id.next_arrow);
         queue=Volley.newRequestQueue(this);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
+
+        scrollView = findViewById(R.id.pw_scroll);
+
+        // pwCheck edit text 클릭했을 때 아래로 스크롤
+        pwCheck.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                scrollToBottom();
+            }
+            return false; // 기본 터치 이벤트도 처리하도록 false 반환
+        });
+
+        // pw edit text 클릭했을 때 위로 스크롤
+        pw.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                scrollToTop();
+            }
+            return false; // 기본 터치 이벤트도 처리하도록 false 반환
+        });
+
+        // 키보드 상태를 감지하고 EditText 클릭 시 동작 트리거
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                scrollView.getWindowVisibleDisplayFrame(r);
+                int screenHeight = scrollView.getRootView().getHeight();
+                int keypadHeight = screenHeight - r.bottom;
+
+                if (keypadHeight > screenHeight * 0.15) { // 키보드가 열려 있는 경우
+                    if (pwCheck.isFocused()) {
+                        scrollToBottom();
+                    } else if (pw.isFocused()) {
+                        scrollToTop();
+                    }
+                }
+            }
+        });
 
         next.setEnabled(false);
 
@@ -182,5 +225,26 @@ public class PwRegisterActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+
+    private void scrollToBottom() {
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+                scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this); // 리스너 제거
+            }
+        });
+    }
+
+    private void scrollToTop() {
+        scrollView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                scrollView.post(() -> scrollView.fullScroll(View.FOCUS_UP));
+                scrollView.getViewTreeObserver().removeOnGlobalLayoutListener(this); // 리스너 제거
+            }
+        });
     }
 }
