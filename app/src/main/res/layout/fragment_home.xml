@@ -224,9 +224,10 @@
                     android:layout_gravity="bottom">
                 </ImageView>
                 <TextView
+                    android:id="@+id/hot_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2024. 01. 12. 13시"
+                    android:text="2024. 12. 06. 3시"
                     android:fontFamily="@font/pretendardregular"
                     android:textSize="12dp"
                     android:textColor="@color/gray_200"
