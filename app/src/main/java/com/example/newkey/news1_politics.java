@@ -38,7 +38,7 @@ public class news1_politics extends Fragment {
     //private RequestQueue queue;
     private news1_adapter adapter;
     private int currentPage = 1;  // 현재 페이지
-    private final int pageSize = 100;  // 한 페이지에 불러올 기사 수
+    private final int pageSize = 40;  // 한 페이지에 불러올 기사 수
     private boolean isLoading = false;  // 로딩 상태를 추적하여 중복 로드 방지
     private Handler handler = new Handler(); // 3초 지연을 위한 Handler
 
@@ -76,7 +76,7 @@ public class news1_politics extends Fragment {
             @Override
             public void run() {
                 // currentPage가 3 이하일 때만 다음 페이지 로드
-                if (!isLoading && currentPage < 2) {
+                if (!isLoading && currentPage < 5) {
                     currentPage++;
                     loadNews(currentPage);
                 }
