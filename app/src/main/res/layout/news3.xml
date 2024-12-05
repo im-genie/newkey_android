@@ -455,6 +455,20 @@
                             </LinearLayout>
                         </LinearLayout>
                     </TableRow>
+                    <TableRow>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(기사 요약은 AI가 제작한 내용으로, 뉴스와 맞지 않을 수 있습니다)"
+                            android:textSize="10dp"
+                            android:textColor="@color/gray_300"
+                            android:fontFamily="@font/pretendardregular"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_gravity="center">
+                        </TextView>
+                    </TableRow>
                 </TableLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -467,12 +481,24 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"/>
 
-        <TextView
-            android:id="@+id/test_textview"
+        <FrameLayout
+            android:id="@+id/news_link"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </TextView>
+            android:layout_height="36dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/news3_radius4">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="본문 확인하기"
+                android:textColor="@color/gray_600"
+                android:textSize="14dp"
+                android:fontFamily="@font/pretendardmedium"
+                android:layout_marginLeft="24dp"
+                android:layout_gravity="center_vertical"/>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/content"
@@ -484,8 +510,14 @@
             android:layout_marginBottom="46dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/pretendardregular"
-            android:text="기사 본문"
+            android:text=""
             android:textColor="@color/gray_100"
             android:textSize="14dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </View>
     </LinearLayout>
 </ScrollView>
