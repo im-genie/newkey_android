@@ -233,6 +233,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        // TextView 참조
+        TextView hotDate = view.findViewById(R.id.hot_date);
+
+        // 현재 시간을 "2024. 12. 05. 14시" 형식으로 설정
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy. MM. dd. HH시", Locale.KOREA);
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul")); // 한국 시간 설정
+        String currentDate = sdf.format(new Date()); // 현재 시간 포맷
+
+        hotDate.setText(currentDate); // TextView에 설정
+
         // HOT 키워드 - 새로고침
         ImageView button_refresh = view.findViewById(R.id.button_refresh);
         button_refresh.setOnClickListener(new View.OnClickListener() {
