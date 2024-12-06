@@ -28,5 +28,6 @@
         android:src="@drawable/ic_delete"
         android:contentDescription="Delete Search"
         android:layout_alignParentEnd="true"
-        app:tint="#3C4043" />
+        app:tint="#3C4043"
+        android:scaleType="centerInside"/>
 </RelativeLayout>
