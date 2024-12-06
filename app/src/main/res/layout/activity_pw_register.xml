@@ -99,8 +99,8 @@
 
                     <ImageView
                         android:id="@+id/pwRightView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
                         android:layout_marginTop="1dp"
                         android:layout_weight="1"
                         android:visibility="gone"
@@ -153,8 +153,8 @@
 
                     <ImageView
                         android:id="@+id/pwSameView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/checkpw"
                         android:layout_marginTop="1dp"

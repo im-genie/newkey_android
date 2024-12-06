@@ -192,8 +192,8 @@
 
             <ImageView
                 android:id="@+id/codeRightView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_marginRight="4dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/checkpw"
