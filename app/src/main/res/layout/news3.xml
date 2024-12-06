@@ -482,7 +482,7 @@
             android:layout_marginTop="16dp"/>
 
         <FrameLayout
-            android:id="@+id/news_link"
+            android:id="@+id/news_link_button"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginTop="16dp"
