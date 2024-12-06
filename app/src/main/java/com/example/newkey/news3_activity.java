@@ -60,7 +60,7 @@ import java.util.concurrent.Executors;
 public class news3_activity extends AppCompatActivity {
 
     private ImageView news3back, news3SummaryArrow;
-    private FrameLayout summaryButton;
+    private FrameLayout summaryButton, news_link_button;
     private CardView summaryCardView;
     TextView Title,Content,Date,Reporter,Publisher,who,what,when,how,why,where;
     ImageView Img,bookMark;
@@ -82,6 +82,7 @@ public class news3_activity extends AppCompatActivity {
         summaryButton = findViewById(R.id.new3_summary);
         summaryCardView = findViewById(R.id.summary_cardview);
         bookMark = findViewById(R.id.news3_scrap);
+        news_link_button = findViewById(R.id.news_link_button);
 
         what=findViewById(R.id.what);
         who=findViewById(R.id.who);
@@ -113,10 +114,23 @@ public class news3_activity extends AppCompatActivity {
         String url = getIntent().getStringExtra("url");
 
         Title.setText(title);
-        Content.setText(url); // 기사 url 받아옴
+//        Content.setText(url); // 기사 url 받아옴
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
+
+
+        news_link_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // WebViewActivity로 이동
+                Intent intent = new Intent(news3_activity.this, WebViewActivity.class);
+                intent.putExtra("url", url); // 전달할 URL
+                startActivity(intent);
+            }
+        });
+
+
 
         if(imgUrl.equals("none")){
             imgUrl=mediaImgUrl;
