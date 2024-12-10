@@ -144,6 +144,7 @@ public class news3_activity extends AppCompatActivity {
                 intent.putExtra("summary", summary);
                 intent.putExtra("key", key);
                 startActivity(intent);
+                finish();
             }
         });
 
