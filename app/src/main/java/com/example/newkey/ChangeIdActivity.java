@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class ChangeIdActivity extends Activity {
 
         // 컴포넌트 초기화
         editUserId = findViewById(R.id.editUserId);
-        LinearLayout backFromProfile = findViewById(R.id.backFromProfile);
+        ImageView backFromProfile = findViewById(R.id.back);
         Button completeButton = findViewById(R.id.completeButton);
         textViewCount = findViewById(R.id.textView6);
 
