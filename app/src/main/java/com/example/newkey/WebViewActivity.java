@@ -1,8 +1,10 @@
 package com.example.newkey;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,11 +66,15 @@ public class WebViewActivity extends AppCompatActivity {
         web_view_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // WebView에서 뒤로 갈 수 있으면 뒤로가기, 없으면 Activity 종료
+                // WebView에서 뒤로 갈 수 있으면 뒤로가기, 없으면 Activity 종료 또는 전환
                 if (webView.canGoBack()) {
-                    webView.goBack();
+                    webView.goBack(); // WebView 내부 뒤로가기
                 } else {
-                    finish();
+                    // news3_activity로 이동
+                    Intent intent = new Intent(WebViewActivity.this, news3_activity.class);
+                    intent.putExtra("isBookmarked", bookMark.getTag() != null && (boolean) bookMark.getTag()); // 북마크 상태 전달
+                    startActivity(intent);
+                    finish(); // WebViewActivity 종료
                 }
             }
         });
@@ -144,6 +150,7 @@ public class WebViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean isChecked = bookMark.getTag() != null && (boolean) bookMark.getTag();
+
                 if (!isChecked) {
                     bookMark.setImageResource(R.drawable.bookmark_checked);
                     bookMark.setTag(true);
@@ -222,16 +229,26 @@ public class WebViewActivity extends AppCompatActivity {
                 }
             }
         });
-    }
 
-    @Override
-    public void onBackPressed() {
-        WebView webView = findViewById(R.id.webView);
-        // WebView에서 뒤로 갈 수 있으면 뒤로가기, 없으면 Activity 종료
-        if (webView.canGoBack()) {
-            webView.goBack(); // WebView 내 뒤로가기
-        } else {
-            super.onBackPressed(); // Activity 종료
-        }
+
+        // OnBackPressedCallback 설정
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // WebView 뒤로가기 로직
+                if (webView.canGoBack()) {
+                    webView.goBack(); // WebView 내부 뒤로가기
+                } else {
+                    // news3_activity로 이동
+                    Intent intent = new Intent(WebViewActivity.this, news3_activity.class);
+                    intent.putExtra("isBookmarked", bookMark.getTag() != null && (boolean) bookMark.getTag());
+                    startActivity(intent);
+                    finish(); // WebViewActivity 종료
+                }
+            }
+        };
+
+        // Dispatcher에 콜백 추가
+        getOnBackPressedDispatcher().addCallback(this, callback);
     }
 }
