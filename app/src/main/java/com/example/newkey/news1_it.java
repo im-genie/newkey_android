@@ -1,4 +1,6 @@
 package com.example.newkey;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +40,7 @@ public class news1_it extends Fragment {
     private List<news1_item> itemList;
     private news1_adapter adapter;
     private int currentPage = 1;  // 현재 페이지
-    private final int pageSize = 40;  // 한 페이지에 불러올 기사 수
+    private final int pageSize = 20;  // 한 페이지에 불러올 기사 수
     private boolean isLoading = false;  // 로딩 상태를 추적하여 중복 로드 방지
     private Handler handler = new Handler(); // 3초 지연을 위한 Handler
 
@@ -46,6 +49,7 @@ public class news1_it extends Fragment {
         View view = inflater.inflate(R.layout.news1_it, container, false);
 
         itemList = new ArrayList<>();
+        //queue = Volley.newRequestQueue(view.getContext());
 
         // RecyclerView 설정
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -55,8 +59,13 @@ public class news1_it extends Fragment {
         adapter = new news1_adapter(itemList);
         recyclerView.setAdapter(adapter);
 
-        // 첫 페이지 로드
-        loadNews(currentPage);
+        // 캐시가 유효하면 캐시 데이터 로드, 유효하지 않으면 첫 페이지 요청
+        if(isCacheValid("it", 1*60*60*1000)) {
+            loadCacheNews("it");
+        } else {
+            loadNews(currentPage);
+            saveLastUpdatedTime("it");
+        }
 
         // 스크롤 리스너: 사용자가 스크롤 내릴 때 로딩 중일 경우 토스트 메시지
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -129,6 +138,7 @@ public class news1_it extends Fragment {
 
                             // 시간 차이 계산
                             long diffInMillis = currentDate.getTime() - articleDate.getTime();
+
                             String timeAgo = getTimeAgo(diffInMillis); // 차이를 "몇 시간 전" 형식으로 변환
                             news1_item newsData = new news1_item(id, title, content, url, press, timeAgo, img, summary, key, reporter, mediaImg);
                             itemList.add(newsData);
@@ -139,6 +149,7 @@ public class news1_it extends Fragment {
                         }
                     }
 
+                    saveSectionDataToPreferences("it", response);
                     adapter.notifyDataSetChanged();  // 어댑터에 데이터가 갱신되었음을 알림
                     isLoading = false;  // 로딩 완료
                 } catch (Exception e) {
@@ -165,6 +176,67 @@ public class news1_it extends Fragment {
         request.setShouldCache(true);
         //queue.add(request);
         MySingleton.getInstance(getContext()).addToRequestQueue(request);  // 싱글톤을 통한 요청 추가
+    }
+
+    private void loadCacheNews(String section) {
+        JSONArray cachedData = loadSectionDataFromPreferences(section);
+        if(cachedData != null) {
+            try {
+                for (int i = 0; i < cachedData.length(); i++) {
+                    JSONObject jsonObject = cachedData.getJSONObject(i);
+                    String id = jsonObject.getString("id");
+                    String title = jsonObject.getString("title");
+                    String content = jsonObject.getString("origin_content");
+                    String press = jsonObject.getString("media");
+                    String dateStr = jsonObject.getString("date");
+                    String img = jsonObject.getString("img");
+                    String summary = jsonObject.getString("summary");
+                    String key = jsonObject.getString("key");
+                    String reporter = jsonObject.getString("reporter");
+                    String mediaImg = jsonObject.getString("media_img");
+                    String url = jsonObject.getString("url");
+
+                    news1_item newsData = new news1_item(id, title, content, url, press, dateStr, img, summary, key, reporter, mediaImg);
+                    itemList.add(newsData);
+                }
+                adapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void saveSectionDataToPreferences(String section, JSONArray data) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("news_cache", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(section, data.toString());
+        editor.apply();
+    }
+
+    private JSONArray loadSectionDataFromPreferences(String section) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("news_cache", Context.MODE_PRIVATE);
+        String jsonString = sharedPreferences.getString(section, null);
+        if (jsonString != null) {
+            try {
+                return new JSONArray(jsonString);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private void saveLastUpdatedTime(String section) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("news_cache", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong(section + "_last_updated", System.currentTimeMillis());
+        editor.apply();
+    }
+
+    private boolean isCacheValid(String section, long cacheDurationMillis) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("news_cache", Context.MODE_PRIVATE);
+        long lastUpdated = sharedPreferences.getLong(section + "_last_updated", 0);
+        return System.currentTimeMillis() - lastUpdated < cacheDurationMillis;
     }
 
     @Override
