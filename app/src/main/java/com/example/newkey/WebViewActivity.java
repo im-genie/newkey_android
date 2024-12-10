@@ -58,6 +58,18 @@ public class WebViewActivity extends AppCompatActivity {
 
         // Intent로 전달받은 URL 로드
         String url = getIntent().getStringExtra("url");
+
+        id = getIntent().getStringExtra("id");
+        String title = getIntent().getStringExtra("title");
+        String content = getIntent().getStringExtra("content");
+        String date = getIntent().getStringExtra("date");
+        String publisher = getIntent().getStringExtra("publisher");
+        String summary = getIntent().getStringExtra("summary");
+        String imgUrl = getIntent().getStringExtra("img");
+        String mediaImgUrl = getIntent().getStringExtra("media_img");
+        String reporter = getIntent().getStringExtra("reporter");
+        String key = getIntent().getStringExtra("key");
+
         if (url != null) {
             webView.loadUrl(url);
         }
@@ -73,6 +85,17 @@ public class WebViewActivity extends AppCompatActivity {
                     // news3_activity로 이동
                     Intent intent = new Intent(WebViewActivity.this, news3_activity.class);
                     intent.putExtra("isBookmarked", bookMark.getTag() != null && (boolean) bookMark.getTag()); // 북마크 상태 전달
+
+                    intent.putExtra("id", id);
+                    intent.putExtra("title", title);
+                    intent.putExtra("content", content);
+                    intent.putExtra("publisher", publisher);
+                    intent.putExtra("reporter", reporter);
+                    intent.putExtra("date", date);
+                    intent.putExtra("img", imgUrl);
+                    intent.putExtra("summary", summary);
+                    intent.putExtra("key", key);
+                    intent.putExtra("url", url);
                     startActivity(intent);
                     finish(); // WebViewActivity 종료
                 }
@@ -242,6 +265,18 @@ public class WebViewActivity extends AppCompatActivity {
                     // news3_activity로 이동
                     Intent intent = new Intent(WebViewActivity.this, news3_activity.class);
                     intent.putExtra("isBookmarked", bookMark.getTag() != null && (boolean) bookMark.getTag());
+
+                    intent.putExtra("id", id);
+                    intent.putExtra("title", title);
+                    intent.putExtra("content", content);
+                    intent.putExtra("publisher", publisher);
+                    intent.putExtra("reporter", reporter);
+                    intent.putExtra("date", date);
+                    intent.putExtra("img", imgUrl);
+                    intent.putExtra("summary", summary);
+                    intent.putExtra("key", key);
+                    intent.putExtra("url", url);
+
                     startActivity(intent);
                     finish(); // WebViewActivity 종료
                 }

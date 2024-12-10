@@ -65,7 +65,7 @@ public class news3_activity extends AppCompatActivity {
     TextView Title,Content,Date,Reporter,Publisher,who,what,when,how,why,where;
     ImageView Img,bookMark;
     RequestQueue queue;
-    String email;
+    String email, imgUrl;
     Set<String> storedNewsIds = new HashSet<>();
     private SharedPreferences preferences;
     public static final String preference = "newkey";
@@ -107,11 +107,20 @@ public class news3_activity extends AppCompatActivity {
         String date = getIntent().getStringExtra("date");
         String publisher = getIntent().getStringExtra("publisher");
         String summary = getIntent().getStringExtra("summary");
-        String imgUrl = getIntent().getStringExtra("img");
+        imgUrl = getIntent().getStringExtra("img");
         String mediaImgUrl = getIntent().getStringExtra("media_img");
         String reporter = getIntent().getStringExtra("reporter");
         String key = getIntent().getStringExtra("key");
         String url = getIntent().getStringExtra("url");
+
+        // Intent에서 WebViewActivity에서 왔는지 확인
+        boolean isFromWebView = getIntent().hasExtra("isBookmarked");
+        if (isFromWebView) {
+            // WebViewActivity에서 온 경우
+            boolean isBookmarked = getIntent().getBooleanExtra("isBookmarked", false);
+            bookMark.setImageResource(isBookmarked ? R.drawable.bookmark_checked : R.drawable.bookmark_unchecked);
+            bookMark.setTag(isBookmarked);
+        }
 
         Title.setText(title);
 //        Content.setText(url); // 기사 url 받아옴
@@ -127,14 +136,19 @@ public class news3_activity extends AppCompatActivity {
                 Intent intent = new Intent(news3_activity.this, WebViewActivity.class);
                 intent.putExtra("url", url); // 전달할 URL
                 intent.putExtra("id", id);
+                intent.putExtra("title", title);
+                intent.putExtra("publisher", publisher);
+                intent.putExtra("reporter", reporter);
+                intent.putExtra("date", date);
+                intent.putExtra("img", imgUrl);
+                intent.putExtra("summary", summary);
+                intent.putExtra("key", key);
                 startActivity(intent);
             }
         });
 
-
-
-        if(imgUrl.equals("none")){
-            imgUrl=mediaImgUrl;
+        if ("none".equals(imgUrl)) { // "none"을 앞에 두어 NPE를 방지
+            imgUrl = mediaImgUrl;
         }
 
         preferences=getApplicationContext().getSharedPreferences(preference, Context.MODE_PRIVATE);
@@ -288,6 +302,7 @@ public class news3_activity extends AppCompatActivity {
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_down);
+                    news3SummaryArrow.setRotation(180f);
                     Toast.makeText(getApplicationContext(), "해당 기사를 요약했어요", Toast.LENGTH_SHORT).show();
 
                 } catch (JSONException e) {
@@ -389,6 +404,7 @@ public class news3_activity extends AppCompatActivity {
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_up);
+                    news3SummaryArrow.setRotation(180f);
 
                     TextView news3SummaryText = findViewById(R.id.news3_summary_text);
                     news3SummaryText.setTextColor(getResources().getColor(R.color.white));
@@ -397,6 +413,7 @@ public class news3_activity extends AppCompatActivity {
                     summaryButton.setBackgroundResource(R.drawable.news3_radius2);
                     summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.key_green_400)));
                     news3SummaryArrow.setImageResource(R.drawable.news3_down);
+                    news3SummaryArrow.setRotation(180f);
 
                     TextView news3SummaryText = findViewById(R.id.news3_summary_text);
                     news3SummaryText.setTextColor(getResources().getColor(R.color.black));
