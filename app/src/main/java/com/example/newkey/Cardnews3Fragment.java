@@ -127,6 +127,7 @@ public class Cardnews3Fragment extends Fragment {
                     dateText.setText(newsData.getDate());
                     reporterText.setText(newsData.getReporter()+" 기자");
                     publisherText.setText(newsData.getPublisher());
+                    when.setText(dateStr);
 
                     if(mediaImg.equals("null")) {
                         mediaCircleImg.setImageResource(R.drawable.newkey);
@@ -199,7 +200,7 @@ public class Cardnews3Fragment extends Fragment {
 
                     // 각 5W1H 요소에 맞는 데이터를 가져와 TextView에 설정
                     who.setText(jsonResponse.getString("누가"));
-                    when.setText(jsonResponse.getString("언제"));
+                    //when.setText(jsonResponse.getString("언제"));
                     where.setText(jsonResponse.getString("어디서"));
                     how.setText(jsonResponse.getString("어떻게"));
                     why.setText(jsonResponse.getString("왜"));

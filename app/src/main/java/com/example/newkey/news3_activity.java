@@ -118,7 +118,7 @@ public class news3_activity extends AppCompatActivity {
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
-
+        when.setText(date);
 
         news_link_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,7 +278,7 @@ public class news3_activity extends AppCompatActivity {
 
                     // 각 5W1H 요소에 맞는 데이터를 가져와 TextView에 설정
                     who.setText(jsonResponse.getString("누가"));
-                    when.setText(jsonResponse.getString("언제"));
+                    //when.setText(jsonResponse.getString("언제"));
                     where.setText(jsonResponse.getString("어디서"));
                     how.setText(jsonResponse.getString("어떻게"));
                     why.setText(jsonResponse.getString("왜"));
