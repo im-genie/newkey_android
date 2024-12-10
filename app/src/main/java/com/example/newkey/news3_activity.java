@@ -118,7 +118,7 @@ public class news3_activity extends AppCompatActivity {
         Date.setText(date);
         Reporter.setText(reporter+" 기자");
         Publisher.setText(publisher);
-
+        when.setText(date);
 
         news_link_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,6 +126,7 @@ public class news3_activity extends AppCompatActivity {
                 // WebViewActivity로 이동
                 Intent intent = new Intent(news3_activity.this, WebViewActivity.class);
                 intent.putExtra("url", url); // 전달할 URL
+                intent.putExtra("id", id);
                 startActivity(intent);
             }
         });
@@ -264,7 +265,7 @@ public class news3_activity extends AppCompatActivity {
         news3SummaryArrow.setImageResource(R.drawable.news3_up);
         summaryButton.setBackgroundResource(R.drawable.news3_radius2);
         summaryButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.gray_500)));
-        Toast.makeText(getApplicationContext(), "요약이 준비되지 않았어요", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "요약을 준비 중입니다", Toast.LENGTH_SHORT).show();
 
         final StringRequest fiveWOneHRequest = new StringRequest(Request.Method.POST, fiveWOneHUrl, new Response.Listener<String>() {
             @Override
@@ -277,7 +278,7 @@ public class news3_activity extends AppCompatActivity {
 
                     // 각 5W1H 요소에 맞는 데이터를 가져와 TextView에 설정
                     who.setText(jsonResponse.getString("누가"));
-                    when.setText(jsonResponse.getString("언제"));
+                    //when.setText(jsonResponse.getString("언제"));
                     where.setText(jsonResponse.getString("어디서"));
                     how.setText(jsonResponse.getString("어떻게"));
                     why.setText(jsonResponse.getString("왜"));

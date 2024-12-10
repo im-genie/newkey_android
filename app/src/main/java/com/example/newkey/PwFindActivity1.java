@@ -66,6 +66,7 @@ public class PwFindActivity1 extends AppCompatActivity {
         nextArrow=findViewById(R.id.next_arrow);
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         queue= Volley.newRequestQueue(this);
+        next.setEnabled(false);
 
         code=findViewById(R.id.code);
         codeSend=findViewById(R.id.codeSend);

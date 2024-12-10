@@ -101,8 +101,12 @@
                         android:id="@+id/pwRightView"
                         android:layout_width="12dp"
                         android:layout_height="12dp"
+<<<<<<<<< Temporary merge branch 1
                         android:layout_marginEnd="4dp"
                         android:layout_marginTop="2dp"
+=========
+                        android:layout_marginTop="1dp"
+>>>>>>>>> Temporary merge branch 2
                         android:layout_weight="1"
                         android:visibility="gone"
                         app:srcCompat="@drawable/checkpw" />
@@ -111,7 +115,6 @@
                         android:id="@+id/pwRightText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
                         android:layout_weight="1"
                         android:text=""
                         android:textSize="10dp" />
@@ -154,11 +157,15 @@
 
                     <ImageView
                         android:id="@+id/pwSameView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+<<<<<<<<< Temporary merge branch 1
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="2dp"
+=========
+>>>>>>>>> Temporary merge branch 2
                         android:layout_weight="1"
                         app:srcCompat="@drawable/checkpw"
-                        android:layout_marginTop="1dp"
                         android:visibility="gone"/>
 
                     <TextView
