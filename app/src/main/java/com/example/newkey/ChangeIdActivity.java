@@ -53,7 +53,7 @@ public class ChangeIdActivity extends Activity {
         preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
         email=preferences.getString("email", null);
 
-        String url="http://43.201.113.167:8080/user/nameSave";
+        String url="http://15.165.181.204:8080/user/nameSave";
         queue=Volley.newRequestQueue(getApplicationContext());
 
         // 글자 수 카운트와 제한 설정
