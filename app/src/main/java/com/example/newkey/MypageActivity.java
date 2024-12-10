@@ -198,7 +198,7 @@ public class MypageActivity extends Activity {
         chooseTopics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, ChooseTopicsActivity_mypage.class);
+                Intent intent = new Intent(MypageActivity.this, ChooseTopicsActivity.class);
                 intent.putExtra("join",false);
                 startActivity(intent);
             }

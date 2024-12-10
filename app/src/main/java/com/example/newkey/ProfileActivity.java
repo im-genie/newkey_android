@@ -3,6 +3,10 @@ package com.example.newkey;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,37 +15,39 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
 public class ProfileActivity extends AppCompatActivity {
 
-    ImageView yellow, green, blue, newkey, back;
-    Button complete;
-    String selected = "";
-    String url = "http://15.165.181.204:8080/user/profileSave";
-    SharedPreferences preferences;
+    private ImageView yellow, green, blue, newkey;
+    private Button complete;
+    private String selected = "";
+    private String url = "http://15.165.181.204:8080/user/profileSave";
+    private SharedPreferences preferences;
     public static final String preference = "newkey";
-    RequestQueue queue;
-    String email;
+    private RequestQueue queue;
+    private String email;
+
+    // 리소스 ID 상수
+    private final int yellowSelectedResId = R.drawable.yellow_check;
+    private final int greenSelectedResId = R.drawable.green_check;
+    private final int blueSelectedResId = R.drawable.blue_check;
+    private final int newkeySelectedResId = R.drawable.newkey_check;
+
+    private final int yellowDefaultResId = R.drawable.profile_yellow;
+    private final int greenDefaultResId = R.drawable.profile_green;
+    private final int blueDefaultResId = R.drawable.profile_blue;
+    private final int newkeyDefaultResId = R.drawable.profile_newkey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,117 +63,89 @@ public class ProfileActivity extends AppCompatActivity {
         green = findViewById(R.id.profile_green);
         blue = findViewById(R.id.profile_blue);
         newkey = findViewById(R.id.profile_newkey);
-
-        final int yellowSelectedResId = R.drawable.yellow_check; // 선택된 상태 이미지
-        final int yellowDefaultResId = R.drawable.profile_yellow; // 기본 이미지
-
-        final int greenSelectedResId = R.drawable.green_check;
-        final int greenDefaultResId = R.drawable.profile_green;
-
-        final int blueSelectedResId = R.drawable.blue_check;
-        final int blueDefaultResId = R.drawable.profile_blue;
-
-        final int newkeySelectedResId = R.drawable.newkey_check;
-        final int newkeyDefaultResId = R.drawable.profile_newkey;
-
-        // XML에서 정의된 둥근 배경과 크기 유지하면서 이미지 변경
-        yellow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selected = "yellow";
-                yellow.setImageResource(yellowSelectedResId);
-                green.setImageResource(greenDefaultResId);
-                blue.setImageResource(blueDefaultResId);
-                newkey.setImageResource(newkeyDefaultResId);
-            }
-        });
-
-        green.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selected = "green";
-                yellow.setImageResource(yellowDefaultResId);
-                green.setImageResource(greenSelectedResId);
-                blue.setImageResource(blueDefaultResId);
-                newkey.setImageResource(newkeyDefaultResId);
-            }
-        });
-
-        blue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selected = "blue";
-                yellow.setImageResource(yellowDefaultResId);
-                green.setImageResource(greenDefaultResId);
-                blue.setImageResource(blueSelectedResId);
-                newkey.setImageResource(newkeyDefaultResId);
-            }
-        });
-
-        newkey.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selected = "newkey";
-                yellow.setImageResource(yellowDefaultResId);
-                green.setImageResource(greenDefaultResId);
-                blue.setImageResource(blueDefaultResId);
-                newkey.setImageResource(newkeySelectedResId);
-            }
-        });
-
-
-        // 프로필 저장
         complete = findViewById(R.id.completeButton);
-        complete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //프로필 설정하지 않은 경우 토스트 메시지
-                Log.d("선택한 프로필",selected);
-                if(selected.equals("")){
-                    Toast.makeText(getApplicationContext(), "프로필 사진이 설정되지 않았습니다.", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    JSONObject jsonRequest = new JSONObject();
-                    try {
-                        jsonRequest.put("email", email);
-                        jsonRequest.put("profile", selected);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonRequest, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Log.d("success!!", response.toString());
 
-                            Toast.makeText(getApplicationContext(), "프로필 설정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+        // 이미지뷰에 크기 조정된 Drawable 적용
+        setResizedDrawable(yellow, yellowSelectedResId);
+        setResizedDrawable(green, greenSelectedResId);
+        setResizedDrawable(blue, blueSelectedResId);
+        setResizedDrawable(newkey, newkeySelectedResId);
 
-                            Intent intent = new Intent(getApplicationContext(), MypageActivity.class);
-                            startActivity(intent);
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // Handle error
-                            Log.d("test", "Profile error: " + error.toString());
-                        }
-                    });
+        // 클릭 리스너 설정
+        setOnClickListeners();
 
-                    request.setRetryPolicy(new DefaultRetryPolicy(
-                            100000000,  // 기본 타임아웃 (기본값: 2500ms)
-                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES, // 기본 재시도 횟수 (기본값: 1)
-                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
-                    ));
+        // 프로필 저장 버튼 클릭 이벤트
+        complete.setOnClickListener(view -> saveProfile());
+    }
 
-                    request.setShouldCache(false);
-                    queue.add(request);
-                }
-            }
-        });
-        back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }}
+    // 이미지 크기를 조정하고 ImageView에 설정하는 메서드
+    private void setResizedDrawable(ImageView imageView, int resId) {
+        Drawable resizedDrawable = getResizedDrawable(this, resId, 120, 120);
+        if (resizedDrawable != null) {
+            imageView.setImageDrawable(resizedDrawable);
+        }
+    }
+
+    // 클릭 리스너 설정
+    private void setOnClickListeners() {
+        yellow.setOnClickListener(v -> updateSelection("yellow", yellowSelectedResId));
+        green.setOnClickListener(v -> updateSelection("green", greenSelectedResId));
+        blue.setOnClickListener(v -> updateSelection("blue", blueSelectedResId));
+        newkey.setOnClickListener(v -> updateSelection("newkey", newkeySelectedResId));
+    }
+
+    // 선택된 프로필 이미지 업데이트
+    private void updateSelection(String profile, int selectedResId) {
+        selected = profile;
+        yellow.setImageResource(profile.equals("yellow") ? selectedResId : yellowDefaultResId);
+        green.setImageResource(profile.equals("green") ? selectedResId : greenDefaultResId);
+        blue.setImageResource(profile.equals("blue") ? selectedResId : blueDefaultResId);
+        newkey.setImageResource(profile.equals("newkey") ? selectedResId : newkeyDefaultResId);
+    }
+
+    // 프로필 저장
+    private void saveProfile() {
+        if (selected.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "프로필 사진이 설정되지 않았습니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("email", email);
+            jsonRequest.put("profile", selected);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonRequest,
+                response -> {
+                    Log.d("Success", response.toString());
+                    Toast.makeText(getApplicationContext(), "프로필 설정이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MypageActivity.class));
+                },
+                error -> Log.e("Error", "Profile error: " + error.toString())
+        );
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                5000, // 타임아웃 시간 (ms)
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        request.setShouldCache(false);
+        queue.add(request);
+    }
+
+    // 리소스 ID에 해당하는 이미지를 크기 조정하는 메서드
+    private Bitmap resizeDrawable(Context context, int resId, int targetWidth, int targetHeight) {
+        Bitmap originalBitmap = BitmapFactory.decodeResource(context.getResources(), resId);
+        return Bitmap.createScaledBitmap(originalBitmap, targetWidth, targetHeight, true);
+    }
+
+    // 크기를 조정한 Bitmap을 다시 Drawable로 변환하는 메서드
+    private Drawable getResizedDrawable(Context context, int resId, int targetWidth, int targetHeight) {
+        Bitmap resizedBitmap = resizeDrawable(context, resId, targetWidth, targetHeight);
+        return resizedBitmap != null ? new BitmapDrawable(context.getResources(), resizedBitmap) : null;
+    }
+}

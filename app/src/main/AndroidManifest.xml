@@ -40,7 +40,6 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"
             android:exported="true" />
         <activity
             android:name=".ConsentActivity"
