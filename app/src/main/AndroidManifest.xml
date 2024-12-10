@@ -106,17 +106,13 @@
             android:name=".RecommendationActivity"
             android:exported="true" />
         <activity
-            android:name=".LogoutActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ChangePasswordActivity"
-            android:exported="true"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".ViewHistoryActivity"
             android:exported="true" />
         <activity
             android:name=".ChooseTopicsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ChooseTopicsActivity_mypage"
             android:exported="true" />
         <activity
             android:name=".ViewScrapActivity"
