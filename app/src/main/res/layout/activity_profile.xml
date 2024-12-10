@@ -84,12 +84,8 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_corner_15"
-                app:srcCompat="@drawable/profile_yellow"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                />
-
+                android:background="@drawable/blue_check"
+                app:srcCompat="@drawable/profile_yellow" />
 
             <ImageButton
                 android:id="@+id/profile_green"
@@ -97,7 +93,6 @@
                 android:layout_height="120dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/rounded_corner_15"
-                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/profile_green" />
         </TableRow>
 
@@ -109,7 +104,6 @@
                 android:layout_height="120dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/rounded_corner_15"
-                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/profile_blue" />
 
             <ImageButton
@@ -118,7 +112,6 @@
                 android:layout_height="120dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/rounded_corner_15"
-                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/profile_newkey" />
         </TableRow>
     </TableLayout>
