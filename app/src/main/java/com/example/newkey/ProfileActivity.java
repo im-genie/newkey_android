@@ -29,7 +29,7 @@ import org.json.JSONObject;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private ImageView yellow, green, blue, newkey;
+    private ImageView yellow, green, blue, newkey, back;
     private Button complete;
     private String selected = "";
     private String url = "http://15.165.181.204:8080/user/profileSave";
@@ -65,11 +65,20 @@ public class ProfileActivity extends AppCompatActivity {
         newkey = findViewById(R.id.profile_newkey);
         complete = findViewById(R.id.completeButton);
 
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MypageActivity.class);
+                startActivity(intent);
+            }
+        });
+
         // 이미지뷰에 크기 조정된 Drawable 적용
-        setResizedDrawable(yellow, yellowSelectedResId);
-        setResizedDrawable(green, greenSelectedResId);
-        setResizedDrawable(blue, blueSelectedResId);
-        setResizedDrawable(newkey, newkeySelectedResId);
+        setResizedDrawable(yellow, yellowDefaultResId);
+        setResizedDrawable(green, greenDefaultResId);
+        setResizedDrawable(blue, blueDefaultResId);
+        setResizedDrawable(newkey, newkeyDefaultResId);
 
         // 클릭 리스너 설정
         setOnClickListeners();
@@ -80,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     // 이미지 크기를 조정하고 ImageView에 설정하는 메서드
     private void setResizedDrawable(ImageView imageView, int resId) {
-        Drawable resizedDrawable = getResizedDrawable(this, resId, 120, 120);
+        Drawable resizedDrawable = getResizedDrawable(this, resId, 360, 360);
         if (resizedDrawable != null) {
             imageView.setImageDrawable(resizedDrawable);
         }
@@ -97,10 +106,10 @@ public class ProfileActivity extends AppCompatActivity {
     // 선택된 프로필 이미지 업데이트
     private void updateSelection(String profile, int selectedResId) {
         selected = profile;
-        yellow.setImageResource(profile.equals("yellow") ? selectedResId : yellowDefaultResId);
-        green.setImageResource(profile.equals("green") ? selectedResId : greenDefaultResId);
-        blue.setImageResource(profile.equals("blue") ? selectedResId : blueDefaultResId);
-        newkey.setImageResource(profile.equals("newkey") ? selectedResId : newkeyDefaultResId);
+        setResizedDrawable(yellow, profile.equals("yellow") ? selectedResId : yellowDefaultResId);
+        setResizedDrawable(green, profile.equals("green") ? selectedResId : greenDefaultResId);
+        setResizedDrawable(blue, profile.equals("blue") ? selectedResId : blueDefaultResId);
+        setResizedDrawable(newkey, profile.equals("newkey") ? selectedResId : newkeyDefaultResId);
     }
 
     // 프로필 저장
