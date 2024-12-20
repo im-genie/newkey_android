@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class ChangeIdActivity extends Activity {
 
         // 컴포넌트 초기화
         editUserId = findViewById(R.id.editUserId);
-        LinearLayout backFromProfile = findViewById(R.id.backFromProfile);
+        ImageView back = findViewById(R.id.back);
         Button completeButton = findViewById(R.id.completeButton);
         textViewCount = findViewById(R.id.textView6);
 
@@ -92,7 +93,7 @@ public class ChangeIdActivity extends Activity {
         });
 
         // 이미지 버튼 클릭 이벤트 처리: 화면을 닫고 이전 화면으로 돌아감
-        backFromProfile.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 현재 액티비티를 종료
