@@ -55,7 +55,7 @@
         <activity
             android:name=".PwRegisterActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".PwFindActivity1"
             android:exported="true"
@@ -83,7 +83,7 @@
         <activity android:name=".news3_activity" />
         <activity
             android:name=".notification1"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop"/>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
@@ -131,7 +131,7 @@
         <receiver
             android:name=".NotificationReceiver"
             android:enabled="true"
-            android:exported="false"></receiver>
+            android:exported="false"/>
     </application>
 
 </manifest>
