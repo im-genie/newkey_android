@@ -34,7 +34,7 @@ import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    ImageView yellow, green, blue, newkey;
+    ImageView yellow, green, blue, newkey, back;
     Button complete;
     String selected = "";
     String url = "http://15.165.181.204:8080/user/profileSave";
@@ -57,6 +57,15 @@ public class ProfileActivity extends AppCompatActivity {
         green = findViewById(R.id.profile_green);
         blue = findViewById(R.id.profile_blue);
         newkey = findViewById(R.id.profile_newkey);
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfileActivity.this, MypageActivity.class);
+                startActivity(intent);
+            }
+        });
 
         final int yellowSelectedResId = R.drawable.yellow_check; // 선택된 상태 이미지
         final int yellowDefaultResId = R.drawable.profile_yellow; // 기본 이미지

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NicknameActivity"
-    android:background="@color/gray_600"
-    >
+    tools:context=".ChangeIdActivity"
+    android:background="@color/black"
+    android:backgroundTint="@color/gray_600">
 
     <LinearLayout
         android:id="@+id/backFromProfile"

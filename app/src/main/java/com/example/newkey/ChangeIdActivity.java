@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -32,9 +34,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ChangeIdActivity extends Activity {
+public class ChangeIdActivity extends AppCompatActivity {
     private EditText editUserId;
     private TextView textViewCount;
+    ImageView back;
+    private Button completeButton;
     RequestQueue queue;
     String email;
     private SharedPreferences preferences;
@@ -47,15 +51,23 @@ public class ChangeIdActivity extends Activity {
 
         // 컴포넌트 초기화
         editUserId = findViewById(R.id.editUserId);
-        ImageView back = findViewById(R.id.back);
-        Button completeButton = findViewById(R.id.completeButton);
+        completeButton = findViewById(R.id.completeButton);
         textViewCount = findViewById(R.id.textView6);
 
-        preferences=getSharedPreferences(preference, Context.MODE_PRIVATE);
-        email=preferences.getString("email", null);
+        preferences = getSharedPreferences(preference, Context.MODE_PRIVATE);
+        email = preferences.getString("email", null);
 
-        String url="http://15.165.181.204:8080/user/nameSave";
-        queue=Volley.newRequestQueue(getApplicationContext());
+        String url = "http://15.165.181.204:8080/user/nameSave";
+        queue = Volley.newRequestQueue(getApplicationContext());
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChangeIdActivity.this, MypageActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 글자 수 카운트와 제한 설정
         editUserId.addTextChangedListener(new TextWatcher() {
@@ -89,15 +101,6 @@ public class ChangeIdActivity extends Activity {
             @Override
             public void afterTextChanged(Editable editable) {
                 // No action needed after text changes
-            }
-        });
-
-        // 이미지 버튼 클릭 이벤트 처리: 화면을 닫고 이전 화면으로 돌아감
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 현재 액티비티를 종료
-                finish();
             }
         });
 
@@ -145,5 +148,6 @@ public class ChangeIdActivity extends Activity {
                 Intent intent = new Intent(ChangeIdActivity.this, MypageActivity.class);
                 startActivity(intent);
             }
-        });}}
-
+        });
+    }
+}
